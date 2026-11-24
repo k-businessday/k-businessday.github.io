@@ -269,7 +269,8 @@ function render(){
  const tab=view.name!=='desk'&&view.name!=='setup'&&S.tablet;
  const pending=tab?mine().filter(m=>S.m[m.id].submittedAt&&!S.m[m.id].sent).length:0;
  const sync=offline?`<span class="pill p-crit">연결 끊김</span>`:'';
- const q=!tab?'':pending?`<span class="pill p-warn">전송 대기 ${pending}건</span>`:`<span class="pill p-good">모두 전송됨</span>`;
+ const anySent=tab&&mine().some(m=>S.m[m.id].submittedAt&&S.m[m.id].sent&&!S.m[m.id].byDesk);
+ const q=!tab?'':pending?`<span class="pill p-warn">전송 대기 ${pending}건</span>`:anySent?`<span class="pill p-good">모두 전송됨</span>`:'';
  let left=`<div class="brand">K-BUSINESS DAY 2026<small>상담일지 / Meeting log</small></div>`,back='';
  if(view.name==='desk'){left=`<div class="brand">매칭데스크${desk.ok?' · '+desk.pco:''}<small>현장 매칭 등록 / Matching desk</small></div>`;back=`<button class="back" data-act="deskexit">← 태블릿 화면</button>`;}
  else if(tab){const b=BUYERS[S.tablet];left=`<div class="brand">${S.tablet} · ${b.table}<small>${esc(b.name)}</small></div>`;if(view.name!=='list')back=`<button class="back" data-act="back">← 목록</button>`;}
