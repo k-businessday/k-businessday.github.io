@@ -166,6 +166,7 @@ const C={
  TIMING:[['TIMING_3M','3개월 이내','Within 3 months'],['TIMING_3to6','3~6개월','3–6 months'],['TIMING_6to12','6~12개월','6–12 months'],['TIMING_Undecided','미정','Undecided']],
  COOP:[['COOP_Import','완제품 수입','Import of finished goods'],['COOP_Distributor','현지 유통·총판','Distributorship'],['COOP_Agency','에이전트(중개)','Agency'],['COOP_OEMODM','OEM·ODM(자체 브랜드 포함)','OEM·ODM, private label'],['COOP_JointDev','공동 개발','Joint development'],['COOP_Other','기타','Other']]
 };
+/* 제품 정보 세부 목록은 기업의 주 산업군이 아니라 제품의 품목코드 산업군(p.ind)으로 고른다. 값이 없으면 기업 산업군. */
 const IND_GROUP={FOD:'FOD',STA:'FSL',FUR:'FSL',LIF:'FSL',TEX:'TEX',MED:'MED',BEA:'BEA',BAB:'BAB'};
 const PRODUCT_REQ=['REQ_Sample','REQ_Quotation','REQ_ProductSpecs','REQ_CertDocs','REQ_TradeTerms','REQ_OEM','REQ_TrialOrder'];
 const COMMON_REQ=['REQ_FactoryVisit','REQ_FollowUp'];
@@ -185,11 +186,11 @@ const COMPANIES={
  'MED-K-001':{name:'SAMPLE Medical Co. C',ind:'MED',products:[['P1','Digital Thermometer',[1,1,1,1]],['P2','Blood Pressure Monitor',[1,1,1,1]]]},
  'LIF-K-001':{name:'SAMPLE Living Co. D',ind:'LIF',products:[['P1','Stainless Tumbler',[1,1,1,1]],['P2','Silicone Kitchen Set',[1,1,0,0]]]},
  'TEX-K-001':{name:'SAMPLE Textile Co. E',ind:'TEX',products:[['P1','Knit Scarf',[1,1,1,1]],['P2','Down Jacket',[0,0,0,0]]]},
- 'BAB-K-001':{name:'SAMPLE Baby Co. F',ind:'BAB',products:[['P1','Organic Baby Wipes',[1,1,1,1]],['P2','Silicone Bib',[1,1,1,1]]]},
+ 'BAB-K-001':{name:'SAMPLE Baby Co. F',ind:'BAB',products:[['P1','Organic Baby Wipes',[1,1,1,1]],['P2','Baby Lotion',[1,1,1,1],'BEA']]},
  'STA-K-001':{name:'SAMPLE Stationery Co. G',ind:'STA',products:[['P1','Gel Pen Set',[1,1,1,1]],['P2','Sticky Note Pack',[1,1,1,1]]]}};
 function mkMeeting(id,buyerNo,slot,mode,coNo,extra){const b=BUYERS[buyerNo],c=COMPANIES[coNo];
  return {id,buyerNo,slot,time:SLOT[slot],mode,buyer:b.name,country:b.country,co:c.name,coNo,ind:c.ind,
-  products:c.products.map(x=>({no:x[0],name:x[1],src:'등록 제품',conv:x[2]})).concat(extra||[])};}
+  products:c.products.map(x=>({no:x[0],name:x[1],src:'등록 제품',conv:x[2],ind:x[3]||c.ind})).concat(extra||[])};}
 const BASE=[
  mkMeeting('P001-1-1','P001',1,'사전 매칭','FOD-K-001',[{no:'P3',name:'Red Ginseng Jelly Stick',src:'사전 요청 제품',conv:[1,1,1,1]}]),
  mkMeeting('P001-1-2','P001',2,'사전 매칭','MED-K-001'),
@@ -397,7 +398,7 @@ function vDraft(){
   if(SWITCHABLE.includes(r.type))h+=`<div class="field"><span class="flabel">누가 요청했나요? <span class="en">Requested by</span></span>${chips(C.REQDIR,r.dir,'ddir','s2')}</div>`;
   if(isOther)h+=`<div class="field"><label for="d-other">기타 요청 내용<span class="req">필수</span></label>${r.product==='COMMON'?'':'<p class="sub" style="margin:-2px 0 10px">독점 판매 요청이 나오면 여기에 적습니다. 대상 지역과 최소 구매 조건을 논의했는지 함께 적어 주세요.</p>'}<input type="text" id="d-other" data-bind="d:otherNote" value="${esc(r.otherNote)}" placeholder="${r.product==='COMMON'?'한 줄로 적어 주세요 / Describe in one line':'예: 베트남 독점 요청, 최소 구매 조건 미정'}"></div>`;
   const det=DETAIL[r.type];
-  if(det){let list=C[det[0]];if(det[0]==='SPEC'){const p=m.products.find(x=>x.no===r.product);list=C.SPEC[IND_GROUP[m.ind]]||[];}
+  if(det){let list=C[det[0]];if(det[0]==='SPEC'){const p=m.products.find(x=>x.no===r.product);list=C.SPEC[IND_GROUP[(p&&p.ind)||m.ind]]||C.SPEC[IND_GROUP[m.ind]]||[];}
    h+=`<div class="field"><span class="flabel">세부 선택 <span class="en">Details (optional${det[1]==='multi'?', multiple':''})</span></span>${chips(list,r.details,'ddetail')}</div>`;
    const hasOther=r.details.some(c=>/_Other$/.test(c));
    if(r.type==='REQ_CertDocs'||hasOther)h+=`<div class="field"><label for="d-name">${r.type==='REQ_CertDocs'?'인증명·자료명':'기타 내용'}${hasOther?'<span class="req">필수</span>':''}</label><input type="text" id="d-name" data-bind="d:detailName" value="${esc(r.detailName)}" placeholder="한 줄로 적어 주세요 / Describe in one line"></div>`;}
