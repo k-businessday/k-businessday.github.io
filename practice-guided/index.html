@@ -411,7 +411,7 @@ function vMeet(){
  h+=`<section class="sec"><h2>진행 상태<span class="en">Meeting status</span></h2>${chips(C.STATUS,s.status,'status','s4')}
   ${held?'':`<div class="note n-info">상담이 진행되지 않아 입력을 마칩니다. 아래 제출만 누르면 됩니다.<br><span class="en">The meeting was not held. Entry is complete.</span></div>`}</section>`;
  if(held){
-  h+=`<section class="sec"><h2>제품<span class="en">Products</span></h2><p class="sub">상담에서 다루는 제품을 선택하고, 이야기가 나오는 대로 물량과 요청을 입력합니다. 순서는 상관없고, 입력한 내용은 바로 저장됩니다.</p>`+m.products.map(p=>vProduct(m,s,p)).join('')+`</section>`;
+  h+=`<section class="sec"><h2>제품<span class="en">Products</span></h2><p class="sub">상담에서 다루는 제품을 선택하고, 상담에서 언급되는 물량과 요청을 입력합니다. 순서는 상관없고, 입력한 내용은 바로 저장됩니다.</p>`+m.products.map(p=>vProduct(m,s,p)).join('')+`</section>`;
   const creqs=s.requests.map((r,i)=>[r,i]).filter(x=>x[0].product==='COMMON'||!x[0].product);
   h+=`<section class="sec"><h2>공통 요청<span class="en">Requests not tied to a product</span></h2><p class="sub">특정 제품과 무관한 요청입니다: 공장·기업 방문, 후속 미팅·통화, 기타. 없으면 비워 둡니다.</p>`+
    (creqs.length?`<div class="rlist">${creqs.map(x=>vReqCard(m,x[0],x[1])).join('')}</div>`:'')+
