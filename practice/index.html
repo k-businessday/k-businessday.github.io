@@ -180,30 +180,40 @@ const BUYERS={P001:{name:'PRACTICE Buyer Co.',country:'Practice',pco:'연습',ta
  B001:{name:'SAMPLE Buyer Trading Co. (VN)',country:'Vietnam',pco:'PREMIEREANT',table:'T-01'},
  B002:{name:'SAMPLE Buyer Beauty Inc. (US)',country:'United States',pco:'WISE-ON',table:'T-02'},
  B003:{name:'SAMPLE Buyer General LLC (AE)',country:'United Arab Emirates',pco:'PREMIEREANT',table:'T-03'}};
+/* 제품: [번호, 이름, 환산 가능 여부[세는 단위,포장 단위,20ft,40ft], 산업군(없으면 기업 산업군), 세는 단위 이름, 포장 단위 이름(null이면 포장 단위 없음)]
+   세는 단위·포장 단위 이름은 기업이 거래 조건으로 제출한 값을 구글 시트에서 내려받는다. 저장 값은 UNIT_ 코드 그대로. */
+const U={pc:['개','Pieces'],bottle:['병','Bottles'],bag:['봉','Bags'],pack:['팩','Packs'],sheet:['장','Sheets'],set:['세트','Sets'],unit:['대','Units'],wear:['벌','Garments'],yard:['야드','Yards'],kg:['kg','Kilograms'],stick:['포','Sticks'],box:['박스','Cartons'],roll:['롤','Rolls']};
 const COMPANIES={
- 'FOD-K-001':{name:'SAMPLE Food Co. A',ind:'FOD',products:[['P1','Kimchi Seasoning Sauce',[1,1,1,1]],['P2','Instant Rice Cake',[1,1,1,1]]]},
- 'BEA-K-001':{name:'SAMPLE Beauty Co. B',ind:'BEA',products:[['P1','Hydrating Face Mask',[1,1,1,1]],['P2','Sun Cream SPF50',[1,1,1,1]]]},
- 'MED-K-001':{name:'SAMPLE Medical Co. C',ind:'MED',products:[['P1','Digital Thermometer',[1,1,1,1]],['P2','Blood Pressure Monitor',[1,1,1,1]]]},
- 'LIF-K-001':{name:'SAMPLE Living Co. D',ind:'LIF',products:[['P1','Stainless Tumbler',[1,1,1,1]],['P2','Silicone Kitchen Set',[1,1,0,0]]]},
- 'TEX-K-001':{name:'SAMPLE Textile Co. E',ind:'TEX',products:[['P1','Knit Scarf',[1,1,1,1]],['P2','Down Jacket',[0,0,0,0]]]},
- 'BAB-K-001':{name:'SAMPLE Baby Co. F',ind:'BAB',products:[['P1','Organic Baby Wipes',[1,1,1,1]],['P2','Baby Lotion',[1,1,1,1],'BEA']]},
- 'STA-K-001':{name:'SAMPLE Stationery Co. G',ind:'STA',products:[['P1','Gel Pen Set',[1,1,1,1]],['P2','Sticky Note Pack',[1,1,1,1]]]}};
+ 'FOD-K-001':{name:'SAMPLE Food Co. A',ind:'FOD',products:[['P1','Kimchi Seasoning Sauce',[1,1,1,1],,U.bottle],['P2','Instant Rice Cake',[1,1,1,1],,U.bag]]},
+ 'BEA-K-001':{name:'SAMPLE Beauty Co. B',ind:'BEA',products:[['P1','Hydrating Face Mask',[1,1,1,1],,U.sheet],['P2','Sun Cream SPF50',[1,1,1,1],,U.pc]]},
+ 'MED-K-001':{name:'SAMPLE Medical Co. C',ind:'MED',products:[['P1','Digital Thermometer',[1,1,1,1],,U.pc],['P2','Blood Pressure Monitor',[1,1,1,1],,U.unit]]},
+ 'LIF-K-001':{name:'SAMPLE Living Co. D',ind:'LIF',products:[['P1','Stainless Tumbler',[1,1,1,1],,U.pc],['P2','Silicone Kitchen Set',[1,1,0,0],,U.set]]},
+ 'TEX-K-001':{name:'SAMPLE Apparel Co. E',ind:'TEX',products:[['P1','Knit Scarf',[1,1,1,1],,U.pc],['P2','Down Jacket',[0,0,0,0],,U.wear]]},
+ 'TEX-K-002':{name:'SAMPLE Fabric Co. H',ind:'TEX',products:[['P1','Polyester Knit Fabric',[1,1,1,1],,U.yard,U.roll],['P2','Cotton Blend Yarn',[1,1,0,0],,U.kg]]},
+ 'FUR-K-001':{name:'SAMPLE Furniture Co. I',ind:'FUR',products:[['P1','Ergonomic Office Chair',[1,0,1,1],,U.pc,null],['P2','Modular Sofa Set',[1,0,1,1],,U.set,null]]},
+ 'BAB-K-001':{name:'SAMPLE Baby Co. F',ind:'BAB',products:[['P1','Organic Baby Wipes',[1,1,1,1],,U.pack],['P2','Baby Lotion',[1,1,1,1],'BEA',U.bottle]]},
+ 'STA-K-001':{name:'SAMPLE Stationery Co. G',ind:'STA',products:[['P1','Gel Pen Set',[1,1,1,1],,U.set],['P2','Sticky Note Pack',[1,1,1,1],,U.pack]]}};
+function unitList(p){const u=(p&&p.u)||['낱개','Pieces'],pk=p&&p.pk===null?null:((p&&p.pk)||U.box);
+ return C.UNIT.map((o,i)=>i===0?[o[0],u[0],u[1]]:i===1?(pk?[o[0],pk[0],pk[1]]:null):o).filter(Boolean);}
 function mkMeeting(id,buyerNo,slot,mode,coNo,extra){const b=BUYERS[buyerNo],c=COMPANIES[coNo];
  return {id,buyerNo,slot,time:SLOT[slot],mode,buyer:b.name,country:b.country,co:c.name,coNo,ind:c.ind,
-  products:c.products.map(x=>({no:x[0],name:x[1],src:'등록 제품',conv:x[2],ind:x[3]||c.ind})).concat(extra||[])};}
+  products:c.products.map(x=>({no:x[0],name:x[1],src:'등록 제품',conv:x[2],ind:x[3]||c.ind,u:x[4],pk:x[5]})).concat(extra||[])};}
 const BASE=[
- mkMeeting('P001-1-1','P001',1,'사전 매칭','FOD-K-001',[{no:'P3',name:'Red Ginseng Jelly Stick',src:'사전 요청 제품',conv:[1,1,1,1]}]),
+ mkMeeting('P001-1-1','P001',1,'사전 매칭','FOD-K-001',[{no:'P3',name:'Red Ginseng Jelly Stick',src:'사전 요청 제품',conv:[1,1,1,1],u:U.stick}]),
  mkMeeting('P001-1-2','P001',2,'사전 매칭','MED-K-001'),
  mkMeeting('P001-1-3','P001',3,'사전 매칭','BEA-K-001'),
- mkMeeting('P001-1-4','P001',4,'사전 매칭','LIF-K-001'),
- mkMeeting('P001-1-7','P001',7,'현장 매칭','TEX-K-001')];
+ mkMeeting('P001-1-4','P001',4,'사전 매칭','TEX-K-002'),
+ mkMeeting('P001-1-5','P001',5,'사전 매칭','FUR-K-001'),
+ mkMeeting('P001-1-6','P001',6,'사전 매칭','LIF-K-001'),
+ mkMeeting('P001-1-7','P001',7,'현장 매칭','TEX-K-001'),
+ mkMeeting('P001-1-8','P001',8,'사전 매칭','BAB-K-001')];
 const DEMO_CODE='2026';
 const MEETING_DATE='2026-12-22';
 
 /* ---------- 서버 역할(시제품용) (실제로는 구글 시트 쪽에서 계산. 단가는 태블릿으로 내려가지 않음) ---------- */
 const SERVER={
  limit:1000000,
- price:{'FOD-K-001-P1':[2.6,24,36000,72000],'FOD-K-001-P2':[1.5,12,30000,60000],'FOD-K-001-P3':[0.9,100,120000,240000],'LIF-K-001-P1':[3.9,40,30000,60000],'LIF-K-001-P2':[6.5,20,0,0],'MED-K-001-P1':[4.5,100,100000,200000],'MED-K-001-P2':[18,10,12000,24000],'TEX-K-001-P1':[5.2,50,40000,80000],'TEX-K-001-P2':[0,10,0,0],'BEA-K-001-P1':[0.8,200,400000,800000],'BEA-K-001-P2':[3.2,48,60000,120000],'BAB-K-001-P1':[1.2,24,48000,96000],'BAB-K-001-P2':[2.4,50,60000,120000],'STA-K-001-P1':[3.0,40,80000,160000],'STA-K-001-P2':[0.7,100,200000,400000]},
+ price:{'FOD-K-001-P1':[2.6,24,36000,72000],'FOD-K-001-P2':[1.5,12,30000,60000],'FOD-K-001-P3':[0.9,100,120000,240000],'LIF-K-001-P1':[3.9,40,30000,60000],'LIF-K-001-P2':[6.5,20,0,0],'MED-K-001-P1':[4.5,100,100000,200000],'MED-K-001-P2':[18,10,12000,24000],'TEX-K-001-P1':[5.2,50,40000,80000],'TEX-K-001-P2':[0,10,0,0],'TEX-K-002-P1':[3.2,60,60000,120000],'TEX-K-002-P2':[6,25,0,0],'FUR-K-001-P1':[85,1,300,640],'FUR-K-001-P2':[420,1,40,90],'BEA-K-001-P1':[0.8,200,400000,800000],'BEA-K-001-P2':[3.2,48,60000,120000],'BAB-K-001-P1':[1.2,24,48000,96000],'BAB-K-001-P2':[2.4,50,60000,120000],'STA-K-001-P1':[3.0,40,80000,160000],'STA-K-001-P2':[0.7,100,200000,400000]},
  compute(mt,st){
   const rows=[];let annual=0,once=0;
   if(st.status==='STATUS_Held') mt.products.forEach(p=>{
@@ -213,18 +223,18 @@ const SERVER={
    const val=p.conv[ui]?pieces*t[0]:(num(l.usd)||0);
    const f={PERIOD_Month:12,PERIOD_Quarter:4,PERIOD_Year:1}[l.period];
    const a=f?val*f:0,o=f?0:val;annual+=a;once+=o;
-   rows.push({name:p.name,vol:volText(l),annual:a,once:o,direct:!p.conv[ui]});
+   rows.push({name:p.name,vol:volText(l,p),annual:a,once:o,direct:!p.conv[ui]});
   });
   return {rows,annual,once,large:annual>this.limit||once>this.limit};
  }
 };
 
 /* ---------- 상태 ---------- */
-const KEY='kbd-practice-free-v1';
+const KEY='kbd-practice-free-v2';
 function blankM(m){const lines={};m.products.forEach(p=>lines[p.no]={discussed:m.products.length===1,qty:'',unit:'',period:'PERIOD_Year',timing:'TIMING_Undecided',usd:'',note:''});
  return {status:'STATUS_Held',lines,requests:[],coop:[],coopOther:'',memo:'',submittedAt:null,sent:false,result:null,byDesk:false,seen:true};}
 function blank(){const o={tablet:'P001',extra:[],m:{}};BASE.forEach(m=>o.m[m.id]=blankM(m));return o;}
-function load(){try{const j=JSON.parse(localStorage.getItem(KEY));if(j&&j.m&&BASE.every(m=>j.m[m.id]))return j;}catch(e){}return blank();}
+function load(){try{const j=JSON.parse(localStorage.getItem(KEY));if(j&&j.m){BASE.forEach(m=>{if(!j.m[m.id])j.m[m.id]=blankM(m);});return j;}}catch(e){}return blank();}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
 let S=load();let view={name:S.tablet?'list':'setup',id:null};let draft=null;let confirmBox=null;let issues=[];let offline=false;
 let zoom=null;let simDue=false;let setupForm={buyer:'',code:'',err:''};let desk={pco:null,ok:false,code:'',buyer:null,pick:null,q:'',err:''};
@@ -245,7 +255,7 @@ const lab=(list,code)=>{const r=list.find(x=>x[0]===code);return r?r[1]:'';};
 const two=(ko,en)=>`${esc(ko)}<span class="en">${esc(en)}</span>`;
 const mt=()=>ALL().find(m=>m.id===view.id);
 const st=()=>S.m[view.id];
-function volText(l){return `${fmt(num(l.qty))} ${lab(C.UNIT,l.unit)} · ${lab(C.PERIOD,l.period)}`;}
+function volText(l,p){return `${fmt(num(l.qty))} ${lab(unitList(p),l.unit)} · ${lab(C.PERIOD,l.period)}`;}
 function chips(list,sel,act,cls,extra){return `<div class="seg ${cls||''}">`+list.map(o=>{const on=Array.isArray(sel)?sel.includes(o[0]):sel===o[0];
   return `<button type="button" class="chip" data-act="${act}" data-val="${o[0]}" ${extra||''} aria-pressed="${on}">${esc(o[1])}<span class="en">${esc(o[2])}</span></button>`;}).join('')+`</div>`;}
 function thumb(p){let x=0;for(const ch of p.name)x=(x*31+ch.charCodeAt(0))%360;
@@ -362,7 +372,7 @@ function vProduct(m,s,p){
    <p class="sub" style="margin:-2px 0 10px">바이어가 이 제품을 거래하게 되면 취급할 것으로 예상하는 제품 수량입니다. 금액이 아니라 수량을 적고, 아래에서 단위와 기간을 고릅니다. 언급이 없으면 비워 둡니다.<br><span class="en">The quantity the buyer expects to handle if a deal goes ahead. Enter a quantity, not an amount. Leave blank if not mentioned.</span></p>
    <input class="num" type="text" inputmode="decimal" id="q-${p.no}" data-bind="line:${p.no}:qty" value="${esc(l.qty)}" placeholder="숫자 입력" autocomplete="off">
    ${l.qty&&q===null?`<div class="note n-crit">숫자만 입력합니다. 소수는 둘째 자리까지 됩니다.</div>`:''}</div>
-   <div class="field"><span class="flabel">단위 <span class="en">Unit</span></span>${chips(C.UNIT,l.unit,'unit','s4',`data-id="${p.no}"`)}</div>
+   <div class="field"><span class="flabel">단위 <span class="en">Unit</span></span>${chips(unitList(p),l.unit,'unit','s4',`data-id="${p.no}"`)}</div>
    <div class="field"><span class="flabel">기간 <span class="en">Period</span></span>${chips(C.PERIOD,l.period,'period','s4',`data-id="${p.no}"`)}</div>`;
   if(needUsd)h+=`<div class="field"><label for="u-${p.no}">USD 총액(위 물량·기간 기준)<span class="req">필수</span> <span class="en">Total amount in USD (for the volume and period above)</span></label>
    <input class="num" type="text" inputmode="decimal" id="u-${p.no}" data-bind="line:${p.no}:usd" value="${esc(l.usd)}" placeholder="USD" autocomplete="off">
@@ -423,7 +433,7 @@ function vConfirm(){
  const m=mt(),s=st(),held=s.status==='STATUS_Held';let body='';
  if(!held)body=`<p>상담이 진행되지 않아 입력을 마칩니다. 입력해 둔 물량과 요청이 있으면 지워집니다. 제출할까요?</p>`;
  else{const vols=m.products.filter(p=>s.lines[p.no].discussed&&num(s.lines[p.no].qty));
-  body=`<p class="sub" style="margin-bottom:8px">예상 취급 물량 <span class="en">Projected volume</span></p>`+(vols.length?`<ul>${vols.map(p=>`<li><b style="font-family:var(--font-latin)">${esc(p.name)}</b>: ${esc(volText(s.lines[p.no]))}</li>`).join('')}</ul>`:`<p>입력한 물량이 없습니다.</p>`)+
+  body=`<p class="sub" style="margin-bottom:8px">예상 취급 물량 <span class="en">Projected volume</span></p>`+(vols.length?`<ul>${vols.map(p=>`<li><b style="font-family:var(--font-latin)">${esc(p.name)}</b>: ${esc(volText(s.lines[p.no],p))}</li>`).join('')}</ul>`:`<p>입력한 물량이 없습니다.</p>`)+
    `<p>${s.requests.length?`요청 ${s.requests.length}건`:'요청 0건입니다. 요청 없이 제출합니다.'}</p>`;
   if(confirmBox.large)body+=`<div class="note n-warn">평소보다 큰 값입니다. 단위를 확인하세요.<br><span class="en" style="color:inherit">This is much larger than usual. Please check the unit.</span></div>`;}
  return `<div class="ovl"><div class="sheet" role="dialog" aria-label="제출 확인" style="max-width:560px"><h2>입력한 내용을 확인해 주세요<span class="en">Please check your entry</span></h2>${body}
