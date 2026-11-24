@@ -361,7 +361,7 @@ function vProduct(m,s,p){
   <button class="toggle" data-act="disc" data-id="${p.no}" aria-pressed="${l.discussed}">${l.discussed?'선택됨':'제품 선택'}</button></div>`;
  if(l.discussed){
   h+=`<div class="field"><label for="q-${p.no}">예상 취급 물량 <span class="en">Projected volume</span></label>
-   <p class="sub" style="margin:-2px 0 10px">바이어가 이 제품을 거래하게 되면 취급할 것으로 말하는 수량입니다. 금액이 아니라 수량을 적고, 아래에서 단위와 기간을 고릅니다. 언급이 없으면 비워 둡니다.<br><span class="en">The quantity the buyer expects to handle if a deal goes ahead. Enter a quantity, not an amount. Leave blank if not mentioned.</span></p>
+   <p class="sub" style="margin:-2px 0 10px">바이어가 이 제품을 거래하게 되면 취급할 것으로 예상하는 제품 수량입니다. 금액이 아니라 수량을 적고, 아래에서 단위와 기간을 고릅니다. 언급이 없으면 비워 둡니다.<br><span class="en">The quantity the buyer expects to handle if a deal goes ahead. Enter a quantity, not an amount. Leave blank if not mentioned.</span></p>
    <input class="num" type="text" inputmode="decimal" id="q-${p.no}" data-bind="line:${p.no}:qty" value="${esc(l.qty)}" placeholder="숫자 입력" autocomplete="off">
    ${l.qty&&q===null?`<div class="note n-crit">숫자만 입력합니다. 소수는 둘째 자리까지 됩니다.</div>`:''}</div>
    <div class="field"><span class="flabel">단위 <span class="en">Unit</span></span>${chips(C.UNIT,l.unit,'unit','s4',`data-id="${p.no}"`)}</div>
