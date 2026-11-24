@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>거래 조건 제출 안내</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* layout: one reading column, numbered sections in the order a company fills the form, one live example box */
+  --paper:#eef2f6; --card:#ffffff; --ink:#15233b; --muted:#5b6a80; --line:#d3dbe5;
+  --accent:#0b5cad; --accent-ink:#ffffff; --accent-soft:#e2eefb;
+  --good:#1c7c4a; --good-soft:#e1f3e8; --warn:#9a5b00; --warn-soft:#fdf0d5;
+  --font-body:"IBM Plex Sans KR","IBM Plex Sans","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --font-latin:"IBM Plex Sans","IBM Plex Sans KR",sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){color-scheme:dark;
+    --paper:#0e1622; --card:#172233; --ink:#e8eef6; --muted:#9aa9bd; --line:#2c3b50;
+    --accent:#6eb1f5; --accent-ink:#08213d; --accent-soft:#1c3552;
+    --good:#6fd39b; --good-soft:#163526; --warn:#f0bd62; --warn-soft:#3a2c10;}
+}
+:root[data-theme="dark"]{color-scheme:dark;
+  --paper:#0e1622; --card:#172233; --ink:#e8eef6; --muted:#9aa9bd; --line:#2c3b50;
+  --accent:#6eb1f5; --accent-ink:#08213d; --accent-soft:#1c3552;
+  --good:#6fd39b; --good-soft:#163526; --warn:#f0bd62; --warn-soft:#3a2c10;}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--font-body);font-size:17px;line-height:1.65}
+.top{background:var(--ink);color:var(--paper)}
+.top div{max-width:760px;margin:0 auto;padding:14px 20px;font-family:var(--font-latin);font-weight:600}
+.top small{display:block;font-weight:400;font-size:13px;opacity:.75;font-family:var(--font-body)}
+main{max-width:760px;margin:0 auto;padding:8px 20px 80px}
+h1{font-size:28px;line-height:1.3;margin:28px 0 8px;font-weight:600;text-wrap:balance}
+.lead{color:var(--muted);margin:0 0 8px}
+.draft{display:inline-block;background:var(--warn-soft);color:var(--warn);border-radius:999px;padding:3px 12px;font-size:14px;font-weight:500;margin-top:24px}
+section{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px;margin-top:18px}
+h2{font-size:20px;margin:0 0 12px;font-weight:600;display:flex;gap:10px;align-items:baseline}
+h2 .n{font-family:var(--font-latin);color:var(--accent);font-variant-numeric:tabular-nums}
+p{margin:0 0 10px}
+ul{margin:0;padding-left:22px}
+li{margin-bottom:6px}
+.item{border-top:1px solid var(--line);padding:14px 0}
+.item:first-of-type{border-top:0;padding-top:0}
+.item h3{font-size:17px;margin:0 0 4px;font-weight:600;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.tag{font-size:13px;font-weight:500;border-radius:999px;padding:1px 10px}
+.t-req{background:var(--accent);color:var(--accent-ink)} .t-rec{background:var(--accent-soft);color:var(--accent)}
+.item dl{margin:6px 0 0;display:grid;grid-template-columns:110px 1fr;gap:4px 12px;font-size:16px}
+.item dt{color:var(--muted)} .item dd{margin:0}
+.ex{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.ex div{background:var(--paper);border-radius:10px;padding:10px 14px}
+.ex span{display:block;font-size:14px;color:var(--muted)}
+.ex b{font-family:var(--font-latin);font-weight:600}
+.inputs{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:14px 0}
+label{display:block;font-weight:500;font-size:15px;margin-bottom:6px}
+input{width:100%;font:inherit;color:inherit;background:var(--paper);border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;min-height:48px;font-family:var(--font-latin);font-size:20px;font-variant-numeric:tabular-nums}
+input:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.out{display:flex;flex-direction:column;gap:8px}
+.row{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center;background:var(--paper);border-radius:10px;padding:12px 14px}
+.row .say{font-weight:500}
+.row .res{font-family:var(--font-latin);font-variant-numeric:tabular-nums;font-weight:600;border-radius:999px;padding:2px 12px}
+.ok{background:var(--good-soft);color:var(--good)} .no{background:var(--warn-soft);color:var(--warn);font-family:var(--font-body)!important}
+.note{background:var(--accent-soft);border-radius:10px;padding:12px 14px;font-size:16px;margin-top:12px}
+</style>
+</head>
+<body>
+<header class="top"><div>K-BUSINESS DAY 2026<small>참가기업 안내</small></div></header>
+<main>
+<span class="draft">초안 · 사무국 검토용</span>
+<h1>거래 조건 제출 안내</h1>
+<p class="lead">상담에서 바이어가 말하는 수량을 정확히 기록하려면 제품별 거래 조건이 필요합니다. 아래 순서대로 적어 주세요.</p>
+
+<section>
+<h2><span class="n">1</span>왜 필요한가요</h2>
+<ul>
+<li>바이어는 상담에서 수량을 <b>낱개, 박스, 20피트 컨테이너, 40피트 컨테이너</b> 중 편한 단위로 말합니다.</li>
+<li>기업이 낸 거래 조건이 있어야 어떤 단위로 말해도 같은 기준으로 정리할 수 있습니다.</li>
+<li>값이 비어 있으면 그 단위로는 정리가 되지 않아, 상담 현장에서 따로 확인해야 합니다.</li>
+<li><b>단가와 컨테이너에 실리는 제품 수는 바이어에게 공개되지 않습니다.</b> 사무국 내부의 상담 결과 정리에만 쓰입니다.</li>
+</ul>
+</section>
+
+<section>
+<h2><span class="n">2</span>항목별 작성법</h2>
+<div class="item"><h3>최소 주문 수량(MOQ) <span class="tag t-req">필수</span></h3>
+<dl><dt>적는 내용</dt><dd>한 번에 주문받을 수 있는 가장 적은 수량, 제품을 세는 단위 기준</dd><dt>예시</dt><dd>1,000</dd><dt>주의</dt><dd>단위를 섞지 않습니다. 제품을 세는 단위가 낱개면 낱개 수로 적습니다.</dd></dl></div>
+<div class="item"><h3>납기 <span class="tag t-req">필수</span></h3>
+<dl><dt>적는 내용</dt><dd>주문 확정 후 출고까지 걸리는 기간</dd><dt>예시</dt><dd>30 days</dd><dt>주의</dt><dd>영어로 적습니다. 운송 기간은 포함하지 않습니다.</dd></dl></div>
+<div class="item"><h3>제품을 세는 단위(낱개, 세트 등) <span class="tag t-rec">권장</span></h3>
+<dl><dt>적는 내용</dt><dd>단가의 기준이 되는 단위</dd><dt>예시</dt><dd>Piece</dd><dt>주의</dt><dd>세트로 파는 제품은 1세트를 제품을 세는 단위로 봅니다.</dd></dl></div>
+<div class="item"><h3>한 박스에 들어가는 제품 수 <span class="tag t-rec">권장</span></h3>
+<dl><dt>적는 내용</dt><dd>수출용 외박스 1개에 들어가는 제품의 수</dd><dt>예시</dt><dd>24</dd><dt>주의</dt><dd>내박스가 아니라 외박스 기준입니다.</dd></dl></div>
+<div class="item"><h3>대표 단가, 통화, 가격 조건 <span class="tag t-rec">권장</span></h3>
+<dl><dt>적는 내용</dt><dd>제품 1개(세트 상품은 1세트)의 수출 가격과 통화, 가격 조건</dd><dt>예시</dt><dd>2.60 · USD · FOB Busan</dd><dt>주의</dt><dd>박스 단가가 아니라 제품 1개(세트 상품은 1세트)의 단가입니다. 수량에 따라 다르면 최소 주문 수량 기준의 단가를 적습니다.</dd></dl></div>
+<div class="item"><h3>20피트 컨테이너 한 대에 실리는 제품 수 <span class="tag t-rec">권장</span></h3>
+<dl><dt>적는 내용</dt><dd>20피트 컨테이너 1대에 실리는 제품의 수</dd><dt>예시</dt><dd>36,000</dd><dt>주의</dt><dd>박스 수가 아니라 낱개 수입니다. 박스 1,500개 × 박스당 24개 = 36,000. 40피트 한 대에 실리는 제품 수도 알면 함께 적습니다.</dd></dl></div>
+</section>
+
+<section>
+<h2><span class="n">3</span>작성 예시</h2>
+<p>가상 제품 "SAMPLE Seasoning Sauce 500g"를 모두 채운 모습입니다.</p>
+<div class="ex">
+<div><span>최소 주문 수량</span><b>1,000</b></div>
+<div><span>납기</span><b>30 days</b></div>
+<div><span>제품을 세는 단위</span><b>Piece</b></div>
+<div><span>한 박스에 들어가는 제품 수</span><b>24</b></div>
+<div><span>대표 단가</span><b>2.60 USD · FOB Busan</b></div>
+<div><span>20피트 한 대에 실리는 제품 수</span><b>36,000</b></div>
+<div><span>40피트 한 대에 실리는 제품 수</span><b>72,000</b></div>
+</div>
+</section>
+
+<section>
+<h2><span class="n">4</span>내 제품으로 확인해 보기</h2>
+<p>아래 세 칸은 <b>기업이 직접 알고 있는 값을 넣는 칸</b>입니다. 한 박스에 들어가는 제품 수만으로 컨테이너에 실리는 수를 계산해 주는 것이 아닙니다. 값을 넣으면 바이어가 말한 수량이 제품 개수로 어떻게 정리되는지 보이고, 값을 지우면 정리되지 않는 경우도 확인할 수 있습니다. 여기 넣은 값은 저장되지 않습니다.</p>
+<div class="inputs">
+<div><label for="c">한 박스에 들어가는 제품 수</label><input id="c" inputmode="numeric" value="24" autocomplete="off"></div>
+<div><label for="a">20피트 한 대에 실리는 제품 수</label><input id="a" inputmode="numeric" value="36000" autocomplete="off"></div>
+<div><label for="b">40피트 한 대에 실리는 제품 수</label><input id="b" inputmode="numeric" value="72000" autocomplete="off"></div>
+</div>
+<div class="out" id="out" aria-live="polite"></div>
+<div class="note">처음 들어 있는 값은 3번 예시 제품의 값입니다.</div>
+<h3 style="font-size:17px;margin:22px 0 6px;font-weight:600">컨테이너에 몇 개 실리는지 모를 때: 박스 크기로 어림하기</h3>
+<p>컨테이너에 실리는 수는 박스 크기와 무게에 따라 제품마다 다릅니다. 수출용 외박스의 크기와 무게를 넣으면 대략의 값을 계산합니다.</p>
+<div class="inputs">
+<div><label for="l">외박스 가로(cm)</label><input id="l" inputmode="decimal" value="40" autocomplete="off"></div>
+<div><label for="w">외박스 세로(cm)</label><input id="w" inputmode="decimal" value="30" autocomplete="off"></div>
+<div><label for="hh">외박스 높이(cm)</label><input id="hh" inputmode="decimal" value="25" autocomplete="off"></div>
+<div><label for="kg">외박스 1개 무게(kg, 선택)</label><input id="kg" inputmode="decimal" value="13" autocomplete="off"></div>
+</div>
+<div class="out" id="est" aria-live="polite"></div>
+<div class="row" style="background:none;padding:10px 0 0"><button type="button" id="use" style="font:inherit;font-weight:600;border:0;border-radius:10px;padding:10px 18px;min-height:48px;background:var(--accent);color:var(--accent-ink);cursor:pointer">어림값을 위 칸에 넣기</button></div>
+<div class="note">어림 기준: 20피트는 약 28㎥·21톤, 40피트는 약 58㎥·26톤까지 싣는 것으로 계산했습니다. 실제로 실리는 수는 박스를 쌓는 방식, 팔레트 사용 여부, 컨테이너 종류에 따라 달라집니다. 수출 경험이 있으면 실제 선적했던 수량을, 없으면 포워더(운송사)에 확인한 값을 적는 것이 가장 정확합니다.</div>
+</section>
+
+<section>
+<h2><span class="n">5</span>자주 틀리는 점</h2>
+<ul>
+<li>낱개 단가와 박스 단가를 섞어 적는 경우. 단가는 항상 제품 1개(세트 상품은 1세트) 기준입니다.</li>
+<li>통화와 가격 조건(FOB, EXW, CIF 등)을 빼는 경우. 같은 숫자라도 조건에 따라 뜻이 달라집니다.</li>
+<li>한 박스에 들어가는 제품 수를 내박스 기준으로 적는 경우. 수출용 외박스 기준입니다.</li>
+<li>컨테이너에 실리는 제품 수를 박스 수로 적는 경우. 낱개 수로 적습니다.</li>
+<li>제품 1과 제품 2의 값을 한 칸에 함께 적는 경우. 제품마다 따로 적습니다.</li>
+</ul>
+</section>
+
+<section>
+<h2><span class="n">6</span>정확히 모를 때</h2>
+<ul>
+<li>권장 항목은 비워 두어도 됩니다. 다만 그 단위로 말한 수량은 상담 현장에서 따로 확인하게 됩니다.</li>
+<li>대략의 값이라도 아는 범위에서 적어 주시면 상담 기록이 훨씬 정확해집니다.</li>
+<li>작성 방법이 궁금하면 담당 PCO(와이즈온 또는 프리미어앙트)에 문의해 주세요.</li>
+</ul>
+</section>
+</main>
+<script>
+const g=id=>{const t=String(document.getElementById(id).value).replace(/,/g,'').trim();return /^\d+(\.\d+)?$/.test(t)&&+t>0?+t:null;};
+const f=n=>Number(n).toLocaleString('en-US');
+function draw(){
+  const c=g('c'),a=g('a'),b=g('b');
+  const rows=[['"연 100,000개"',100000,'연'],['"월 500박스"',c?500*c:null,'월'],['"연 2 × 20피트 컨테이너"',a?2*a:null,'연'],['"분기 1 × 40피트 컨테이너"',b?b:null,'분기']];
+  document.getElementById('out').innerHTML=rows.map(r=>`<div class="row"><span class="say">바이어: ${r[0]}</span>${r[1]?`<span class="res ok">${r[2]} ${f(r[1])}개</span>`:`<span class="res no">이 단위로는 정리할 수 없습니다</span>`}</div>`).join('');
+}
+let last=null;
+function est(){
+  const l=g('l'),w=g('w'),hh=g('hh'),kg=g('kg'),c=g('c');const el=document.getElementById('est');last=null;
+  if(!l||!w||!hh){el.innerHTML='<div class="row"><span class="res no">외박스 가로, 세로, 높이를 넣어 주세요</span></div>';return;}
+  const cbm=l*w*hh/1e6;
+  const one=(vol,ton)=>{let n=Math.floor(vol/cbm),byW=false;if(kg){const m=Math.floor(ton*1000/kg);if(m<n){n=m;byW=true;}}return [n,byW];};
+  const [n20,w20]=one(28,21),[n40,w40]=one(58,26);
+  const line=(name,n,byW)=>`<div class="row"><span class="say">${name}</span><span class="res ok">약 ${f(n)}박스${c?' · 낱개 약 '+f(n*c)+'개':''}${byW?' (무게 기준)':''}</span></div>`;
+  el.innerHTML=`<div class="row"><span class="say">외박스 1개 부피</span><span class="res ok">${cbm.toFixed(3)}㎥</span></div>`+line('20피트 컨테이너',n20,w20)+line('40피트 컨테이너',n40,w40)+(c?'':'<div class="row"><span class="res no">위에 한 박스에 들어가는 제품 수를 넣으면 낱개 수로 바뀝니다</span></div>');
+  if(c)last=[n20*c,n40*c];
+}
+document.getElementById('use').addEventListener('click',()=>{if(!last)return;document.getElementById('a').value=last[0];document.getElementById('b').value=last[1];draw();});
+['c','a','b'].forEach(id=>document.getElementById(id).addEventListener('input',draw));
+['l','w','hh','kg','c'].forEach(id=>document.getElementById(id).addEventListener('input',est));
+draw();est();
+</script>
+</body>
+</html>
