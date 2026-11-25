@@ -122,6 +122,10 @@ input.num{font-family:var(--font-latin);font-size:24px;font-variant-numeric:tabu
 .sheet h2{display:flex;justify-content:space-between;align-items:center;gap:12px}
 .smp{border:1px dashed var(--line);border-radius:10px;padding:12px;margin-top:10px}
 table{width:100%;border-collapse:collapse;font-size:16px}
+.sh-t{font-size:18px;margin:22px 0 4px}.sh-wrap{overflow-x:auto;border:1px solid var(--line,#d5dbe5);border-radius:10px;margin-top:8px}
+table.sh{width:auto;min-width:100%;font-size:14px}table.sh th,table.sh td{padding:8px 10px;border-right:1px solid var(--line,#d5dbe5);border-bottom:1px solid var(--line,#d5dbe5);text-align:left;vertical-align:top;white-space:nowrap}
+table.sh th{background:var(--paper);font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px}table.sh small{display:block;font-family:var(--font-body);font-weight:400;font-size:12px;opacity:.72;margin-top:2px}
+.sh-v{font-family:ui-monospace,Menlo,Consolas,monospace;font-weight:700;white-space:normal;display:inline-block;max-width:260px}.sh-empty{opacity:.4;font-size:12px}.sh-none{opacity:.7;margin:6px 0}
 th,td{padding:10px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
 td.n,th.n{text-align:right;font-family:var(--font-latin);font-variant-numeric:tabular-nums}
 tfoot td{font-weight:600;border-bottom:0}
@@ -265,7 +269,7 @@ function thumb(p){let x=0;for(const ch of p.name)x=(x*31+ch.charCodeAt(0))%360;
  return `<svg viewBox="0 0 80 80" role="img" aria-label="${esc(p.name)} 예시 사진"><rect width="80" height="80" fill="hsl(${x} 45% 86%)"/><rect x="26" y="24" width="28" height="38" rx="5" fill="hsl(${x} 40% 55%)"/><rect x="32" y="15" width="16" height="10" rx="3" fill="hsl(${x} 40% 40%)"/><rect x="30" y="36" width="20" height="12" rx="2" fill="hsl(${x} 45% 86%)"/><text x="40" y="75" text-anchor="middle" font-size="8" fill="hsl(${x} 40% 28%)">예시 사진</text></svg>`;}
 function vZoom(){const p=mt().products.find(x=>x.no===zoom);return `<div class="ovl" data-act="zoomx"><div class="sheet" role="dialog" aria-label="제품 사진" style="max-width:520px"><h2><span style="font-family:var(--font-latin)">${esc(p.name)}</span><button class="btn ghost small" data-act="zoomx">닫기</button></h2><div class="zoomimg">${thumb(p)}</div><p class="sub" style="margin:12px 0 0;text-align:center">${p.no} · ${p.src} · 시제품이라 실제 사진 대신 예시 그림이 들어 있습니다.</p></div></div>`;}
 function toast(t){$('toast').innerHTML=`<div class="toast" role="status">${esc(t)}</div>`;setTimeout(()=>{$('toast').innerHTML='';},2200);}
-function addDays(d,n){const x=new Date(d+'T00:00:00');x.setDate(x.getDate()+n);return x.toISOString().slice(0,10);}
+function addDays(d,n){const x=new Date(d+'T00:00:00Z');x.setUTCDate(x.getUTCDate()+n);return x.toISOString().slice(0,10);}
 function sendDate(r){if(r.send==='SEND_1W')return addDays(MEETING_DATE,7);if(r.send==='SEND_2W')return addDays(MEETING_DATE,14);if(r.send==='SEND_1M')return '2027-01-22';return r.sendDate||'';}
 
 /* ---------- 화면 ---------- */
@@ -453,7 +457,33 @@ function vResult(){
   <tfoot><tr><td colspan="2">합계</td><td class="n">${fmt(r.annual)}</td><td class="n">${fmt(r.once)}</td></tr></tfoot></table></div>`:`<p>입력한 물량이 없어 환산 금액이 없습니다.</p>`}
   ${r.large?`<div class="note n-warn">평소보다 큰 물량입니다. 단위와 기간을 다시 확인해 주세요.</div>`:''}
   <div class="note n-info">입력한 내용과 기업 단가로 계산한 추정값입니다. 바이어와 기업에는 보이지 않습니다.<br><span class="en">Estimated values. Not shown to the buyer or the company.</span></div></section>
+ ${SHOW_SHEET?vSheet(m,s):''}
  <p class="sub" style="margin-top:16px">요청 ${s.requests.length}건 · 제출 ${new Date(s.submittedAt).toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'})}</p>`;
+}
+
+/* ---------- 구글 시트 저장 내용 미리 보기 (연습용에서만 켠다. 실제로 시트에 쓰지는 않는다) ----------
+   열 이름은 상담일지 데이터 표(Consultations / ProductLines / Requests)의 현재 열 이름. '신규' 표시는 아직 데이터 표에 없는 열. */
+const SHOW_SHEET=false;
+function vSheet(m,s){const pad=n=>String(n).padStart(2,'0');
+ const held=s.status==='STATUS_Held',ALLDET=[].concat(C.QUOTE,Object.values(C.SPEC).flat(),C.DOC,C.TERMS,C.OEM);
+ const calc=held?SERVER.compute(m,s):{rows:[]};
+ const mode={'사전 매칭':'MATCHMODE_Pre','현장 매칭':'MATCHMODE_Walkin','노쇼 대체':'MATCHMODE_Replacement'}[m.mode]||'MATCHMODE_Pre';
+ const cell=(v,k)=>`<td>${v===''||v==null?'<span class="sh-empty">(빈칸)</span>':`<span class="sh-v">${esc(String(v))}</span>`}${k?`<small>${esc(k)}</small>`:''}</td>`;
+ const tbl=(title,en,why,cols,rows)=>`<h3 class="sh-t">${title} <span class="en">${en} 탭</span></h3><p class="sub">${why}</p>${rows.length?`<div class="sh-wrap"><table class="sh"><thead><tr>${cols.map(c=>`<th>${c[0]}${c[2]?' <span class="pill p-warn">신규</span>':''}<small>${c[1]}</small></th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${r.join('')}</tr>`).join('')}</tbody></table></div>`:`<p class="sh-none">이 상담에서는 저장되는 줄이 없습니다.</p>`}`;
+ const c1=[['ConsultationID','상담 번호'],['MatchMode','매칭 방식'],['BuyerNo','바이어 번호'],['CompanyNo','기업 번호'],['MeetingStatus','진행 상태'],['CoopDirection','희망 거래 형태'],['CoopOtherText','거래 형태 기타'],['Memo','그 밖의 메모'],['SubmittedAt','제출 시각']];
+ const r1=[[cell(m.id),cell(mode,m.mode),cell(m.buyerNo),cell(m.coNo,m.co),cell(s.status,lab(C.STATUS,s.status)),cell(held?s.coop.join(', '):'',held?s.coop.map(c=>lab(C.COOP,c)).join(', '):''),cell(held?s.coopOther:''),cell(held?s.memo:''),cell(s.submittedAt?(d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`)(new Date(s.submittedAt)):'')]];
+ const c2=[['LineID','제품 줄 번호'],['ProductNo','제품 번호'],['ProductSource','제품 출처'],['Industry','산업군'],['Discussed','상담 여부'],['VolumeQty','수량'],['VolumeUnit','단위'],['VolumePeriod','기간'],['DirectUSDTotal','USD 직접 입력'],['VolumeNote','물량의 조건·배경',1],['TimingCode','예상 시기'],['AdjustedUSD','환산 금액(시트가 계산)']];
+ const r2=held?m.products.map(p=>{const l=s.lines[p.no],on=l.discussed,q=on&&num(l.qty)?num(l.qty):'',cr=calc.rows.find(x=>x.name===p.name);
+  return [cell(m.id+'-'+p.no,p.name),cell(p.no),cell(p.src==='사전 요청 제품'?'PRODSRC_PreRequested':'PRODSRC_Registered',p.src),cell(p.ind||m.ind),cell(on?'TRUE':'FALSE',on?'상담함':'상담 안 함'),cell(q),cell(q?l.unit:'',q?lab(unitList(p),l.unit):''),cell(q?l.period:'',q?lab(C.PERIOD,l.period):''),cell(q&&l.usd?num(l.usd):''),cell(q?l.note:''),cell(q?l.timing:'',q?lab(C.TIMING,l.timing):''),cell(cr?fmt(cr.annual||cr.once):'',cr?(cr.annual?'연 환산':'1회성'):'')];}):[];
+ const c3=[['RequestID','요청 번호'],['LineID','제품 줄 번호'],['Scope','범위'],['ReqType','요청 유형'],['Direction','누가 요청'],['DetailCodes','세부 선택'],['DetailName','인증명·기타 내용'],['OtherNote','기타 요청 내용'],['SampleNote','샘플 내용',1],['Response','대응'],['ResponseNote','기타 대응 내용'],['SendBy','발송 기한'],['SendByDate','발송 날짜'],['FollowUpDate','후속 미팅 날짜'],['FollowUpMethod','후속 미팅 방법'],['VisitMonth','방문 예정 월']];
+ const r3=held?s.requests.map((r,i)=>{const com=r.product==='COMMON',acc=r.resp==='RSP_Accepted',snd=acc&&SENDBY_REQ.includes(r.type),p=m.products.find(x=>x.no===r.product);
+  return [cell(m.id+'-Q'+(i+1)),cell(com?'':m.id+'-'+r.product,com?'':(p||{}).name),cell(com?'SCOPE_Common':'SCOPE_Product',com?'공통':'제품'),cell(r.type,lab(C.REQ,r.type)),cell(r.dir,lab(C.REQDIR,r.dir)),cell(r.details.join(', '),r.details.map(c=>lab(ALLDET,c).replace(/ ?\(.*\)$/,'')).join(', ')),cell(r.detailName),cell(r.otherNote),cell(r.sampleNote),cell(r.resp,lab(C.RSP,r.resp).replace(/ ?\(.*\)$/,'')),cell(r.respNote),cell(snd?r.send:'',snd?lab(C.SEND,r.send):''),cell(snd?sendDate(r):''),cell(acc?r.fuDate:''),cell(acc?r.fuMethod:'',acc?lab(C.FUMETHOD,r.fuMethod):''),cell(acc?r.visitMonth:'')];}):[];
+ return `<section class="sec"><h2>구글 시트에 저장되는 내용<span class="en">What is saved to the sheet</span></h2>
+  <div class="note n-info">연습용 미리 보기입니다. 실제 시트에 쓰지는 않습니다. 방금 제출한 상담이 통합 스프레드시트의 탭 3개에 아래처럼 한 줄씩 저장됩니다. 굵은 글씨가 시트에 들어가는 값이고, 그 아래 작은 글씨는 그 값의 뜻입니다. 표는 옆으로 밀어서 볼 수 있습니다.</div>
+  ${tbl('① 상담 1건 = 1줄','Consultations','상담 한 건마다 한 줄입니다. 진행 상태와 희망 거래 형태, 그 밖의 메모가 여기에 들어갑니다.',c1,r1)}
+  ${tbl('② 제품 1개 = 1줄','ProductLines','이 상담의 제품마다 한 줄입니다. 선택하지 않은 제품도 "상담 안 함"으로 한 줄이 남습니다. 환산 금액은 통역원이 입력하지 않고 시트가 기업 단가로 계산합니다.',c2,r2)}
+  ${tbl('③ 요청 1건 = 1줄','Requests','요청마다 한 줄입니다. 상담 뒤 후속 조치 확인에 이 탭을 씁니다.',c3,r3)}
+ </section>`;
 }
 
 /* ---------- 검증 ---------- */
