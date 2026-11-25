@@ -459,7 +459,7 @@ function vResult(){
 
 /* ---------- 구글 시트 저장 내용 미리 보기 (연습용에서만 켠다. 실제로 시트에 쓰지는 않는다) ----------
    열 이름은 상담일지 데이터 표(Consultations / ProductLines / Requests)의 현재 열 이름. '신규' 표시는 아직 데이터 표에 없는 열. */
-const SHOW_SHEET=true;
+const SHOW_SHEET=false;
 const SAVE_URL='https://script.google.com/macros/s/AKfycbxCMZmiK8-DG9emarWftRG8H9lLhps97So-Erk6KDpWT5iEilAw2GgZx1611G_Wu2bMWQ/exec';/* 저장 시험용 화면에서만 채운다 */
 function sheetTabs(m,s){const pad=n=>String(n).padStart(2,'0');
  const held=s.status==='STATUS_Held',ALLDET=[].concat(C.QUOTE,Object.values(C.SPEC).flat(),C.DOC,C.TERMS,C.OEM);
