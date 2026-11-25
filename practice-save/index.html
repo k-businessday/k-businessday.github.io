@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>K-BUSINESS DAY 2026 상담일지 저장 시험</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* layout: one centred column for a tablet; summary strip on top, large touch targets, Korean first with small English beneath */
+  --paper:#eef2f6; --card:#ffffff; --ink:#15233b; --muted:#5b6a80; --line:#d3dbe5;
+  --accent:#0b5cad; --accent-ink:#ffffff; --accent-soft:#e2eefb;
+  --good:#1c7c4a; --good-soft:#e1f3e8; --warn:#9a5b00; --warn-soft:#fdf0d5; --crit:#b3261e; --crit-soft:#fbe4e2;
+  --font-body:"IBM Plex Sans KR","IBM Plex Sans","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --font-latin:"IBM Plex Sans","IBM Plex Sans KR",sans-serif;
+  --bar:#15233b; --bar-ink:#eef2f6; --alert:#f6c453; --alert-ink:#3b2700;
+  --r:12px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --paper:#0e1622; --card:#172233; --ink:#e8eef6; --muted:#9aa9bd; --line:#2c3b50;
+    --accent:#6eb1f5; --accent-ink:#08213d; --accent-soft:#1c3552;
+    --good:#6fd39b; --good-soft:#163526; --warn:#f0bd62; --warn-soft:#3a2c10; --crit:#ff9a92; --crit-soft:#40201d;
+    --bar:#1b2a42; --bar-ink:#eef2f6;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --paper:#0e1622; --card:#172233; --ink:#e8eef6; --muted:#9aa9bd; --line:#2c3b50;
+  --accent:#6eb1f5; --accent-ink:#08213d; --accent-soft:#1c3552;
+  --good:#6fd39b; --good-soft:#163526; --warn:#f0bd62; --warn-soft:#3a2c10; --crit:#ff9a92; --crit-soft:#40201d;
+    --bar:#1b2a42; --bar-ink:#eef2f6;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--font-body);font-size:17px;line-height:1.5;-webkit-text-size-adjust:100%}
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.wrap{max-width:860px;margin:0 auto;padding:0 16px 120px}
+.top{position:sticky;top:0;z-index:5;background:var(--bar);color:var(--bar-ink)}
+.top-in{max-width:860px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.brand{font-weight:600;letter-spacing:.01em;font-family:var(--font-latin)}
+.brand small{display:block;font-weight:400;font-size:13px;opacity:.75;font-family:var(--font-body)}
+.grow{flex:1}
+.pill{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:4px 12px;font-size:14px;font-weight:500;white-space:nowrap}
+.pill::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor}
+.p-good{background:var(--good-soft);color:var(--good)}
+.p-warn{background:var(--warn-soft);color:var(--warn)}
+.p-crit{background:var(--crit-soft);color:var(--crit)}
+.p-mute{background:var(--accent-soft);color:var(--accent)}
+#due{background:var(--alert);color:var(--alert-ink)}
+#due>div{max-width:860px;margin:0 auto;padding:12px 16px;display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+#due .msg{display:flex;gap:12px;align-items:center;flex:1 1 320px;min-width:0}
+#due .tag{flex:none;background:var(--alert-ink);color:var(--alert);border-radius:999px;padding:4px 12px;font-size:14px;font-weight:600}
+#due b{font-weight:600;font-size:18px;display:block;line-height:1.3}
+#due small{display:block;font-size:14px;opacity:.85;font-family:var(--font-latin)}
+#due button{flex:none;font:inherit;font-weight:600;border:0;background:var(--alert-ink);color:var(--alert);border-radius:10px;padding:10px 20px;min-height:48px;cursor:pointer}
+.back{background:transparent;border:1px solid currentColor;color:inherit;border-radius:10px;padding:8px 14px;min-height:44px}
+h1{font-size:22px;margin:20px 0 4px;font-weight:600;text-wrap:balance}
+h2{font-size:18px;margin:0 0 12px;font-weight:600}
+.en{font-family:var(--font-latin);font-size:.76em;color:var(--muted);font-weight:400}
+h2 .en{margin-left:8px}
+.sub{color:var(--muted);font-size:15px;margin:0 0 16px}
+.sec{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px;margin-top:16px}
+.summary{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px}
+.tile{flex:1 1 150px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:12px 16px}
+.tile b{display:block;font-size:26px;font-family:var(--font-latin);font-variant-numeric:tabular-nums;font-weight:600}
+.tile span{font-size:14px;color:var(--muted)}
+.mlist{display:flex;flex-direction:column;gap:12px;margin-top:16px}
+.mcard{display:grid;grid-template-columns:96px 1fr auto;gap:14px;align-items:center;text-align:left;width:100%;background:var(--card);border:1px solid var(--line);border-left:6px solid var(--line);border-radius:var(--r);padding:16px;min-height:88px}
+.mcard.done{border-left-color:var(--good)} .mcard.wait{border-left-color:var(--warn)}
+.slot{font-family:var(--font-latin);font-variant-numeric:tabular-nums;font-weight:600;font-size:19px}
+.slot small{display:block;font-weight:400;font-size:13px;color:var(--muted);font-family:var(--font-body)}
+.who b{display:block;font-family:var(--font-latin);font-weight:600}
+.who span{font-family:var(--font-latin);color:var(--muted);font-size:15px}
+.mact{display:flex;flex-direction:column;gap:8px;align-items:flex-end}
+.link{background:none;border:0;color:var(--accent);text-decoration:underline;padding:6px 0;min-height:36px}
+.seg{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.seg.s4{grid-template-columns:repeat(4,1fr)} .seg.s2{grid-template-columns:repeat(2,1fr)}
+.chip{background:var(--card);border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;min-height:56px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;text-align:left;line-height:1.25;font-weight:500}
+.chip .en{display:block;margin-top:2px}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.chip[aria-pressed="true"] .en{color:var(--accent-ink);opacity:.85}
+.field{margin-top:16px}
+.field>label,.flabel{display:block;font-weight:500;margin-bottom:8px}
+.req{color:var(--crit);font-size:13px;margin-left:6px;font-weight:500}
+input[type=text],input[type=date],input[type=month],textarea{width:100%;background:var(--paper);border:1.5px solid var(--line);border-radius:10px;padding:12px 14px;min-height:52px}
+textarea{min-height:110px;resize:vertical}
+input.num{font-family:var(--font-latin);font-size:24px;font-variant-numeric:tabular-nums;font-weight:500;max-width:300px}
+.pcard{border:1.5px solid var(--line);border-radius:var(--r);padding:16px;margin-top:12px}
+.pcard.on{border-color:var(--accent)}
+.phead{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.thumb{width:76px;height:76px;border:0;padding:0;background:none;border-radius:10px;flex:none;cursor:zoom-in}
+.thumb svg,.zoomimg svg{display:block;width:100%;height:100%;border-radius:10px}
+.zoomimg{width:min(100%,420px);margin:0 auto}
+.pname{font-family:var(--font-latin);font-weight:600;font-size:18px;flex:1 1 220px}
+.pname small{display:block;font-weight:400;font-size:13px;color:var(--muted);font-family:var(--font-body)}
+.toggle{border:1.5px solid var(--line);background:var(--card);border-radius:999px;padding:10px 18px;min-height:48px;font-weight:500}
+.toggle[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.rlist{display:flex;flex-direction:column;gap:10px}
+.rcard{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:var(--paper)}
+.rcard b{font-weight:600}
+.rcard p{margin:2px 0 0;font-size:14px;color:var(--muted)}
+.btn{border:0;border-radius:10px;padding:12px 20px;min-height:52px;font-weight:600;background:var(--accent);color:var(--accent-ink)}
+.btn.ghost{background:transparent;color:var(--accent);border:1.5px solid var(--accent)}
+.btn.danger{background:transparent;color:var(--crit);border:1.5px solid var(--crit)}
+.btn.big{width:100%;min-height:64px;font-size:19px}
+.btn.small{min-height:44px;padding:8px 14px;font-weight:500}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.note{border-radius:10px;padding:12px 14px;font-size:15px;margin-top:12px}
+.n-info{background:var(--accent-soft);color:var(--ink)}
+.n-warn{background:var(--warn-soft);color:var(--warn)}
+.n-crit{background:var(--crit-soft);color:var(--crit)}
+.note ul{margin:6px 0 0;padding-left:20px}
+.ovl{position:fixed;inset:0;background:rgba(10,18,30,.55);z-index:20;display:flex;justify-content:center;align-items:flex-start;overflow-y:auto;padding:24px 12px}
+.sheet{background:var(--card);border-radius:16px;width:100%;max-width:760px;padding:20px}
+.sheet h2{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.smp{border:1px dashed var(--line);border-radius:10px;padding:12px;margin-top:10px}
+table{width:100%;border-collapse:collapse;font-size:16px}
+.sh-t{font-size:18px;margin:22px 0 4px}.sh-wrap{overflow-x:auto;border:1px solid var(--line,#d5dbe5);border-radius:10px;margin-top:8px}
+table.sh{width:auto;min-width:100%;font-size:14px}table.sh th,table.sh td{padding:8px 10px;border-right:1px solid var(--line,#d5dbe5);border-bottom:1px solid var(--line,#d5dbe5);text-align:left;vertical-align:top;white-space:nowrap}
+table.sh th{background:var(--paper);font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px}table.sh small{display:block;font-family:var(--font-body);font-weight:400;font-size:12px;opacity:.72;margin-top:2px}
+.sh-v{font-family:ui-monospace,Menlo,Consolas,monospace;font-weight:700;white-space:normal;display:inline-block;max-width:260px}.sh-empty{opacity:.4;font-size:12px}.sh-none{opacity:.7;margin:6px 0}
+th,td{padding:10px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+td.n,th.n{text-align:right;font-family:var(--font-latin);font-variant-numeric:tabular-nums}
+tfoot td{font-weight:600;border-bottom:0}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:12px 20px;border-radius:999px;z-index:30;font-weight:500}
+.proto{margin-top:28px;font-size:14px;color:var(--muted);display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+@media (max-width:560px){
+  .mcard{grid-template-columns:1fr}.mact{align-items:flex-start;flex-direction:row}
+  .seg.s4{grid-template-columns:repeat(2,1fr)}
+}
+@media (prefers-reduced-motion:no-preference){.chip,.toggle,.btn{transition:background-color .12s,border-color .12s}}
+</style>
+</head>
+<body>
+<header class="top"><div class="top-in" id="top"></div><div id="due"></div></header>
+<main class="wrap" id="main"></main>
+<div id="overlay"></div>
+<div id="toast"></div>
+<script>
+/* ---------- 선택지 (구글 시트 Codes 탭에서 내려받을 값. 시제품은 페이지에 넣어 둠) ---------- */
+const C={
+ STATUS:[['STATUS_Held','상담 진행','Held'],['STATUS_BuyerNoShow','바이어 불참','Buyer no-show'],['STATUS_CompanyNoShow','기업 불참','Company no-show'],['STATUS_Cancelled','취소','Cancelled']],
+ REQ:[['REQ_Sample','샘플','Sample'],['REQ_Quotation','견적','Quotation'],['REQ_ProductSpecs','제품 정보','Product specifications'],['REQ_CertDocs','인증·서류','Certification or documents'],['REQ_TradeTerms','관심 거래 조건','Trade terms of interest'],['REQ_OEM','OEM·ODM·PB·맞춤 제작','OEM, ODM, private label or customization'],['REQ_TrialOrder','시범 주문','Trial order'],['REQ_FactoryVisit','공장·기업 방문','Factory or company visit'],['REQ_FollowUp','후속 미팅·통화','Follow-up meeting or call'],['REQ_Other','기타','Other']],
+ REQDIR:[['REQDIR_B2C','바이어 → 기업','Buyer → Company'],['REQDIR_C2B','기업 → 바이어','Company → Buyer']],
+ QUOTE:[['QUOTE_Formal','정식 견적','Formal'],['QUOTE_Indicative','참고 가격 범위','Indicative range']],
+ SPEC:{FOD:[['SPEC_FOD_Ingredients','성분표·원재료(알레르기 포함)','Ingredients & raw materials'],['SPEC_FOD_Nutrition','영양성분','Nutrition facts'],['SPEC_FOD_ShelfLife','유통기한·보관','Shelf life & storage'],['SPEC_FOD_Process','제조 공정','Manufacturing process'],['SPEC_FOD_Packaging','포장 규격','Packaging specifications'],['SPEC_FOD_Other','기타','Other']],
+  BEA:[['SPEC_BEA_INCI','전성분(INCI)','Full ingredient list (INCI)'],['SPEC_BEA_Formulation','제형','Formulation'],['SPEC_BEA_SpecSheet','규격서','Specification sheet'],['SPEC_BEA_Other','기타','Other']],
+  TEX:[['SPEC_TEX_Fabric','원단 사양','Fabric specifications'],['SPEC_TEX_Colors','컬러·스와치북','Colors & swatch book'],['SPEC_TEX_Capacity','생산 능력','Production capacity'],['SPEC_TEX_Other','기타','Other']],
+  MED:[['SPEC_MED_Technical','기술 사양','Technical specifications'],['SPEC_MED_IFU','사용설명서','Instructions for use'],['SPEC_MED_Other','기타','Other']],
+  BAB:[['SPEC_BAB_Materials','소재·안전','Materials & safety'],['SPEC_BAB_Specs','규격','Specifications'],['SPEC_BAB_Other','기타','Other']],
+  FSL:[['SPEC_FSL_Dimensions','치수·소재 사양','Dimensions & material specifications'],['SPEC_FSL_Assembly','조립·포장 규격','Assembly & packing specifications'],['SPEC_FSL_Other','기타','Other']]},
+ DOC:[['DOC_Quality','품질·안전 인증','Quality & safety certification'],['DOC_Registration','제품 등록·승인','Product registration & approval'],['DOC_Religious','종교·유기농·친환경 인증','Religious, organic & eco-friendly'],['DOC_Test','시험·임상 자료','Test & clinical data'],['DOC_Origin','원산지·수출 서류','Origin & export documents'],['DOC_Other','기타','Other']],
+ TERMS:[['TERMS_Price','가격·인코텀즈','Price & Incoterms'],['TERMS_MOQ','최소 주문 수량(MOQ)','MOQ'],['TERMS_Payment','결제 조건','Payment'],['TERMS_LeadTime','납기·배송','Lead time & delivery'],['TERMS_Packaging','포장·라벨','Packaging & labeling'],['TERMS_Other','기타','Other']],
+ OEM:[['OEM_PrivateLabel','OEM·ODM·PB (바이어 브랜드로 생산)','OEM, ODM, private label'],['OEM_Custom','맞춤 제작 (기업 브랜드 유지, 사양 변경)','Customization'],['OEM_Other','기타','Other']],
+ RSP:[['RSP_Done','현장에서 완료 (후속 조치 없음)','Done on site, no follow-up'],['RSP_Accepted','수락(아래에 일정 입력)','Accepted (enter schedule below)'],['RSP_UnderReview','검토 중','Under review'],['RSP_Declined','거절','Declined'],['RSP_Other','기타','Other'],['RSP_Unconfirmed','미확인','Unconfirmed']],
+ SEND:[['SEND_1W','1주 이내','Within 1 week'],['SEND_2W','2주 이내','Within 2 weeks'],['SEND_1M','1개월 이내','Within 1 month'],['SEND_Date','날짜 지정','Pick a date']],
+ FUMETHOD:[['FUMETHOD_Video','화상 미팅','Video meeting'],['FUMETHOD_Phone','전화','Phone call'],['FUMETHOD_Email','이메일','Email'],['FUMETHOD_Messenger','메신저','Messenger'],['FUMETHOD_InPerson','대면','In person']],
+ SMPTYPE:[['SMPTYPE_Existing','기존 제품','Existing'],['SMPTYPE_Custom','맞춤 제작','Custom']],
+ SMPU:[['SMPU_Pieces','낱개','Pieces'],['SMPU_Cartons','박스','Cartons'],['SMPU_TBD','미정','TBD']],
+ SMPT:[['SMPT_Free','무상','Free'],['SMPT_Paid','유상','Paid'],['SMPT_TBD','미정','TBD']],
+ UNIT:[['UNIT_Pieces','낱개','Pieces'],['UNIT_Cartons','박스','Cartons'],['UNIT_20ft','20피트 컨테이너','20ft'],['UNIT_40ft','40피트 컨테이너','40ft']],
+ PERIOD:[['PERIOD_Month','월','Per month'],['PERIOD_Quarter','분기','Per quarter'],['PERIOD_Year','연','Per year'],['PERIOD_OneTime','1회성','One-time']],
+ TIMING:[['TIMING_3M','3개월 이내','Within 3 months'],['TIMING_3to6','3~6개월','3–6 months'],['TIMING_6to12','6~12개월','6–12 months'],['TIMING_Undecided','미정','Undecided']],
+ COOP:[['COOP_Import','완제품 수입','Import of finished goods'],['COOP_Distributor','현지 유통·총판','Distributorship'],['COOP_Agency','에이전트(중개)','Agency'],['COOP_OEMODM','OEM·ODM·PB','OEM, ODM, private label'],['COOP_JointDev','공동 개발','Joint development'],['COOP_Other','기타','Other']]
+};
+/* 제품 정보 세부 목록은 기업의 주 산업군이 아니라 제품의 품목코드 산업군(p.ind)으로 고른다. 값이 없으면 기업 산업군. */
+const IND_GROUP={FOD:'FOD',STA:'FSL',FUR:'FSL',LIF:'FSL',TEX:'TEX',MED:'MED',BEA:'BEA',BAB:'BAB'};
+const PRODUCT_REQ=['REQ_Sample','REQ_Quotation','REQ_ProductSpecs','REQ_CertDocs','REQ_TradeTerms','REQ_OEM','REQ_TrialOrder'];
+/* 상담 뒤에 일어나는 일이라 '현장에서 완료'가 성립하지 않는 요청 유형 */
+const NO_DONE=['REQ_FactoryVisit','REQ_FollowUp'];
+const COMMON_REQ=['REQ_FactoryVisit','REQ_FollowUp'];
+const SWITCHABLE=['REQ_TrialOrder','REQ_FactoryVisit','REQ_FollowUp','REQ_Other'];
+const SENDBY_REQ=['REQ_Sample','REQ_Quotation','REQ_ProductSpecs','REQ_CertDocs'];
+const DETAIL={REQ_Quotation:['QUOTE','single'],REQ_ProductSpecs:['SPEC','multi'],REQ_CertDocs:['DOC','single'],REQ_TradeTerms:['TERMS','multi'],REQ_OEM:['OEM','multi']};
+
+/* ---------- 이 태블릿의 상담 목록 (가상 데이터. 단가는 들어 있지 않고 환산 가능 여부만 있음) ---------- */
+const SLOT={1:'10:00–10:40',2:'10:50–11:30',3:'11:40–12:20',4:'13:30–14:10',5:'14:20–15:00',6:'15:10–15:50',7:'16:00–16:40',8:'16:50–17:30'};
+const BUYERS={P001:{name:'PRACTICE Buyer Co.',country:'Practice',pco:'연습',table:'연습'},
+ B001:{name:'SAMPLE Buyer Trading Co. (VN)',country:'Vietnam',pco:'PREMIEREANT',table:'T-01'},
+ B002:{name:'SAMPLE Buyer Beauty Inc. (US)',country:'United States',pco:'WISE-ON',table:'T-02'},
+ B003:{name:'SAMPLE Buyer General LLC (AE)',country:'United Arab Emirates',pco:'PREMIEREANT',table:'T-03'}};
+/* 제품: [번호, 이름, 환산 가능 여부[세는 단위,포장 단위,20ft,40ft], 산업군(없으면 기업 산업군), 세는 단위 이름, 포장 단위 이름(null이면 포장 단위 없음)]
+   세는 단위·포장 단위 이름은 기업이 거래 조건으로 제출한 값을 구글 시트에서 내려받는다. 저장 값은 UNIT_ 코드 그대로. */
+const U={pc:['개','Pieces'],bottle:['병','Bottles'],bag:['봉','Bags'],pack:['팩','Packs'],sheet:['장','Sheets'],set:['세트','Sets'],unit:['대','Units'],wear:['벌','Garments'],yard:['야드','Yards'],kg:['kg','Kilograms'],stick:['포','Sticks'],box:['박스','Cartons'],roll:['롤','Rolls']};
+const COMPANIES={
+ 'FOD-K-001':{name:'SAMPLE Food Co. A',ind:'FOD',products:[['P1','Kimchi Seasoning Sauce',[1,1,1,1],,U.bottle],['P2','Instant Rice Cake',[1,1,1,1],,U.bag]]},
+ 'BEA-K-001':{name:'SAMPLE Beauty Co. B',ind:'BEA',products:[['P1','Hydrating Face Mask',[1,1,1,1],,U.sheet],['P2','Sun Cream SPF50',[1,1,1,1],,U.pc]]},
+ 'MED-K-001':{name:'SAMPLE Medical Co. C',ind:'MED',products:[['P1','Digital Thermometer',[1,1,1,1],,U.pc],['P2','Blood Pressure Monitor',[1,1,1,1],,U.unit]]},
+ 'LIF-K-001':{name:'SAMPLE Living Co. D',ind:'LIF',products:[['P1','Stainless Tumbler',[1,1,1,1],,U.pc],['P2','Silicone Kitchen Set',[1,1,0,0],,U.set]]},
+ 'TEX-K-001':{name:'SAMPLE Apparel Co. E',ind:'TEX',products:[['P1','Knit Scarf',[1,1,1,1],,U.pc],['P2','Down Jacket',[0,0,0,0],,U.wear]]},
+ 'TEX-K-002':{name:'SAMPLE Fabric Co. H',ind:'TEX',products:[['P1','Polyester Knit Fabric',[1,1,1,1],,U.yard,U.roll],['P2','Cotton Blend Yarn',[1,1,0,0],,U.kg]]},
+ 'FUR-K-001':{name:'SAMPLE Furniture Co. I',ind:'FUR',products:[['P1','Ergonomic Office Chair',[1,0,1,1],,U.pc,null],['P2','Modular Sofa Set',[1,0,1,1],,U.set,null]]},
+ 'BAB-K-001':{name:'SAMPLE Baby Co. F',ind:'BAB',products:[['P1','Organic Baby Wipes',[1,1,1,1],,U.pack],['P2','Baby Lotion',[1,1,1,1],'BEA',U.bottle]]},
+ 'STA-K-001':{name:'SAMPLE Stationery Co. G',ind:'STA',products:[['P1','Gel Pen Set',[1,1,1,1],,U.set],['P2','Sticky Note Pack',[1,1,1,1],,U.pack]]}};
+function unitList(p){const u=(p&&p.u)||['낱개','Pieces'],pk=p&&p.pk===null?null:((p&&p.pk)||U.box);
+ return C.UNIT.map((o,i)=>i===0?[o[0],u[0],u[1]]:i===1?(pk?[o[0],pk[0],pk[1]]:null):o).filter(Boolean);}
+function mkMeeting(id,buyerNo,slot,mode,coNo,extra){const b=BUYERS[buyerNo],c=COMPANIES[coNo];
+ return {id,buyerNo,slot,time:SLOT[slot],mode,buyer:b.name,country:b.country,co:c.name,coNo,ind:c.ind,
+  products:c.products.map(x=>({no:x[0],name:x[1],src:'등록 제품',conv:x[2],ind:x[3]||c.ind,u:x[4],pk:x[5]})).concat(extra||[])};}
+const BASE=[
+ mkMeeting('P001-1-1','P001',1,'사전 매칭','FOD-K-001',[{no:'P3',name:'Red Ginseng Jelly Stick',src:'사전 요청 제품',conv:[1,1,1,1],u:U.stick}]),
+ mkMeeting('P001-1-2','P001',2,'사전 매칭','MED-K-001'),
+ mkMeeting('P001-1-3','P001',3,'사전 매칭','BEA-K-001'),
+ mkMeeting('P001-1-4','P001',4,'사전 매칭','TEX-K-002'),
+ mkMeeting('P001-1-5','P001',5,'사전 매칭','FUR-K-001'),
+ mkMeeting('P001-1-6','P001',6,'사전 매칭','LIF-K-001'),
+ mkMeeting('P001-1-7','P001',7,'현장 매칭','TEX-K-001'),
+ mkMeeting('P001-1-8','P001',8,'사전 매칭','BAB-K-001')];
+const DEMO_CODE='2026';
+const MEETING_DATE='2026-12-22';
+
+/* ---------- 서버 역할(시제품용) (실제로는 구글 시트 쪽에서 계산. 단가는 태블릿으로 내려가지 않음) ---------- */
+const SERVER={
+ limit:1000000,
+ price:{'FOD-K-001-P1':[2.6,24,36000,72000],'FOD-K-001-P2':[1.5,12,30000,60000],'FOD-K-001-P3':[0.9,100,120000,240000],'LIF-K-001-P1':[3.9,40,30000,60000],'LIF-K-001-P2':[6.5,20,0,0],'MED-K-001-P1':[4.5,100,100000,200000],'MED-K-001-P2':[18,10,12000,24000],'TEX-K-001-P1':[5.2,50,40000,80000],'TEX-K-001-P2':[0,10,0,0],'TEX-K-002-P1':[3.2,60,60000,120000],'TEX-K-002-P2':[6,25,0,0],'FUR-K-001-P1':[85,1,300,640],'FUR-K-001-P2':[420,1,40,90],'BEA-K-001-P1':[0.8,200,400000,800000],'BEA-K-001-P2':[3.2,48,60000,120000],'BAB-K-001-P1':[1.2,24,48000,96000],'BAB-K-001-P2':[2.4,50,60000,120000],'STA-K-001-P1':[3.0,40,80000,160000],'STA-K-001-P2':[0.7,100,200000,400000]},
+ compute(mt,st){
+  const rows=[];let annual=0,once=0;
+  if(st.status==='STATUS_Held') mt.products.forEach(p=>{
+   const l=st.lines[p.no];const q=num(l.qty);if(!l.discussed||!q||!l.unit)return;
+   const t=this.price[mt.coNo+'-'+p.no]||[0,0,0,0];const ui=C.UNIT.findIndex(u=>u[0]===l.unit);
+   const pieces=[q,q*t[1],q*t[2],q*t[3]][ui];
+   const val=p.conv[ui]?pieces*t[0]:(num(l.usd)||0);
+   const f={PERIOD_Month:12,PERIOD_Quarter:4,PERIOD_Year:1}[l.period];
+   const a=f?val*f:0,o=f?0:val;annual+=a;once+=o;
+   rows.push({name:p.name,vol:volText(l,p),annual:a,once:o,direct:!p.conv[ui]});
+  });
+  return {rows,annual,once,large:annual>this.limit||once>this.limit};
+ }
+};
+
+/* ---------- 상태 ---------- */
+const KEY='kbd-practice-save-v1';
+function blankM(m){const lines={};m.products.forEach(p=>lines[p.no]={discussed:m.products.length===1,qty:'',unit:'',period:'PERIOD_Year',timing:'TIMING_Undecided',usd:'',note:''});
+ return {status:'STATUS_Held',lines,requests:[],coop:[],coopOther:'',memo:'',submittedAt:null,sent:false,result:null,byDesk:false,seen:true};}
+function blank(){const o={tablet:'P001',extra:[],m:{}};BASE.forEach(m=>o.m[m.id]=blankM(m));return o;}
+function load(){try{const j=JSON.parse(localStorage.getItem(KEY));if(j&&j.m){BASE.forEach(m=>{if(!j.m[m.id])j.m[m.id]=blankM(m);});return j;}}catch(e){}return blank();}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+let S=load();let view={name:S.tablet?'list':'setup',id:null};let draft=null;let confirmBox=null;let issues=[];let offline=false;
+let zoom=null;let simDue=false;let setupForm={buyer:'',code:'',err:''};let desk={pco:null,ok:false,code:'',buyer:null,pick:null,q:'',err:''};
+const ALL=()=>BASE.concat(S.extra.map(e=>mkMeeting(e.id,e.buyerNo,e.slot,e.mode,e.coNo)));
+const mine=()=>ALL().filter(m=>m.buyerNo===S.tablet).sort((a,b)=>a.slot-b.slot||a.id.length-b.id.length||a.id.localeCompare(b.id));
+const hasContent=s=>s.requests.length>0||s.memo.trim()!==''||Object.values(s.lines).some(l=>l.qty||l.note);
+function slotInfo(buyerNo,slot){const ms=ALL().filter(m=>m.buyerNo===buyerNo&&m.slot===slot).sort((a,b)=>a.id.length-b.id.length||a.id.localeCompare(b.id));
+ if(!ms.length)return {kind:'empty',ms};const a=ms[ms.length-1],s=S.m[a.id];
+ return {kind:s.submittedAt?(s.status==='STATUS_Held'?'held':'noshow'):(hasContent(s)?'busy':'planned'),active:a,ms};}
+const coBusy=(coNo,slot)=>ALL().some(m=>m.slot===slot&&m.coNo===coNo&&!(S.m[m.id].submittedAt&&S.m[m.id].status!=='STATUS_Held'));
+function markDesk(m){const s=S.m[m.id];m.products.forEach(p=>Object.assign(s.lines[p.no],{qty:'',unit:'',usd:'',note:''}));
+ Object.assign(s,{status:'STATUS_CompanyNoShow',requests:[],coop:[],coopOther:'',memo:'',submittedAt:new Date().toISOString(),sent:true,result:null,byDesk:true});}
+const $=id=>document.getElementById(id);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const num=v=>{const t=String(v||'').replace(/,/g,'').trim();return /^\d+(\.\d{1,2})?$/.test(t)?parseFloat(t):null;};
+const fmt=n=>Number(n).toLocaleString('en-US',{maximumFractionDigits:2});
+const lab=(list,code)=>{const r=list.find(x=>x[0]===code);return r?r[1]:'';};
+const two=(ko,en)=>`${esc(ko)}<span class="en">${esc(en)}</span>`;
+const mt=()=>ALL().find(m=>m.id===view.id);
+const st=()=>S.m[view.id];
+function volText(l,p){return `${fmt(num(l.qty))} ${lab(unitList(p),l.unit)} · ${lab(C.PERIOD,l.period)}`;}
+function chips(list,sel,act,cls,extra){return `<div class="seg ${cls||''}">`+list.map(o=>{const on=Array.isArray(sel)?sel.includes(o[0]):sel===o[0];
+  return `<button type="button" class="chip" data-act="${act}" data-val="${o[0]}" ${extra||''} aria-pressed="${on}">${esc(o[1])}<span class="en">${esc(o[2])}</span></button>`;}).join('')+`</div>`;}
+function thumb(p){let x=0;for(const ch of p.name)x=(x*31+ch.charCodeAt(0))%360;
+ return `<svg viewBox="0 0 80 80" role="img" aria-label="${esc(p.name)} 예시 사진"><rect width="80" height="80" fill="hsl(${x} 45% 86%)"/><rect x="26" y="24" width="28" height="38" rx="5" fill="hsl(${x} 40% 55%)"/><rect x="32" y="15" width="16" height="10" rx="3" fill="hsl(${x} 40% 40%)"/><rect x="30" y="36" width="20" height="12" rx="2" fill="hsl(${x} 45% 86%)"/><text x="40" y="75" text-anchor="middle" font-size="8" fill="hsl(${x} 40% 28%)">예시 사진</text></svg>`;}
+function vZoom(){const p=mt().products.find(x=>x.no===zoom);return `<div class="ovl" data-act="zoomx"><div class="sheet" role="dialog" aria-label="제품 사진" style="max-width:520px"><h2><span style="font-family:var(--font-latin)">${esc(p.name)}</span><button class="btn ghost small" data-act="zoomx">닫기</button></h2><div class="zoomimg">${thumb(p)}</div><p class="sub" style="margin:12px 0 0;text-align:center">${p.no} · ${p.src} · 시제품이라 실제 사진 대신 예시 그림이 들어 있습니다.</p></div></div>`;}
+function toast(t){$('toast').innerHTML=`<div class="toast" role="status">${esc(t)}</div>`;setTimeout(()=>{$('toast').innerHTML='';},2200);}
+function addDays(d,n){const x=new Date(d+'T00:00:00Z');x.setUTCDate(x.getUTCDate()+n);return x.toISOString().slice(0,10);}
+function sendDate(r){if(r.send==='SEND_1W')return addDays(MEETING_DATE,7);if(r.send==='SEND_2W')return addDays(MEETING_DATE,14);if(r.send==='SEND_1M')return '2027-01-22';return r.sendDate||'';}
+
+/* ---------- 화면 ---------- */
+function dueMeeting(){
+ if(!S.tablet)return null;const open=mine().filter(m=>!S.m[m.id].submittedAt);
+ if(simDue)return open[0]||null;
+ const now=new Date();
+ return open.find(m=>{const end=new Date(MEETING_DATE+'T'+m.time.split('–')[1]+':00+09:00');const d=(end-now)/60000;return d<=5&&d>=-10;})||null;
+}
+function drawDue(){
+ const m=(view.name==='desk'||view.name==='setup')?null:dueMeeting();
+ $('due').innerHTML=m?`<div role="status"><div class="msg"><span class="tag">제출 시간</span><span><b>${m.slot}번 상담이 ${m.time.split('–')[1]}에 끝납니다. 제출해 주세요.</b><small>${esc(m.co)} · Time to submit this meeting</small></span></div>${view.id===m.id&&view.name==='meet'?'':`<button data-act="open" data-id="${m.id}">이 상담 열기</button>`}</div>`:'';
+}
+function render(){
+ const tab=view.name!=='desk'&&view.name!=='setup'&&S.tablet;
+ const pending=tab?mine().filter(m=>S.m[m.id].submittedAt&&!S.m[m.id].sent).length:0;
+ const sync=offline?`<span class="pill p-crit">연결 끊김</span>`:'';
+ const anySent=tab&&mine().some(m=>S.m[m.id].submittedAt&&S.m[m.id].sent&&!S.m[m.id].byDesk);
+ const q=`<span class="pill p-warn">저장 시험</span>`+(!tab?'':pending?`<span class="pill p-warn">전송 대기 ${pending}건</span>`:anySent?`<span class="pill p-good">모두 전송됨</span>`:'');
+ let left=`<div class="brand">K-BUSINESS DAY 2026<small>상담일지 / Meeting log</small></div>`,back='';
+ if(view.name==='desk'){left=`<div class="brand">매칭데스크${desk.ok?' · '+desk.pco:''}<small>현장 매칭 등록 / Matching desk</small></div>`;back=`<button class="back" data-act="deskexit">← 태블릿 화면</button>`;}
+ else if(tab){const b=BUYERS[S.tablet];left=`<div class="brand">${S.tablet} · ${b.table}<small>${esc(b.name)}</small></div>`;if(view.name!=='list')back=`<button class="back" data-act="back">← 목록</button>`;}
+ $('top').innerHTML=back+left+`<div class="grow"></div>${sync}${q}`;
+ $('main').innerHTML=({setup:vSetup,list:vList,meet:vMeet,result:vResult,desk:vDesk})[view.name]();
+ drawDue();
+ $('overlay').innerHTML=draft?vDraft():confirmBox?vConfirm():(zoom&&view.name==='meet')?vZoom():'';
+}
+function vSetup(){
+ return `<h1>태블릿 설정 <span class="en">Tablet setup</span></h1><p class="sub">태블릿 스티커에 적힌 바이어 번호와 접근 코드를 입력합니다. 처음 한 번만 하면 됩니다.</p>
+ <section class="sec">${setupForm.err?`<div class="note n-crit" style="margin-top:0">${esc(setupForm.err)}</div>`:''}
+  <div class="field"><label for="s-buyer">바이어 번호 <span class="en">Buyer no.</span></label><input class="num" type="text" id="s-buyer" data-bind="setup:buyer" value="${esc(setupForm.buyer)}" placeholder="B001" autocomplete="off" autocapitalize="characters"></div>
+  <div class="field"><label for="s-code">접근 코드 <span class="en">Access code</span></label><input class="num" type="text" inputmode="numeric" id="s-code" data-bind="setup:code" value="${esc(setupForm.code)}" placeholder="숫자" autocomplete="off"></div>
+  <div class="field"><button class="btn big" data-act="setupok">이 태블릿에 설정 <span class="en" style="color:inherit;opacity:.85">Set up</span></button></div>
+  <div class="note n-info">시제품용 값: 바이어 번호 B001, B002, B003 중 하나, 접근 코드 ${DEMO_CODE}</div></section>
+ <div class="proto"><span class="pill p-mute">시제품 · 가상 데이터</span><button class="btn ghost small" data-act="deskopen">매칭데스크 화면 보기</button></div>`;
+}
+function vList(){
+ const ms=mine();const done=ms.filter(m=>S.m[m.id].submittedAt).length;
+ return `<h1>내 상담 <span class="en">My meetings</span></h1><p class="sub">저장 시험용 화면입니다. 여기서 제출한 상담은 시험용 구글 시트에 실제로 저장됩니다. 가상 데이터이며 행사 기록에는 반영되지 않습니다. 같은 상담을 다시 제출하면 시트의 이전 줄이 새 내용으로 바뀝니다.</p>
+ <div class="summary"><div class="tile"><b>${ms.length}</b><span>오늘 상담</span></div><div class="tile"><b>${done}</b><span>제출 완료</span></div><div class="tile"><b>${ms.length-done}</b><span>미제출</span></div></div>
+ <div class="mlist">`+ms.map(m=>{const s=S.m[m.id];const cls=s.submittedAt?(s.sent?'done':'wait'):'';
+  const pill=s.byDesk?`<span class="pill p-crit">기업 불참 · 매칭데스크 처리</span>`:s.submittedAt?(s.sent?`<span class="pill p-good">제출 완료</span>`:`<span class="pill p-warn">전송 대기</span>`):hasContent(s)?`<span class="pill p-warn">입력 중 · 미제출</span>`:`<span class="pill p-mute">미제출</span>`;
+  return `<div class="mcard ${cls}"><div class="slot">${m.time.split('–')[0]}<small>${m.slot}번 · ${m.mode}</small></div>
+   <div class="who"><b>${esc(m.co)}</b><span>${esc(m.id)} · ${esc(m.products.map(p=>p.name).join(', '))}</span></div>
+   <div class="mact">${s.seen?'':`<span class="pill p-warn">새 상담</span>`}${pill}${s.byDesk?'':`<button class="btn small" data-act="open" data-id="${m.id}">${s.submittedAt?'수정':hasContent(s)?'이어서 입력':'입력'}</button>`}${s.sent&&!s.byDesk?`<button class="link" data-act="result" data-id="${m.id}">내 상담 결과</button>`:''}</div></div>`;}).join('')+`</div>
+ <div class="proto"><span class="pill p-mute">연습용 · 가상 데이터</span>
+  <button class="btn ghost small" data-act="simdue">${simDue?'종료 알림 미리 보기 끄기':'종료 5분 전 알림 미리 보기'}</button>
+  <button class="btn ghost small" data-act="reset">모두 지우고 처음부터</button></div>`;
+}
+function vDesk(){
+ if(!desk.ok)return `<h1>매칭데스크 <span class="en">Matching desk</span></h1><p class="sub">PCO를 고르고 접근 코드를 입력합니다. 자기 PCO의 바이어만 보입니다.</p>
+  <section class="sec">${desk.err?`<div class="note n-crit" style="margin-top:0">${esc(desk.err)}</div>`:''}
+   <div class="field"><span class="flabel">PCO</span>${chips([['WISE-ON','와이즈온','WISE-ON'],['PREMIEREANT','프리미어앙트','PREMIEREANT']],desk.pco,'dpco','s2')}</div>
+   <div class="field"><label for="k-code">접근 코드 <span class="en">Access code</span></label><input class="num" type="text" inputmode="numeric" id="k-code" data-bind="desk:code" value="${esc(desk.code)}" placeholder="숫자" autocomplete="off"></div>
+   <div class="field"><button class="btn big" data-act="deskin">들어가기</button></div>
+   <div class="note n-info">시제품용 접근 코드 ${DEMO_CODE}. 실제로는 PCO별로 다른 코드를 씁니다.</div></section>`;
+ const bs=Object.keys(BUYERS).filter(k=>BUYERS[k].pco===desk.pco).map(k=>[k,k+' · '+BUYERS[k].table,BUYERS[k].name]);
+ let h=`<h1>현장 매칭 등록 <span class="en">On-site matching</span></h1><p class="sub">12월 22일(화) · 1일차</p>
+  <section class="sec"><h2>바이어<span class="en">Buyer</span></h2>${chips(bs,desk.buyer,'dbuyer')}</section>`;
+ if(desk.buyer){
+  h+=`<section class="sec"><h2>슬롯<span class="en">Slots</span></h2><div class="rlist">`+[1,2,3,4,5,6,7,8].map(n=>{const i=slotInfo(desk.buyer,n);let st,btn='';
+   const who=i.active?`${esc(i.active.co)} <span class="en">${esc(i.active.id)}</span>`:'';
+   if(i.kind==='empty'){st=`<span class="pill p-mute">빈 슬롯</span>`;btn=`<button class="btn small" data-act="dpick" data-id="${n}">기업 등록</button>`;}
+   else if(i.kind==='planned'){st=`<span class="pill p-mute">상담 예정</span> ${who}`;btn=`<button class="btn ghost small" data-act="dnoshow" data-id="${n}">기업 불참 처리</button><button class="btn small" data-act="dpick" data-id="${n}">불참 처리 후 대체 등록</button>`;}
+   else if(i.kind==='noshow'){st=`<span class="pill p-crit">${esc(lab(C.STATUS,S.m[i.active.id].status))}</span> ${who}`;btn=`<button class="btn small" data-act="dpick" data-id="${n}">대체 기업 등록</button>`;}
+   else if(i.kind==='held'){st=`<span class="pill p-good">제출 완료</span> ${who}`;btn=`<span class="sub" style="margin:0">변경할 수 없음</span>`;}
+   else{st=`<span class="pill p-warn">통역원 입력 중</span> ${who}`;btn=`<span class="sub" style="margin:0">변경할 수 없음</span>`;}
+   return `<div class="rcard"><div><b>${n}번 · ${SLOT[n]}</b><p>${st}</p></div><div class="row">${btn}</div></div>`;}).join('')+`</div></section>`;
+  if(desk.pick){const q=desk.q.trim().toLowerCase();const cs=Object.keys(COMPANIES).filter(k=>!q||k.toLowerCase().includes(q)||COMPANIES[k].name.toLowerCase().includes(q));
+   h+=`<section class="sec" id="picker"><h2>${desk.pick}번 슬롯에 등록할 기업<span class="en">Company</span></h2>
+    <input type="text" id="k-q" data-bind="desk:q" value="${esc(desk.q)}" placeholder="기업 이름 또는 관리번호로 검색" autocomplete="off">
+    <div class="rlist" style="margin-top:12px">${cs.length?cs.map(k=>{const busy=coBusy(k,desk.pick);return `<div class="rcard"><div><b style="font-family:var(--font-latin)">${esc(COMPANIES[k].name)}</b><p>${k} · ${esc(COMPANIES[k].products.map(x=>x[1]).join(', '))}</p></div>
+     ${busy?`<span class="pill p-warn">이 시간에 다른 상담</span>`:`<button class="btn small" data-act="dreg" data-id="${k}">등록</button>`}</div>`;}).join(''):`<p class="sub">검색 결과가 없습니다.</p>`}</div>
+    <div class="field"><button class="btn ghost small" data-act="dpickx">취소</button></div></section>`;}
+ }
+ return h+`<div class="proto"><span class="pill p-mute">시제품 · 가상 데이터</span><span>여기서 등록하면 해당 바이어 태블릿 목록에 바로 나타납니다.</span></div>`;
+}
+function vMeet(){
+ const m=mt(),s=st(),held=s.status==='STATUS_Held';
+ let h=`<h1 style="font-family:var(--font-latin)">${esc(m.co)}</h1><p class="sub">${esc(m.id)} · ${m.slot}번 ${m.time} · ${m.mode}</p>`;
+ if(issues.length)h+=`<div class="note n-crit" id="issues"><b>미완료 항목 <span class="en">Incomplete items</span></b><ul>${issues.map(i=>`<li>${esc(i)}</li>`).join('')}</ul></div>`;
+ h+=`<section class="sec"><h2>진행 상태<span class="en">Meeting status</span></h2>${chips(C.STATUS,s.status,'status','s4')}
+  ${held?'':`<div class="note n-info">상담이 진행되지 않아 입력을 마칩니다. 아래 제출만 누르면 됩니다.<br><span class="en">The meeting was not held. Entry is complete.</span></div>`}</section>`;
+ if(held){
+  h+=`<section class="sec"><h2>제품<span class="en">Products</span></h2><p class="sub">상담에서 다루는 제품을 선택하고, 상담에서 언급되는 물량과 요청을 입력합니다. 순서는 상관없고, 입력한 내용은 바로 저장됩니다.</p>`+m.products.map(p=>vProduct(m,s,p)).join('')+`</section>`;
+  const creqs=s.requests.map((r,i)=>[r,i]).filter(x=>x[0].product==='COMMON'||!x[0].product);
+  h+=`<section class="sec"><h2>공통 요청<span class="en">Requests not tied to a product</span></h2><p class="sub">특정 제품과 무관한 요청입니다: 공장·기업 방문, 후속 미팅·통화, 기타. 없으면 비워 둡니다.</p>`+
+   (creqs.length?`<div class="rlist">${creqs.map(x=>vReqCard(m,x[0],x[1])).join('')}</div>`:'')+
+   `<div class="field"><button class="btn ghost" data-act="addreq" data-id="COMMON">+ 공통 요청 추가 <span class="en">Add request</span></button></div></section>`;
+  h+=`<section class="sec"><h2>희망 거래 형태<span class="en">Preferred type of business</span></h2><p class="sub">바이어가 이 기업과 원하는 거래 형태를 모두 고릅니다. 언급이 없으면 비워 둡니다.</p>${chips(C.COOP,s.coop,'coop')}
+   ${s.coop.includes('COOP_Other')?`<div class="field"><label for="f-coop">희망 거래 형태 기타 내용<span class="req">필수</span></label><input type="text" id="f-coop" data-bind="coopOther" value="${esc(s.coopOther)}" placeholder="한 줄로 적어 주세요 / Describe in one line"></div>`:''}</section>`;
+  h+=`<section class="sec"><h2>그 밖의 메모<span class="en">Other notes (optional)</span></h2><p class="sub">선택 항목과 물량 메모에 담지 못한 내용이 있을 때만 적습니다. 없으면 비워 둡니다.</p>
+   <textarea id="f-memo" data-bind="memo" placeholder="예: 바이어가 내년 3월 방한 예정">${esc(s.memo)}</textarea></section>`;
+ }
+ h+=`<div id="pending">${pendingInner()}</div>`;
+ h+=`<div class="field"><button class="btn big" data-act="submit">${s.submittedAt?'수정 내용 다시 제출':'제출'} <span class="en" style="color:inherit;opacity:.85">Submit</span></button></div>`;
+ return h;
+}
+function vProduct(m,s,p){
+ const l=s.lines[p.no];const ui=C.UNIT.findIndex(u=>u[0]===l.unit);const q=num(l.qty);
+ const needUsd=l.discussed&&q&&l.unit&&!p.conv[ui];
+ const reqs=s.requests.map((r,i)=>[r,i]).filter(x=>x[0].product===p.no);
+ let h=`<div class="pcard ${l.discussed?'on':''}"><div class="phead"><button class="thumb" data-act="zoom" data-id="${p.no}" aria-label="제품 사진 크게 보기">${thumb(p)}</button><div class="pname">${esc(p.name)}<small>${p.no} · ${p.src}</small></div>
+  <button class="toggle" data-act="disc" data-id="${p.no}" aria-pressed="${l.discussed}">${l.discussed?'선택됨':'제품 선택'}</button></div>`;
+ if(l.discussed){
+  h+=`<div class="field"><label for="q-${p.no}">예상 취급 물량 <span class="en">Projected volume</span></label>
+   <p class="sub" style="margin:-2px 0 10px">바이어가 이 제품을 거래하게 되면 취급할 것으로 예상하는 제품 수량입니다. 금액이 아니라 수량을 적고, 아래에서 단위와 기간을 고릅니다. 언급이 없으면 비워 둡니다.<br><span class="en">The quantity the buyer expects to handle if a deal goes ahead. Enter a quantity, not an amount. Leave blank if not mentioned.</span></p>
+   <input class="num" type="text" inputmode="decimal" id="q-${p.no}" data-bind="line:${p.no}:qty" value="${esc(l.qty)}" placeholder="숫자 입력" autocomplete="off">
+   ${l.qty&&q===null?`<div class="note n-crit">숫자만 입력합니다. 소수는 둘째 자리까지 됩니다.</div>`:''}</div>
+   <div class="field"><span class="flabel">단위 <span class="en">Unit</span></span>${chips(unitList(p),l.unit,'unit','s4',`data-id="${p.no}"`)}</div>
+   <div class="field"><span class="flabel">기간 <span class="en">Period</span></span>${chips(C.PERIOD,l.period,'period','s4',`data-id="${p.no}"`)}</div>`;
+  if(needUsd)h+=`<div class="field"><label for="u-${p.no}">USD 총액(위 물량·기간 기준)<span class="req">필수</span> <span class="en">Total amount in USD (for the volume and period above)</span></label>
+   <input class="num" type="text" inputmode="decimal" id="u-${p.no}" data-bind="line:${p.no}:usd" value="${esc(l.usd)}" placeholder="USD" autocomplete="off">
+   <div class="note n-info">이 단위는 자동 계산이 되지 않습니다. 바이어나 기업이 말한 대략의 금액을 USD로 적어 주세요.</div></div>`;
+  if(q)h+=`<div class="field"><label for="n-${p.no}">이 물량의 조건·배경<span class="req">필수</span> <span class="en">Conditions behind this volume</span></label>
+   <p class="sub" style="margin:-2px 0 10px">위 물량이 어떤 조건에서 나온 말인지 한두 문장으로 적습니다. 상담 중에 적기 어려우면 상담을 마칠 때 적어도 됩니다. 예: 가격 조건, 인증 필요, 현재 수입 규모, 결정권자</p>
+   <textarea id="n-${p.no}" data-bind="line:${p.no}:note" style="min-height:80px" placeholder="예: 단가 2달러 이하일 때. 현재 유사 제품 월 2컨테이너 수입 중">${esc(l.note||'')}</textarea></div>`;
+  h+=`<div class="field"><span class="flabel">예상 시기 <span class="en">Expected timing</span></span>${chips(C.TIMING,l.timing,'timing','s4',`data-id="${p.no}"`)}</div>
+   <div class="field"><span class="flabel">이 제품의 요청 <span class="en">Requests for this product</span></span>
+   ${reqs.length?`<div class="rlist">${reqs.map(x=>vReqCard(m,x[0],x[1])).join('')}</div>`:`<p class="sub" style="margin:0">샘플, 견적, 제품 정보, 인증·서류 등 이 제품에 대한 요청이 나오면 바로 추가합니다.</p>`}
+   <div class="row" style="margin-top:10px"><button class="btn ghost small" data-act="addreq" data-id="${p.no}">+ 이 제품의 요청 추가</button></div></div>`;
+ }
+ return h+`</div>`;
+}
+function reqTarget(m,r){if(r.product==='ALL')return '전체 제품';if(r.product==='COMMON'||!r.product)return '공통';const p=m.products.find(x=>x.no===r.product);return p?p.name:'';}
+function vReqCard(m,r,i){
+ let d=[];const det=DETAIL[r.type];
+ if(det){const list=det[0]==='SPEC'?Object.values(C.SPEC).flat():C[det[0]];r.details.forEach(c=>d.push(lab(list,c)));}
+ if(r.detailName)d.push(r.detailName);if(r.otherNote)d.push(r.otherNote);
+ if(r.sampleNote)d.push('샘플: '+r.sampleNote);
+ let sch='';if(r.resp==='RSP_Accepted'){if(SENDBY_REQ.includes(r.type))sch=`발송 기한 ${sendDate(r)}`;else if(r.type==='REQ_FollowUp')sch=`${r.fuDate||'날짜 미정'} · ${lab(C.FUMETHOD,r.fuMethod)}`;else if(r.type==='REQ_FactoryVisit')sch=`방문 예정 ${r.visitMonth||'미정'}`;}
+ return `<div class="rcard"><div><b>${esc(lab(C.REQ,r.type))}</b> · <span class="en" style="font-size:15px">${esc(reqTarget(m,r))}</span>
+  <p>${esc(lab(C.REQDIR,r.dir))} · 대응: ${esc(lab(C.RSP,r.resp).replace(/ ?\(.*\)$/,''))}${r.respNote?' ('+esc(r.respNote)+')':''}${sch?' · '+esc(sch):''}</p>${d.length?`<p>${esc(d.join(', '))}</p>`:''}</div>
+  <button class="btn ghost small" data-act="editreq" data-id="${i}">수정</button></div>`;
+}
+function vDraft(){
+ const m=mt(),s=st(),r=draft;const disc=m.products.filter(p=>s.lines[p.no].discussed);
+ const isProd=PRODUCT_REQ.includes(r.type),isOther=r.type==='REQ_Other';
+ let h=`<div class="ovl"><div class="sheet" role="dialog" aria-label="요청 입력"><h2><span>${r.product==='COMMON'?'공통 요청':'제품 요청'} ${r.idx==null?'추가':'수정'}<span class="en">${esc(r.product==='COMMON'?'Not tied to a product':(m.products.find(p=>p.no===r.product)||{}).name||'')}</span></span><button class="btn ghost small" data-act="dcancel">닫기</button></h2>`;
+ if(r.err.length)h+=`<div class="note n-crit"><ul>${r.err.map(e=>`<li>${esc(e)}</li>`).join('')}</ul></div>`;
+ h+=`<div class="field"><span class="flabel">요청 유형 <span class="en">Request type</span></span>${chips(C.REQ.filter(o=>o[0]==='REQ_Other'||(r.product==='COMMON'?COMMON_REQ:PRODUCT_REQ).includes(o[0])),r.type,'dtype')}</div>`;
+ if(r.type){
+  if(SWITCHABLE.includes(r.type))h+=`<div class="field"><span class="flabel">누가 요청했나요? <span class="en">Requested by</span></span>${chips(C.REQDIR,r.dir,'ddir','s2')}</div>`;
+  if(isOther)h+=`<div class="field"><label for="d-other">기타 요청 내용<span class="req">필수</span></label>${r.product==='COMMON'?'':'<p class="sub" style="margin:-2px 0 10px">독점 판매 요청이 나오면 여기에 적습니다. 대상 지역과 최소 구매 조건을 논의했는지 함께 적어 주세요.</p>'}<input type="text" id="d-other" data-bind="d:otherNote" value="${esc(r.otherNote)}" placeholder="${r.product==='COMMON'?'한 줄로 적어 주세요 / Describe in one line':'예: 베트남 독점 요청, 최소 구매 조건 미정'}"></div>`;
+  const det=DETAIL[r.type];
+  if(det){let list=C[det[0]];if(det[0]==='SPEC'){const p=m.products.find(x=>x.no===r.product);list=C.SPEC[IND_GROUP[(p&&p.ind)||m.ind]]||C.SPEC[IND_GROUP[m.ind]]||[];}
+   h+=`<div class="field"><span class="flabel">세부 선택 <span class="en">Details (optional${det[1]==='multi'?', multiple':''})</span></span>${chips(list,r.details,'ddetail')}</div>`;
+   const hasOther=r.details.some(c=>/_Other$/.test(c));
+   if(r.type==='REQ_CertDocs'||hasOther)h+=`<div class="field"><label for="d-name">${r.type==='REQ_CertDocs'?'인증명·자료명':'기타 내용'}${hasOther?'<span class="req">필수</span>':''}</label><input type="text" id="d-name" data-bind="d:detailName" value="${esc(r.detailName)}" placeholder="한 줄로 적어 주세요 / Describe in one line"></div>`;}
+  if(r.type==='REQ_Sample')h+=`<div class="field"><label for="d-smp">샘플 내용<span class="req">필수</span> <span class="en">Sample details (one line)</span></label>
+   <p class="sub" style="margin:-2px 0 10px">종류, 수량, 유상·무상은 두 회사가 말로 정하고, 정해진 내용만 한 줄로 적습니다.</p>
+   <input type="text" id="d-smp" data-bind="d:sampleNote" value="${esc(r.sampleNote||'')}" placeholder="예: 기존 제품 10개, 무상"></div>`;
+  h+=`<div class="field"><span class="flabel">기업 및 바이어 대응 <span class="en">Company or buyer response</span></span>${chips(NO_DONE.includes(r.type)?C.RSP.filter(o=>o[0]!=='RSP_Done'):C.RSP,r.resp,'dresp')}</div>`;
+  if(r.resp==='RSP_Other')h+=`<div class="field"><label for="d-resp">기타 대응 내용<span class="req">필수</span></label><input type="text" id="d-resp" data-bind="d:respNote" value="${esc(r.respNote)}" placeholder="한 줄로 적어 주세요 / Describe in one line"></div>`;
+  if(r.resp==='RSP_Accepted'){
+   if(SENDBY_REQ.includes(r.type)){h+=`<div class="field"><span class="flabel">발송 기한<span class="req">필수</span> <span class="en">Send by</span></span>${chips(C.SEND,r.send,'dsend','s4')}</div>`;
+    if(r.send==='SEND_Date')h+=`<div class="field"><label for="d-sd">날짜<span class="req">필수</span></label><input type="date" id="d-sd" data-bind="d:sendDate" value="${esc(r.sendDate)}"></div>`;
+    else if(r.send)h+=`<div class="note n-info">발송 기한: ${sendDate(r)}</div>`;}
+   if(r.type==='REQ_FollowUp')h+=`<div class="field"><span class="flabel">방법<span class="req">필수</span> <span class="en">Method</span></span>${chips(C.FUMETHOD,r.fuMethod,'dfum')}</div>
+    <div class="field"><label for="d-fd">날짜 <span class="en">미정이면 비워 둡니다</span></label><input type="date" id="d-fd" data-bind="d:fuDate" value="${esc(r.fuDate)}"></div>`;
+   if(r.type==='REQ_FactoryVisit')h+=`<div class="field"><label for="d-vm">방문 예정 월 <span class="en">미정이면 비워 둡니다</span></label><input type="month" id="d-vm" data-bind="d:visitMonth" value="${esc(r.visitMonth)}"></div>`;
+  }
+ }
+ h+=`<div class="field row"><button class="btn" data-act="dsave">저장 <span class="en" style="color:inherit;opacity:.85">Save</span></button><button class="btn ghost" data-act="dcancel">취소</button><div class="grow"></div>${r.idx!=null?`<button class="btn danger" data-act="ddel">삭제</button>`:''}</div></div></div>`;
+ return h;
+}
+function vConfirm(){
+ const m=mt(),s=st(),held=s.status==='STATUS_Held';let body='';
+ if(!held)body=`<p>상담이 진행되지 않아 입력을 마칩니다. 입력해 둔 물량과 요청이 있으면 지워집니다. 제출할까요?</p>`;
+ else{const vols=m.products.filter(p=>s.lines[p.no].discussed&&num(s.lines[p.no].qty));
+  body=`<p class="sub" style="margin-bottom:8px">예상 취급 물량 <span class="en">Projected volume</span></p>`+(vols.length?`<ul>${vols.map(p=>`<li><b style="font-family:var(--font-latin)">${esc(p.name)}</b>: ${esc(volText(s.lines[p.no],p))}</li>`).join('')}</ul>`:`<p>입력한 물량이 없습니다.</p>`)+
+   `<p>${s.requests.length?`요청 ${s.requests.length}건`:'요청 0건입니다. 요청 없이 제출합니다.'}</p>`;
+  if(confirmBox.large)body+=`<div class="note n-warn">평소보다 큰 값입니다. 단위를 확인하세요.<br><span class="en" style="color:inherit">This is much larger than usual. Please check the unit.</span></div>`;}
+ return `<div class="ovl"><div class="sheet" role="dialog" aria-label="제출 확인" style="max-width:560px"><h2>입력한 내용을 확인해 주세요<span class="en">Please check your entry</span></h2>${body}
+  <div class="field row"><button class="btn" data-act="cok">맞음, 제출 <span class="en" style="color:inherit;opacity:.85">Correct</span></button><button class="btn ghost" data-act="cedit">고치기 <span class="en">Edit</span></button></div></div></div>`;
+}
+function vResult(){
+ const m=mt(),s=st(),r=s.result||{rows:[],annual:0,once:0};
+ return `<h1>내 상담 결과 <span class="en">My consultation result</span></h1><p class="sub">${esc(m.buyer)} × ${esc(m.co)} · ${m.slot}번 ${m.time}</p>
+ <section class="sec">${s.status!=='STATUS_Held'?`<p>상담이 진행되지 않은 건입니다. (${esc(lab(C.STATUS,s.status))})</p>`:r.rows.length?`<div style="overflow-x:auto"><table><thead><tr><th>제품</th><th>예상 취급 물량</th><th class="n">환산 금액(연, USD)</th><th class="n">1회성(USD)</th></tr></thead>
+  <tbody>${r.rows.map(x=>`<tr><td style="font-family:var(--font-latin)">${esc(x.name)}${x.direct?'<br><span class="en">USD 직접 입력</span>':''}</td><td>${esc(x.vol)}</td><td class="n">${fmt(x.annual)}</td><td class="n">${fmt(x.once)}</td></tr>`).join('')}</tbody>
+  <tfoot><tr><td colspan="2">합계</td><td class="n">${fmt(r.annual)}</td><td class="n">${fmt(r.once)}</td></tr></tfoot></table></div>`:`<p>입력한 물량이 없어 환산 금액이 없습니다.</p>`}
+  ${r.large?`<div class="note n-warn">평소보다 큰 물량입니다. 단위와 기간을 다시 확인해 주세요.</div>`:''}
+  <div class="note n-info">입력한 내용과 기업 단가로 계산한 추정값입니다. 바이어와 기업에는 보이지 않습니다.<br><span class="en">Estimated values. Not shown to the buyer or the company.</span></div></section>
+ ${SHOW_SHEET?vSheet(m,s):''}
+ <p class="sub" style="margin-top:16px">요청 ${s.requests.length}건 · 제출 ${new Date(s.submittedAt).toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'})}</p>`;
+}
+
+/* ---------- 구글 시트 저장 내용 미리 보기 (연습용에서만 켠다. 실제로 시트에 쓰지는 않는다) ----------
+   열 이름은 상담일지 데이터 표(Consultations / ProductLines / Requests)의 현재 열 이름. '신규' 표시는 아직 데이터 표에 없는 열. */
+const SHOW_SHEET=true;
+const SAVE_URL='https://script.google.com/macros/s/AKfycbxCMZmiK8-DG9emarWftRG8H9lLhps97So-Erk6KDpWT5iEilAw2GgZx1611G_Wu2bMWQ/exec';/* 저장 시험용 화면에서만 채운다 */
+function sheetTabs(m,s){const pad=n=>String(n).padStart(2,'0');
+ const held=s.status==='STATUS_Held',ALLDET=[].concat(C.QUOTE,Object.values(C.SPEC).flat(),C.DOC,C.TERMS,C.OEM);
+ const calc=held?SERVER.compute(m,s):{rows:[]};
+ const mode={'사전 매칭':'MATCHMODE_Pre','현장 매칭':'MATCHMODE_Walkin','노쇼 대체':'MATCHMODE_Replacement'}[m.mode]||'MATCHMODE_Pre';
+ const cell=(v,k)=>({v:v==null?'':v,k:k||''}),short=t=>t.replace(/ ?\(.*\)$/,'');
+ /* 열: [시트 열 이름, 한국어 설명, 신규 열 여부, 뜻 열을 함께 저장할지] */
+ const c1=[['ConsultationID','상담 번호'],['MatchMode','매칭 방식',0,1],['BuyerNo','바이어 번호'],['CompanyNo','기업 번호',0,1],['MeetingStatus','진행 상태',0,1],['CoopDirection','희망 거래 형태',0,1],['CoopOtherText','거래 형태 기타'],['Memo','그 밖의 메모'],['SubmittedAt','제출 시각']];
+ const r1=[[cell(m.id),cell(mode,m.mode),cell(m.buyerNo),cell(m.coNo,m.co),cell(s.status,lab(C.STATUS,s.status)),cell(held?s.coop.join(', '):'',held?s.coop.map(c=>lab(C.COOP,c)).join(', '):''),cell(held?s.coopOther:''),cell(held?s.memo:''),cell(s.submittedAt?(d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`)(new Date(s.submittedAt)):'')]];
+ const c2=[['LineID','제품 줄 번호',0,1],['ProductNo','제품 번호'],['ProductSource','제품 출처',0,1],['Industry','산업군'],['Discussed','상담 여부'],['VolumeQty','수량'],['VolumeUnit','단위',0,1],['VolumePeriod','기간',0,1],['DirectUSDTotal','USD 직접 입력'],['VolumeNote','물량의 조건·배경',1],['TimingCode','예상 시기',0,1],['AdjustedUSD','환산 금액(시트가 계산)',0,1]];
+ const r2=held?m.products.map(p=>{const l=s.lines[p.no],on=l.discussed,q=on&&num(l.qty)?num(l.qty):'',cr=calc.rows.find(x=>x.name===p.name);
+  return [cell(m.id+'-'+p.no,p.name),cell(p.no),cell(p.src==='사전 요청 제품'?'PRODSRC_PreRequested':'PRODSRC_Registered',p.src),cell(p.ind||m.ind),cell(on?'TRUE':'FALSE',on?'상담함':'상담 안 함'),cell(q),cell(q?l.unit:'',q?lab(unitList(p),l.unit):''),cell(q?l.period:'',q?lab(C.PERIOD,l.period):''),cell(q&&l.usd?num(l.usd):''),cell(q?l.note:''),cell(q?l.timing:'',q?lab(C.TIMING,l.timing):''),cell(cr?(cr.annual||cr.once):'',cr?(cr.annual?'연 환산':'1회성'):'')];}):[];
+ const c3=[['RequestID','요청 번호'],['LineID','제품 줄 번호',0,1],['Scope','범위'],['ReqType','요청 유형',0,1],['Direction','누가 요청',0,1],['DetailCodes','세부 선택',0,1],['DetailName','인증명·기타 내용'],['OtherNote','기타 요청 내용'],['SampleNote','샘플 내용',1],['Response','대응',0,1],['ResponseNote','기타 대응 내용'],['SendBy','발송 기한'],['SendByDate','발송 날짜'],['FollowUpDate','후속 미팅 날짜'],['FollowUpMethod','후속 미팅 방법'],['VisitMonth','방문 예정 월']];
+ const r3=held?s.requests.map((r,i)=>{const com=r.product==='COMMON',acc=r.resp==='RSP_Accepted',snd=acc&&SENDBY_REQ.includes(r.type),p=m.products.find(x=>x.no===r.product);
+  return [cell(m.id+'-Q'+(i+1)),cell(com?'':m.id+'-'+r.product,com?'':(p||{}).name),cell(com?'SCOPE_Common':'SCOPE_Product',com?'공통':'제품'),cell(r.type,lab(C.REQ,r.type)),cell(r.dir,lab(C.REQDIR,r.dir)),cell(r.details.join(', '),r.details.map(c=>short(lab(ALLDET,c))).join(', ')),cell(r.detailName),cell(r.otherNote),cell(r.sampleNote),cell(r.resp,short(lab(C.RSP,r.resp))),cell(r.respNote),cell(snd?r.send:'',snd?lab(C.SEND,r.send):''),cell(snd?sendDate(r):''),cell(acc?r.fuDate:''),cell(acc?r.fuMethod:'',acc?lab(C.FUMETHOD,r.fuMethod):''),cell(acc?r.visitMonth:'')];}):[];
+ return [{name:'Consultations',title:'① 상담 1건 = 1줄',why:'상담 한 건마다 한 줄입니다. 진행 상태와 희망 거래 형태, 그 밖의 메모가 여기에 들어갑니다.',cols:c1,rows:r1},
+  {name:'ProductLines',title:'② 제품 1개 = 1줄',why:'이 상담의 제품마다 한 줄입니다. 선택하지 않은 제품도 "상담 안 함"으로 한 줄이 남습니다. 환산 금액은 통역원이 입력하지 않고 시트가 기업 단가로 계산합니다.',cols:c2,rows:r2},
+  {name:'Requests',title:'③ 요청 1건 = 1줄',why:'요청마다 한 줄입니다. 상담 뒤 후속 조치 확인에 이 탭을 씁니다.',cols:c3,rows:r3}];
+}
+/* 시트로 보내는 모양: 각 탭의 A열은 상담 번호. 뜻 열(…_뜻)은 사람이 읽기 쉽게 함께 적는다(저장 시험용). */
+function sheetPayload(m,s){const tabs={};sheetTabs(m,s).forEach(t=>{const first=t.name==='Consultations';
+  const headers=(first?[]:['ConsultationID']).concat(...t.cols.map(c=>c[3]?[c[0],c[0]+'_뜻']:[c[0]]));
+  const rows=t.rows.map(r=>(first?[]:[m.id]).concat(...r.map((x,i)=>t.cols[i][3]?[x.v,x.k]:[x.v])));tabs[t.name]={headers,rows};});
+ return {id:m.id,tabs};}
+function vSheet(m,s){
+ const td=x=>`<td>${x.v===''?'<span class="sh-empty">(빈칸)</span>':`<span class="sh-v">${esc(typeof x.v==='number'?fmt(x.v):String(x.v))}</span>`}${x.k?`<small>${esc(x.k)}</small>`:''}</td>`;
+ return `<section class="sec"><h2>구글 시트에 저장되는 내용<span class="en">What is saved to the sheet</span></h2>
+  <div class="note n-info">${SAVE_URL?'이 화면에서 제출한 상담은 시험용 구글 시트의 탭 3개에 아래처럼 한 줄씩 저장됩니다.':'연습용 미리 보기입니다. 실제 시트에 쓰지는 않습니다. 방금 제출한 상담이 통합 스프레드시트의 탭 3개에 아래처럼 한 줄씩 저장됩니다.'} ${SAVE_URL&&s.savedAt?`<b>시트가 받은 시각: ${esc(s.savedAt)}</b>. `:''}굵은 글씨가 시트에 들어가는 값이고, 그 아래 작은 글씨는 그 값의 뜻입니다. 표는 옆으로 밀어서 볼 수 있습니다.</div>
+  ${sheetTabs(m,s).map(t=>`<h3 class="sh-t">${t.title} <span class="en">${t.name} 탭</span></h3><p class="sub">${t.why}</p>${t.rows.length?`<div class="sh-wrap"><table class="sh"><thead><tr>${t.cols.map(c=>`<th>${c[0]}${c[2]?' <span class="pill p-warn">신규</span>':''}<small>${c[1]}</small></th>`).join('')}</tr></thead><tbody>${t.rows.map(r=>`<tr>${r.map(td).join('')}</tr>`).join('')}</tbody></table></div>`:`<p class="sh-none">이 상담에서는 저장되는 줄이 없습니다.</p>`}`).join('')}
+ </section>`;
+}
+
+/* ---------- 검증 ---------- */
+function pendingInner(){const s=st();if(s.status!=='STATUS_Held')return '';const e=validate(mt(),s);
+ return e.length?`<div class="note n-warn"><b>제출 전에 채울 항목 ${e.length}개</b> <span class="en" style="color:inherit">To complete before submitting</span><ul>${e.map(i=>`<li>${esc(i)}</li>`).join('')}</ul></div>`
+  :`<div class="note n-info">입력할 것을 모두 채웠습니다. 상담을 마칠 때 제출합니다. 제출한 뒤에도 고칠 수 있습니다.</div>`;}
+function validate(m,s){
+ const e=[];if(s.status!=='STATUS_Held')return e;
+ const disc=m.products.filter(p=>s.lines[p.no].discussed);
+ if(!disc.length)e.push('제품을 1개 이상 선택하세요.');
+ let anyVol=false;
+ disc.forEach(p=>{const l=s.lines[p.no];if(!l.qty)return;const q=num(l.qty);
+  if(q===null||q<=0){e.push(`${p.name}: 물량은 0보다 큰 숫자로 입력하세요.`);return;}
+  anyVol=true;if(!l.unit){e.push(`${p.name}: 단위를 고르세요.`);return;}
+  const ui=C.UNIT.findIndex(u=>u[0]===l.unit);if(!p.conv[ui]){const u=num(l.usd);if(u===null||u<=0)e.push(`${p.name}: USD 총액을 입력하세요.`);}
+  if(!(l.note||'').trim())e.push(`${p.name}: 이 물량의 조건·배경을 적어 주세요.`);});
+ if(s.coop.includes('COOP_Other')&&!s.coopOther.trim())e.push('희망 거래 형태 기타 내용을 한 줄로 적어 주세요.');
+ return e;
+}
+function validateDraft(r){
+ const e=[];if(!r.type){e.push('요청 유형을 고르세요.');return e;}
+ if((PRODUCT_REQ.includes(r.type)||r.type==='REQ_Other')&&!r.product)e.push('어느 제품의 요청인지 고르세요.');
+ if(r.type==='REQ_Other'&&!r.otherNote.trim())e.push('기타 요청 내용을 한 줄로 적어 주세요.');
+ if(r.details.some(c=>/_Other$/.test(c))&&!r.detailName.trim())e.push('세부 선택의 기타 내용을 한 줄로 적어 주세요.');
+ if(r.type==='REQ_Sample'&&!(r.sampleNote||'').trim())e.push('샘플 내용을 한 줄로 적어 주세요.');
+ if(r.resp==='RSP_Other'&&!r.respNote.trim())e.push('기타 대응 내용을 한 줄로 적어 주세요.');
+ if(r.resp==='RSP_Accepted'){
+  if(SENDBY_REQ.includes(r.type)){if(!r.send)e.push('발송 기한을 고르세요.');else if(r.send==='SEND_Date'&&!r.sendDate)e.push('발송 날짜를 입력하세요.');}
+  if(r.type==='REQ_FollowUp'&&!r.fuMethod)e.push('후속 미팅·통화 방법을 고르세요.');}
+ return e;
+}
+function newSample(){return {type:'',qty:'',unit:'SMPU_TBD',terms:'SMPT_TBD'};}
+function newDraft(product){return {idx:null,type:'',product:product||'',dir:'REQDIR_B2C',details:[],detailName:'',otherNote:'',sampleNote:'',resp:'RSP_Unconfirmed',respNote:'',send:'',sendDate:'',fuDate:'',fuMethod:'',visitMonth:'',err:[]};}
+function clearSchedule(r){r.send='';r.sendDate='';r.fuDate='';r.fuMethod='';r.visitMonth='';}
+
+/* ---------- 전송(시제품용) ---------- */
+const SAVE_CODE='KBD-SAVE-TEST',sending=new Set();
+function flushReal(m,s){if(sending.has(m.id))return;sending.add(m.id);const at=s.submittedAt;
+ fetch(SAVE_URL,{method:'POST',body:JSON.stringify(Object.assign({code:SAVE_CODE},sheetPayload(m,s)))}).then(r=>r.json()).then(j=>{sending.delete(m.id);if(!j.ok)throw new Error(j.error||'저장 실패');
+   if(s.submittedAt!==at){flush();return;}/* 보내는 사이에 다시 제출했으면 한 번 더 보낸다 */
+   s.sent=true;s.result=SERVER.compute(m,s);s.savedAt=j.receivedAt||'';save();render();toast('구글 시트에 저장했습니다: '+m.id);})
+  .catch(e=>{sending.delete(m.id);toast('시트에 저장하지 못했습니다. 잠시 뒤 다시 보냅니다');});}
+if(SAVE_URL)setInterval(()=>flush(),20000);
+function flush(){if(offline)return;ALL().forEach(m=>{const s=S.m[m.id];if(SAVE_URL){if(s.submittedAt&&!s.sent)flushReal(m,s);return;}if(s.submittedAt&&!s.sent)setTimeout(()=>{if(offline||!s.submittedAt)return;s.sent=true;s.result=SERVER.compute(m,s);save();render();},900);});}
+
+/* ---------- 동작 ---------- */
+function keepScroll(fn){const y=window.scrollY;fn();window.scrollTo(0,y);}
+document.addEventListener('click',ev=>{
+ const b=ev.target.closest('[data-act]');if(!b)return;const a=b.dataset.act,v=b.dataset.val,id=b.dataset.id;const s=view.id?st():null,m=view.id?mt():null;
+ const tog=(arr,x)=>{const i=arr.indexOf(x);i<0?arr.push(x):arr.splice(i,1);};
+ switch(a){
+  case 'open':S.m[id].seen=true;save();view={name:'meet',id};issues=[];render();window.scrollTo(0,0);return;
+  case 'setupok':{const b=setupForm.buyer.trim().toUpperCase();if(!BUYERS[b]){setupForm.err='바이어 번호를 찾을 수 없습니다. 스티커의 번호를 다시 확인해 주세요.';render();return;}
+   if(setupForm.code.trim()!==DEMO_CODE){setupForm.err='접근 코드가 맞지 않습니다.';render();return;}
+   S.tablet=b;save();setupForm={buyer:'',code:'',err:''};view={name:'list',id:null};render();window.scrollTo(0,0);toast(b+' 태블릿으로 설정했습니다');return;}
+  case 'tabletreset':setupForm={buyer:'',code:'',err:''};view={name:'setup',id:null};render();window.scrollTo(0,0);return;
+  case 'deskopen':view={name:'desk',id:null};render();window.scrollTo(0,0);return;
+  case 'deskexit':desk.pick=null;view={name:S.tablet?'list':'setup',id:null};render();window.scrollTo(0,0);return;
+  case 'dpco':desk.pco=v;render();return;
+  case 'deskin':if(!desk.pco){desk.err='PCO를 고르세요.';render();return;}if(desk.code.trim()!==DEMO_CODE){desk.err='접근 코드가 맞지 않습니다.';render();return;}desk.ok=true;desk.err='';desk.buyer=null;render();return;
+  case 'dbuyer':desk.buyer=v;desk.pick=null;render();return;
+  case 'dpick':desk.pick=+id;desk.q='';render();{const el=$('picker');if(el)el.scrollIntoView({block:'start'});}return;
+  case 'dpickx':desk.pick=null;keepScroll(render);return;
+  case 'dnoshow':{const i=slotInfo(desk.buyer,+id);if(i.kind!=='planned'){toast('이 슬롯은 변경할 수 없습니다');render();return;}markDesk(i.active);save();keepScroll(render);toast('기업 불참으로 처리했습니다');return;}
+  case 'dreg':{const n=desk.pick,i=slotInfo(desk.buyer,n);if(i.kind==='held'||i.kind==='busy'||coBusy(id,n)){toast('등록할 수 없습니다. 다시 확인해 주세요');desk.pick=null;render();return;}
+   const base=`${desk.buyer}-1-${n}`;let nid=base,mode='현장 매칭';
+   if(i.kind!=='empty'){if(i.kind==='planned')markDesk(i.active);const r=i.ms.filter(m=>m.id.startsWith(base+'-R')).length;nid=base+'-R'+(r?r+1:'');mode='노쇼 대체';}
+   S.extra.push({id:nid,buyerNo:desk.buyer,slot:n,mode,coNo:id});S.m[nid]=blankM(mkMeeting(nid,desk.buyer,n,mode,id));S.m[nid].seen=false;save();desk.pick=null;keepScroll(render);toast('등록했습니다: '+nid);return;}
+  case 'result':view={name:'result',id};render();window.scrollTo(0,0);return;
+  case 'simdue':simDue=!simDue;render();return;
+  case 'zoom':zoom=id;render();return;
+  case 'zoomx':zoom=null;render();return;
+  case 'back':zoom=null;view={name:'list',id:null};draft=null;confirmBox=null;issues=[];render();window.scrollTo(0,0);return;
+  case 'offline':offline=!offline;render();if(!offline)flush();toast(offline?'연결이 끊긴 상태로 바꿨습니다':'연결되었습니다');return;
+  case 'reset':S=blank();save();view={name:'list',id:null};render();toast('모두 지웠습니다');return;
+  case 'status':s.status=v;break;
+  case 'disc':s.lines[id].discussed=!s.lines[id].discussed;if(!s.lines[id].discussed){Object.assign(s.lines[id],{qty:'',unit:'',usd:'',note:'',period:'PERIOD_Year',timing:'TIMING_Undecided'});s.requests=s.requests.filter(r=>r.product!==id);}break;
+  case 'unit':s.lines[id].unit=s.lines[id].unit===v?'':v;s.lines[id].usd='';break;
+  case 'period':s.lines[id].period=v;break;
+  case 'timing':s.lines[id].timing=v;break;
+  case 'coop':tog(s.coop,v);if(!s.coop.includes('COOP_Other'))s.coopOther='';break;
+  case 'addreq':draft=newDraft(id||'COMMON');render();return;
+  case 'editreq':draft=Object.assign(JSON.parse(JSON.stringify(s.requests[+id])),{idx:+id,err:[]});render();return;
+  case 'dcancel':draft=null;render();return;
+  case 'ddel':s.requests.splice(draft.idx,1);draft=null;save();render();toast('요청을 삭제했습니다');return;
+  case 'dtype':if(NO_DONE.includes(v)&&draft.resp==='RSP_Done')draft.resp='RSP_Unconfirmed';Object.assign(draft,newDraft(draft.product),{idx:draft.idx,type:v});render();return;
+  case 'dprod':draft.product=v;render();return;
+  case 'ddir':draft.dir=v;render();return;
+  case 'ddetail':if(DETAIL[draft.type][1]==='single')draft.details=draft.details[0]===v?[]:[v];else tog(draft.details,v);if(!draft.details.some(c=>/_Other$/.test(c))&&draft.type!=='REQ_CertDocs')draft.detailName='';render();return;
+  case 'dresp':draft.resp=v;if(v!=='RSP_Other')draft.respNote='';if(v!=='RSP_Accepted')clearSchedule(draft);render();return;
+  case 'dsend':draft.send=v;if(v!=='SEND_Date')draft.sendDate='';render();return;
+  case 'dfum':draft.fuMethod=v;render();return;
+  case 'stype':draft.samples[+id].type=v;render();return;
+  case 'sunit':draft.samples[+id].unit=v;if(v==='SMPU_TBD')draft.samples[+id].qty='';render();return;
+  case 'sterms':draft.samples[+id].terms=v;render();return;
+  case 'sadd':draft.samples.push(newSample());render();return;
+  case 'sdel':draft.samples.splice(+id,1);render();return;
+  case 'dsave':{draft.err=validateDraft(draft);if(draft.err.length){render();$('overlay').firstChild.scrollTop=0;return;}
+   const r=JSON.parse(JSON.stringify(draft));const idx=r.idx;delete r.idx;delete r.err;if(r.type!=='REQ_Sample')r.sampleNote='';if(!SWITCHABLE.includes(r.type))r.dir='REQDIR_B2C';
+   if(idx==null)s.requests.push(r);else s.requests[idx]=r;draft=null;
+   /* OEM·ODM·PB 요청을 넣으면 희망 거래 형태의 같은 항목을 함께 선택한다(통역원이 끌 수 있음) */
+   const auto=r.type==='REQ_OEM'&&r.details.includes('OEM_PrivateLabel')&&!s.coop.includes('COOP_OEMODM');if(auto)s.coop.push('COOP_OEMODM');
+   save();keepScroll(render);toast(auto?'요청을 저장했습니다. 희망 거래 형태에 OEM·ODM·PB를 함께 선택했습니다':'요청을 저장했습니다');return;}
+  case 'submit':issues=validate(m,s);if(issues.length){render();const el=$('issues');if(el)el.scrollIntoView({block:'start'});return;}
+   confirmBox={large:!offline&&SERVER.compute(m,s).large};render();return;
+  case 'cedit':confirmBox=null;render();return;
+  case 'cok':if(s.status!=='STATUS_Held'){m.products.forEach(p=>Object.assign(s.lines[p.no],{qty:'',unit:'',usd:'',note:''}));s.requests=[];s.coop=[];s.coopOther='';s.memo='';}
+   s.submittedAt=new Date().toISOString();s.sent=false;s.result=null;confirmBox=null;issues=[];save();view={name:'list',id:null};render();window.scrollTo(0,0);
+   toast(offline?'제출했습니다. 연결되면 전송됩니다':'제출했습니다');flush();return;
+ }
+ save();keepScroll(render);
+});
+document.addEventListener('input',ev=>{
+ const k=ev.target.dataset.bind;if(!k)return;const v=ev.target.value,p=k.split(':');
+ if(p[0]==='setup'){setupForm[p[1]]=v;return;}
+ if(p[0]==='desk'){desk[p[1]]=v;if(p[1]==='q'){keepScroll(render);const el=$('k-q');if(el){el.focus();try{el.setSelectionRange(v.length,v.length);}catch(e){}}}return;}
+ if(p[0]==='line'){
+  const sig=()=>{const s=st(),m=mt();return m.products.map(x=>{const l=s.lines[x.no];const q=num(l.qty);return (l.qty?1:0)+':'+(q===null?0:1);}).join('|');};
+  const before=sig();st().lines[p[1]][p[2]]=v;save();
+  if(before!==sig()){const id=ev.target.id;keepScroll(render);const el=$(id);if(el){el.focus();try{el.setSelectionRange(el.value.length,el.value.length);}catch(e){}}}
+  else{const pe=$('pending');if(pe)pe.innerHTML=pendingInner();}
+  return;
+ }
+ else if(p[0]==='d'){if(p[1]==='smp')draft.samples[+p[2]].qty=v;else draft[p[1]]=v;return;}
+ else st()[k]=v;
+ save();{const pe=$('pending');if(pe&&view.name==='meet')pe.innerHTML=pendingInner();}
+});
+render();flush();setInterval(drawDue,30000);
+</script>
+</body>
+</html>
