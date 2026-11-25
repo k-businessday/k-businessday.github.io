@@ -539,7 +539,7 @@ function vConfirm(){
 function vResult(){
  const m=mt(),s=st(),r=s.result||{rows:[],annual:0,once:0};
  return `<h1>${esc(SCEN[m.id].title)} 결과</h1><p class="sub" style="font-family:var(--font-latin)">${esc(m.co)}</p>${gradeHTML(m,s)}
- <section class="sec" style="display:none">${s.status!=='STATUS_Held'?`<p>상담이 진행되지 않은 건입니다. (${esc(lab(C.STATUS,s.status))})</p>`:r.rows.length?`<div style="overflow-x:auto"><table><thead><tr><th>제품</th><th>예상 취급 물량</th><th class="n">환산 금액(연, USD)</th><th class="n">1회성(USD)</th></tr></thead>
+ <section class="sec"><h2>내 상담 결과<span class="en">My consultation result</span></h2><p class="sub">실제 상담에서는 제출한 뒤 이 표를 볼 수 있습니다. 단위나 기간을 잘못 고르면 금액이 크게 달라지니 확인하는 습관을 들여 주세요.</p>${s.status!=='STATUS_Held'?`<p>상담이 진행되지 않은 건입니다. (${esc(lab(C.STATUS,s.status))})</p>`:r.rows.length?`<div style="overflow-x:auto"><table><thead><tr><th>제품</th><th>예상 취급 물량</th><th class="n">환산 금액(연, USD)</th><th class="n">1회성(USD)</th></tr></thead>
   <tbody>${r.rows.map(x=>`<tr><td style="font-family:var(--font-latin)">${esc(x.name)}${x.direct?'<br><span class="en">USD 직접 입력</span>':''}</td><td>${esc(x.vol)}</td><td class="n">${fmt(x.annual)}</td><td class="n">${fmt(x.once)}</td></tr>`).join('')}</tbody>
   <tfoot><tr><td colspan="2">합계</td><td class="n">${fmt(r.annual)}</td><td class="n">${fmt(r.once)}</td></tr></tfoot></table></div>`:`<p>입력한 물량이 없어 환산 금액이 없습니다.</p>`}
   ${r.large?`<div class="note n-warn">평소보다 큰 물량입니다. 단위와 기간을 다시 확인해 주세요.</div>`:''}
