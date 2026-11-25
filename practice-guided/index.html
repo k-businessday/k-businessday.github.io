@@ -551,25 +551,35 @@ function vResult(){
 /* ---------- 구글 시트 저장 내용 미리 보기 (연습용에서만 켠다. 실제로 시트에 쓰지는 않는다) ----------
    열 이름은 상담일지 데이터 표(Consultations / ProductLines / Requests)의 현재 열 이름. '신규' 표시는 아직 데이터 표에 없는 열. */
 const SHOW_SHEET=true;
-function vSheet(m,s){const pad=n=>String(n).padStart(2,'0');
+const SAVE_URL='';/* 저장 시험용 화면에서만 채운다 */
+function sheetTabs(m,s){const pad=n=>String(n).padStart(2,'0');
  const held=s.status==='STATUS_Held',ALLDET=[].concat(C.QUOTE,Object.values(C.SPEC).flat(),C.DOC,C.TERMS,C.OEM);
  const calc=held?SERVER.compute(m,s):{rows:[]};
  const mode={'사전 매칭':'MATCHMODE_Pre','현장 매칭':'MATCHMODE_Walkin','노쇼 대체':'MATCHMODE_Replacement'}[m.mode]||'MATCHMODE_Pre';
- const cell=(v,k)=>`<td>${v===''||v==null?'<span class="sh-empty">(빈칸)</span>':`<span class="sh-v">${esc(String(v))}</span>`}${k?`<small>${esc(k)}</small>`:''}</td>`;
- const tbl=(title,en,why,cols,rows)=>`<h3 class="sh-t">${title} <span class="en">${en} 탭</span></h3><p class="sub">${why}</p>${rows.length?`<div class="sh-wrap"><table class="sh"><thead><tr>${cols.map(c=>`<th>${c[0]}${c[2]?' <span class="pill p-warn">신규</span>':''}<small>${c[1]}</small></th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${r.join('')}</tr>`).join('')}</tbody></table></div>`:`<p class="sh-none">이 상담에서는 저장되는 줄이 없습니다.</p>`}`;
- const c1=[['ConsultationID','상담 번호'],['MatchMode','매칭 방식'],['BuyerNo','바이어 번호'],['CompanyNo','기업 번호'],['MeetingStatus','진행 상태'],['CoopDirection','희망 거래 형태'],['CoopOtherText','거래 형태 기타'],['Memo','그 밖의 메모'],['SubmittedAt','제출 시각']];
+ const cell=(v,k)=>({v:v==null?'':v,k:k||''}),short=t=>t.replace(/ ?\(.*\)$/,'');
+ /* 열: [시트 열 이름, 한국어 설명, 신규 열 여부, 뜻 열을 함께 저장할지] */
+ const c1=[['ConsultationID','상담 번호'],['MatchMode','매칭 방식',0,1],['BuyerNo','바이어 번호'],['CompanyNo','기업 번호',0,1],['MeetingStatus','진행 상태',0,1],['CoopDirection','희망 거래 형태',0,1],['CoopOtherText','거래 형태 기타'],['Memo','그 밖의 메모'],['SubmittedAt','제출 시각']];
  const r1=[[cell(m.id),cell(mode,m.mode),cell(m.buyerNo),cell(m.coNo,m.co),cell(s.status,lab(C.STATUS,s.status)),cell(held?s.coop.join(', '):'',held?s.coop.map(c=>lab(C.COOP,c)).join(', '):''),cell(held?s.coopOther:''),cell(held?s.memo:''),cell(s.submittedAt?(d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`)(new Date(s.submittedAt)):'')]];
- const c2=[['LineID','제품 줄 번호'],['ProductNo','제품 번호'],['ProductSource','제품 출처'],['Industry','산업군'],['Discussed','상담 여부'],['VolumeQty','수량'],['VolumeUnit','단위'],['VolumePeriod','기간'],['DirectUSDTotal','USD 직접 입력'],['VolumeNote','물량의 조건·배경',1],['TimingCode','예상 시기'],['AdjustedUSD','환산 금액(시트가 계산)']];
+ const c2=[['LineID','제품 줄 번호',0,1],['ProductNo','제품 번호'],['ProductSource','제품 출처',0,1],['Industry','산업군'],['Discussed','상담 여부'],['VolumeQty','수량'],['VolumeUnit','단위',0,1],['VolumePeriod','기간',0,1],['DirectUSDTotal','USD 직접 입력'],['VolumeNote','물량의 조건·배경',1],['TimingCode','예상 시기',0,1],['AdjustedUSD','환산 금액(시트가 계산)',0,1]];
  const r2=held?m.products.map(p=>{const l=s.lines[p.no],on=l.discussed,q=on&&num(l.qty)?num(l.qty):'',cr=calc.rows.find(x=>x.name===p.name);
-  return [cell(m.id+'-'+p.no,p.name),cell(p.no),cell(p.src==='사전 요청 제품'?'PRODSRC_PreRequested':'PRODSRC_Registered',p.src),cell(p.ind||m.ind),cell(on?'TRUE':'FALSE',on?'상담함':'상담 안 함'),cell(q),cell(q?l.unit:'',q?lab(unitList(p),l.unit):''),cell(q?l.period:'',q?lab(C.PERIOD,l.period):''),cell(q&&l.usd?num(l.usd):''),cell(q?l.note:''),cell(q?l.timing:'',q?lab(C.TIMING,l.timing):''),cell(cr?fmt(cr.annual||cr.once):'',cr?(cr.annual?'연 환산':'1회성'):'')];}):[];
- const c3=[['RequestID','요청 번호'],['LineID','제품 줄 번호'],['Scope','범위'],['ReqType','요청 유형'],['Direction','누가 요청'],['DetailCodes','세부 선택'],['DetailName','인증명·기타 내용'],['OtherNote','기타 요청 내용'],['SampleNote','샘플 내용',1],['Response','대응'],['ResponseNote','기타 대응 내용'],['SendBy','발송 기한'],['SendByDate','발송 날짜'],['FollowUpDate','후속 미팅 날짜'],['FollowUpMethod','후속 미팅 방법'],['VisitMonth','방문 예정 월']];
+  return [cell(m.id+'-'+p.no,p.name),cell(p.no),cell(p.src==='사전 요청 제품'?'PRODSRC_PreRequested':'PRODSRC_Registered',p.src),cell(p.ind||m.ind),cell(on?'TRUE':'FALSE',on?'상담함':'상담 안 함'),cell(q),cell(q?l.unit:'',q?lab(unitList(p),l.unit):''),cell(q?l.period:'',q?lab(C.PERIOD,l.period):''),cell(q&&l.usd?num(l.usd):''),cell(q?l.note:''),cell(q?l.timing:'',q?lab(C.TIMING,l.timing):''),cell(cr?(cr.annual||cr.once):'',cr?(cr.annual?'연 환산':'1회성'):'')];}):[];
+ const c3=[['RequestID','요청 번호'],['LineID','제품 줄 번호',0,1],['Scope','범위'],['ReqType','요청 유형',0,1],['Direction','누가 요청',0,1],['DetailCodes','세부 선택',0,1],['DetailName','인증명·기타 내용'],['OtherNote','기타 요청 내용'],['SampleNote','샘플 내용',1],['Response','대응',0,1],['ResponseNote','기타 대응 내용'],['SendBy','발송 기한'],['SendByDate','발송 날짜'],['FollowUpDate','후속 미팅 날짜'],['FollowUpMethod','후속 미팅 방법'],['VisitMonth','방문 예정 월']];
  const r3=held?s.requests.map((r,i)=>{const com=r.product==='COMMON',acc=r.resp==='RSP_Accepted',snd=acc&&SENDBY_REQ.includes(r.type),p=m.products.find(x=>x.no===r.product);
-  return [cell(m.id+'-Q'+(i+1)),cell(com?'':m.id+'-'+r.product,com?'':(p||{}).name),cell(com?'SCOPE_Common':'SCOPE_Product',com?'공통':'제품'),cell(r.type,lab(C.REQ,r.type)),cell(r.dir,lab(C.REQDIR,r.dir)),cell(r.details.join(', '),r.details.map(c=>lab(ALLDET,c).replace(/ ?\(.*\)$/,'')).join(', ')),cell(r.detailName),cell(r.otherNote),cell(r.sampleNote),cell(r.resp,lab(C.RSP,r.resp).replace(/ ?\(.*\)$/,'')),cell(r.respNote),cell(snd?r.send:'',snd?lab(C.SEND,r.send):''),cell(snd?sendDate(r):''),cell(acc?r.fuDate:''),cell(acc?r.fuMethod:'',acc?lab(C.FUMETHOD,r.fuMethod):''),cell(acc?r.visitMonth:'')];}):[];
+  return [cell(m.id+'-Q'+(i+1)),cell(com?'':m.id+'-'+r.product,com?'':(p||{}).name),cell(com?'SCOPE_Common':'SCOPE_Product',com?'공통':'제품'),cell(r.type,lab(C.REQ,r.type)),cell(r.dir,lab(C.REQDIR,r.dir)),cell(r.details.join(', '),r.details.map(c=>short(lab(ALLDET,c))).join(', ')),cell(r.detailName),cell(r.otherNote),cell(r.sampleNote),cell(r.resp,short(lab(C.RSP,r.resp))),cell(r.respNote),cell(snd?r.send:'',snd?lab(C.SEND,r.send):''),cell(snd?sendDate(r):''),cell(acc?r.fuDate:''),cell(acc?r.fuMethod:'',acc?lab(C.FUMETHOD,r.fuMethod):''),cell(acc?r.visitMonth:'')];}):[];
+ return [{name:'Consultations',title:'① 상담 1건 = 1줄',why:'상담 한 건마다 한 줄입니다. 진행 상태와 희망 거래 형태, 그 밖의 메모가 여기에 들어갑니다.',cols:c1,rows:r1},
+  {name:'ProductLines',title:'② 제품 1개 = 1줄',why:'이 상담의 제품마다 한 줄입니다. 선택하지 않은 제품도 "상담 안 함"으로 한 줄이 남습니다. 환산 금액은 통역원이 입력하지 않고 시트가 기업 단가로 계산합니다.',cols:c2,rows:r2},
+  {name:'Requests',title:'③ 요청 1건 = 1줄',why:'요청마다 한 줄입니다. 상담 뒤 후속 조치 확인에 이 탭을 씁니다.',cols:c3,rows:r3}];
+}
+/* 시트로 보내는 모양: 각 탭의 A열은 상담 번호. 뜻 열(…_뜻)은 사람이 읽기 쉽게 함께 적는다(저장 시험용). */
+function sheetPayload(m,s){const tabs={};sheetTabs(m,s).forEach(t=>{const first=t.name==='Consultations';
+  const headers=(first?[]:['ConsultationID']).concat(...t.cols.map(c=>c[3]?[c[0],c[0]+'_뜻']:[c[0]]));
+  const rows=t.rows.map(r=>(first?[]:[m.id]).concat(...r.map((x,i)=>t.cols[i][3]?[x.v,x.k]:[x.v])));tabs[t.name]={headers,rows};});
+ return {id:m.id,tabs};}
+function vSheet(m,s){
+ const td=x=>`<td>${x.v===''?'<span class="sh-empty">(빈칸)</span>':`<span class="sh-v">${esc(typeof x.v==='number'?fmt(x.v):String(x.v))}</span>`}${x.k?`<small>${esc(x.k)}</small>`:''}</td>`;
  return `<section class="sec"><h2>구글 시트에 저장되는 내용<span class="en">What is saved to the sheet</span></h2>
-  <div class="note n-info">연습용 미리 보기입니다. 실제 시트에 쓰지는 않습니다. 방금 제출한 상담이 통합 스프레드시트의 탭 3개에 아래처럼 한 줄씩 저장됩니다. 굵은 글씨가 시트에 들어가는 값이고, 그 아래 작은 글씨는 그 값의 뜻입니다. 표는 옆으로 밀어서 볼 수 있습니다.</div>
-  ${tbl('① 상담 1건 = 1줄','Consultations','상담 한 건마다 한 줄입니다. 진행 상태와 희망 거래 형태, 그 밖의 메모가 여기에 들어갑니다.',c1,r1)}
-  ${tbl('② 제품 1개 = 1줄','ProductLines','이 상담의 제품마다 한 줄입니다. 선택하지 않은 제품도 "상담 안 함"으로 한 줄이 남습니다. 환산 금액은 통역원이 입력하지 않고 시트가 기업 단가로 계산합니다.',c2,r2)}
-  ${tbl('③ 요청 1건 = 1줄','Requests','요청마다 한 줄입니다. 상담 뒤 후속 조치 확인에 이 탭을 씁니다.',c3,r3)}
+  <div class="note n-info">${SAVE_URL?'이 화면에서 제출한 상담은 시험용 구글 시트의 탭 3개에 아래처럼 한 줄씩 저장됩니다.':'연습용 미리 보기입니다. 실제 시트에 쓰지는 않습니다. 방금 제출한 상담이 통합 스프레드시트의 탭 3개에 아래처럼 한 줄씩 저장됩니다.'} ${SAVE_URL&&s.savedAt?`<b>시트가 받은 시각: ${esc(s.savedAt)}</b>. `:''}굵은 글씨가 시트에 들어가는 값이고, 그 아래 작은 글씨는 그 값의 뜻입니다. 표는 옆으로 밀어서 볼 수 있습니다.</div>
+  ${sheetTabs(m,s).map(t=>`<h3 class="sh-t">${t.title} <span class="en">${t.name} 탭</span></h3><p class="sub">${t.why}</p>${t.rows.length?`<div class="sh-wrap"><table class="sh"><thead><tr>${t.cols.map(c=>`<th>${c[0]}${c[2]?' <span class="pill p-warn">신규</span>':''}<small>${c[1]}</small></th>`).join('')}</tr></thead><tbody>${t.rows.map(r=>`<tr>${r.map(td).join('')}</tr>`).join('')}</tbody></table></div>`:`<p class="sh-none">이 상담에서는 저장되는 줄이 없습니다.</p>`}`).join('')}
  </section>`;
 }
 
@@ -607,7 +617,14 @@ function newDraft(product){return {idx:null,type:'',product:product||'',dir:'REQ
 function clearSchedule(r){r.send='';r.sendDate='';r.fuDate='';r.fuMethod='';r.visitMonth='';}
 
 /* ---------- 전송(시제품용) ---------- */
-function flush(){if(offline)return;ALL().forEach(m=>{const s=S.m[m.id];if(s.submittedAt&&!s.sent)setTimeout(()=>{if(offline||!s.submittedAt)return;s.sent=true;s.result=SERVER.compute(m,s);save();render();},900);});}
+const SAVE_CODE='KBD-SAVE-TEST',sending=new Set();
+function flushReal(m,s){if(sending.has(m.id))return;sending.add(m.id);const at=s.submittedAt;
+ fetch(SAVE_URL,{method:'POST',body:JSON.stringify(Object.assign({code:SAVE_CODE},sheetPayload(m,s)))}).then(r=>r.json()).then(j=>{sending.delete(m.id);if(!j.ok)throw new Error(j.error||'저장 실패');
+   if(s.submittedAt!==at){flush();return;}/* 보내는 사이에 다시 제출했으면 한 번 더 보낸다 */
+   s.sent=true;s.result=SERVER.compute(m,s);s.savedAt=j.receivedAt||'';save();render();toast('구글 시트에 저장했습니다: '+m.id);})
+  .catch(e=>{sending.delete(m.id);toast('시트에 저장하지 못했습니다. 잠시 뒤 다시 보냅니다');});}
+if(SAVE_URL)setInterval(()=>flush(),20000);
+function flush(){if(offline)return;ALL().forEach(m=>{const s=S.m[m.id];if(SAVE_URL){if(s.submittedAt&&!s.sent)flushReal(m,s);return;}if(s.submittedAt&&!s.sent)setTimeout(()=>{if(offline||!s.submittedAt)return;s.sent=true;s.result=SERVER.compute(m,s);save();render();},900);});}
 
 /* ---------- 동작 ---------- */
 function keepScroll(fn){const y=window.scrollY;fn();window.scrollTo(0,y);}
