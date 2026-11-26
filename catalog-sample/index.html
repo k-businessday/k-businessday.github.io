@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>K-BUSINESS DAY 2026 · Online Catalog (sample)</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<style>
+:root{--bg:#F6F5F2;--panel:#FFFFFF;--fg:#1A1F2B;--muted:#5B6170;--line:#D8DAE0;--accent:#A8324F;--tint:rgba(168,50,79,.08);--warn:#B4510F;--warnbg:#FBEDE3;--font:Inter,'Noto Sans KR',system-ui,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font);font-size:14px;line-height:1.55}
+a{color:var(--accent)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+.note{background:var(--warnbg);color:var(--warn);font-size:13px;padding:8px 0}
+.top{background:#1A1F2B;color:#fff}.top .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:14px 20px;flex-wrap:wrap}
+.top b{font-size:16px;letter-spacing:.5px}.top .sub{opacity:.75;font-size:13px}
+.nav{background:var(--panel);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+.nav .wrap{display:flex;gap:4px;overflow-x:auto;padding:0 20px}
+.nav button{font:inherit;font-weight:600;font-size:13px;background:none;border:0;border-bottom:3px solid transparent;padding:14px 14px;cursor:pointer;color:var(--muted);white-space:nowrap}
+.nav button[aria-selected="true"]{color:var(--accent);border-bottom-color:var(--accent)}
+.filters{display:flex;gap:8px;flex-wrap:wrap;padding:16px 0;align-items:center}
+.filters select,.filters input{font:inherit;font-size:13px;padding:8px 10px;border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--fg);min-height:38px}
+.filters input{flex:1;min-width:180px}.meta{font-size:12px;color:var(--muted);margin-left:auto}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;padding-bottom:40px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:14px;cursor:pointer;display:flex;flex-direction:column;gap:8px;text-align:left;font:inherit;color:inherit;min-width:0}
+.card:hover,.card:focus-visible{border-color:var(--accent);outline:none}
+.card .code{font-size:11px;font-weight:700;letter-spacing:.6px;color:var(--accent)}.card h3{margin:0;font-size:15px;line-height:1.25}
+.card .p{font-size:13px;color:var(--muted)}
+.ph{height:150px;border-radius:6px;background:var(--tint);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.ph img{max-width:100%;max-height:100%;object-fit:contain}.ph.sq{background:#fff}.ph.sq img{width:100%;height:100%;object-fit:cover}
+.chips{display:flex;gap:6px;flex-wrap:wrap}.chip{font-size:11px;font-weight:600;padding:3px 8px;border-radius:4px;background:var(--tint);color:var(--accent)}
+.chip.v{background:#1A1F2B;color:#fff}
+/* company page */
+.back{display:inline-flex;align-items:center;gap:6px;font:inherit;font-weight:600;font-size:13px;color:var(--fg);background:none;border:0;padding:16px 0 8px;cursor:pointer}
+.co{background:var(--panel);border:1px solid var(--line);border-radius:10px;margin:6px 0 40px;overflow:hidden}
+.band{height:8px;background:var(--accent)}
+.hd{display:flex;gap:16px;align-items:center;padding:20px 24px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.logo{width:80px;height:80px;flex:none;background:#fff;border:1px solid var(--line);border-radius:6px;display:flex;align-items:center;justify-content:center;overflow:hidden}.logo img{max-width:66px;max-height:66px;object-fit:contain}
+.hd .k{font-size:11px;font-weight:700;letter-spacing:.7px;color:var(--accent);text-transform:uppercase}.hd h2{margin:2px 0 0;font-size:24px;line-height:1.2}.hd .ko{font-size:13px;color:var(--muted)}
+.hd .right{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+.sec{padding:18px 24px;border-bottom:1px solid var(--line)}.sec:last-child{border-bottom:0}
+h4.t{margin:0 0 8px;font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--accent)}
+.sec p{margin:0;max-width:90ch}
+.kv{display:grid;grid-template-columns:140px minmax(0,1fr);gap:4px 12px;font-size:13px}.kv span:nth-child(odd){color:var(--muted)}
+.prod{display:grid;grid-template-columns:160px minmax(0,1fr) 300px;gap:22px;padding:20px 24px;border-bottom:1px solid var(--line)}
+.prod .ph{width:160px;height:160px}
+.prod h5{margin:0 0 4px;font-size:17px;line-height:1.25}.prod .chips{margin-bottom:8px}.prod p{margin:6px 0 0;font-size:13px}
+.links{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.btn{font:inherit;font-weight:600;font-size:12px;padding:8px 12px;border-radius:5px;border:1px solid var(--fg);color:var(--fg);text-decoration:none;display:inline-flex;align-items:center;gap:6px;background:transparent;cursor:pointer}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.vcol{display:flex;flex-direction:column;gap:8px}
+.player{position:relative;width:100%;border-radius:8px;overflow:hidden;background:#000;aspect-ratio:16/9}
+.player.shorts{aspect-ratio:9/16;max-width:220px;margin:0 auto}
+.player img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.92}
+.player iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.play{position:absolute;inset:0;width:100%;height:100%;border:0;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.play span{width:58px;height:58px;border-radius:50%;background:var(--accent);box-shadow:0 4px 16px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center}
+.play:hover span{transform:scale(1.06)}.play svg{margin-left:4px}
+.vmeta{font-size:12px;color:var(--muted);text-align:center}
+.novid{border:1px dashed var(--line);border-radius:8px;padding:14px;font-size:12px;color:var(--muted);text-align:center}
+.pending{font-size:13px;color:var(--muted);background:var(--tint);border-radius:6px;padding:10px 12px}
+.foot{font-size:12px;color:var(--muted);padding:0 0 40px;max-width:80ch}
+@media (max-width:860px){.prod{grid-template-columns:1fr}.prod .ph{width:100%;height:220px}.player.shorts{margin:0}.kv{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="note"><div class="wrap">시험판 · 접수 자료(선정 전) 중 산업군별 1개사씩 무작위 8개사입니다. 유튜브 링크를 제출한 4개사(ZEROSET·MEREN·Daon International·Liberte)는 제품 옆에서 영상이 바로 재생됩니다.</div></div>
+<div class="top"><div class="wrap"><div><b>K-BUSINESS DAY 2026</b> <span class="sub">· Online catalog of participating companies</span></div><div class="sub">22–23 Dec 2026 · COEX, Seoul</div></div></div>
+<div class="nav"><div class="wrap" id="tabs" role="tablist"></div></div>
+<div class="wrap" id="main"></div>
+<script>
+const VOL={'Beauty & Health':{accent:'#A8324F',tint:'rgba(168,50,79,.08)',chapters:['Beauty','Medical devices']},'Fashion & Textile':{accent:'#2F3E8F',tint:'rgba(47,62,143,.08)',chapters:['Textile & fashion']},'Lifestyle':{accent:'#2F6B3F',tint:'rgba(47,107,63,.08)',chapters:['Living','Furniture & interior','Stationery','Baby & maternity']},'Fine Food':{accent:'#B4510F',tint:'rgba(180,81,15,.08)',chapters:['Food']}};
+let C=[], vol='Beauty & Health', ch='', code='', q='';
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const ph=(p,cls)=>p?`<div class="ph ${p.tr?'':'sq'} ${cls||''}"><img src="${p.src}" alt=""></div>`:`<div class="ph ${cls||''}" style="font-size:12px;color:var(--muted)">Photo not received (file over 10 MB)</div>`;
+function applyVol(){const v=VOL[vol];document.documentElement.style.setProperty('--accent',v.accent);document.documentElement.style.setProperty('--tint',v.tint);}
+function renderTabs(){$('#tabs').innerHTML=Object.keys(VOL).map(v=>`<button role="tab" aria-selected="${v===vol}" data-v="${v}">${v} (${C.filter(c=>c.vol===v).length})</button>`).join('');}
+function list(){return C.filter(c=>c.vol===vol&&(!ch||c.ch===ch)&&(!code||c.codes.includes(code))&&(!q||(c.name+' '+c.name_ko+' '+c.products.map(p=>p.name).join(' ')).toLowerCase().includes(q.toLowerCase()))).sort((a,b)=>a.codes[0].localeCompare(b.codes[0]));}
+function renderList(){const codes=[...new Set(C.filter(c=>c.vol===vol).flatMap(c=>c.codes))].sort();const L=list();
+ $('#main').innerHTML=`<div class="filters"><select id="chapter" aria-label="Chapter"><option value="">All chapters</option>${VOL[vol].chapters.map(c=>`<option ${c===ch?'selected':''}>${c}</option>`).join('')}</select><select id="code" aria-label="Product code"><option value="">All product codes</option>${codes.map(c=>`<option ${c===code?'selected':''}>${c}</option>`).join('')}</select><input id="q" type="search" value="${esc(q)}" placeholder="Search company or product" aria-label="Search"><span class="meta">${L.length} of ${C.filter(c=>c.vol===vol).length} companies in this volume · sample of 8 from 840 applicants</span></div>
+ <div class="grid">${L.map(c=>{const nv=c.products.filter(p=>p.yt).length;return `<button class="card" data-id="${c.id}"><div class="code">${c.codes[0]} · ${c.id}</div><h3>${esc(c.name)}</h3>${ph(c.products[0]&&c.products[0].photo)}<div class="p">${c.products.map(p=>esc(p.name)).join(' · ')}</div><div class="chips"><span class="chip">${esc(c.ch)}</span>${nv?`<span class="chip v">▶ ${nv} video${nv>1?'s':''}</span>`:''}</div></button>`}).join('')||'<p style="color:var(--muted)">No company matches these filters.</p>'}</div>
+ <div class="foot">Videos play inside this page. Product videos were submitted by each company as YouTube links on its matching form; prices are discussed at the meeting and are never shown here.</div>`;
+ $('#chapter').onchange=e=>{ch=e.target.value;renderList()};$('#code').onchange=e=>{code=e.target.value;renderList()};$('#q').oninput=e=>{q=e.target.value;renderList();$('#q').focus();$('#q').setSelectionRange(q.length,q.length)};
+ $('#main').onclick=e=>{const b=e.target.closest('.card');if(b)location.hash=b.dataset.id};}
+function video(p){ if(!p.yt) return `<div class="vcol"><div class="novid">No video submitted for this product</div></div>`;
+ return `<div class="vcol"><div class="player ${p.shorts?'shorts':''}" data-yt="${p.yt}"><img src="https://i.ytimg.com/vi/${p.yt}/hqdefault.jpg" alt="" onerror="this.remove()"><button class="play" aria-label="Play video"><span><svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></span></button></div><div class="vmeta">${p.shorts?'Short (vertical)':'Product video'} · submitted by the company</div></div>`;}
+function renderCompany(c){vol=c.vol;applyVol();renderTabs();
+ const pr=p=>`<div class="prod">${ph(p.photo)}<div><h4 class="t">Product 0${p.n}</h4><h5>${esc(p.name)}</h5><div class="chips"><span class="chip">${esc(p.code)}</span>${c.brand?`<span class="chip">${esc(c.brand)}</span>`:''}</div><p><b>Overview.</b> ${esc(p.intro)}</p>${p.why?`<p><b>Why it stands out.</b> ${esc(p.why)}</p>`:''}${p.url?`<div class="links"><a class="btn" href="${esc(p.url)}" target="_blank" rel="noopener">Product page ↗</a></div>`:''}</div>${video(p)}</div>`;
+ $('#main').innerHTML=`<button class="back" id="back">← Back to ${esc(vol)}</button>
+ <section class="co"><div class="band"></div>
+ <div class="hd"><div class="logo">${c.logo?`<img src="${c.logo.src}" alt="">`:'LOGO'}</div><div><div class="k">${c.vol} / ${esc(c.ch)} · ${c.id}</div><h2>${esc(c.name)}</h2><div class="ko">${esc(c.name_ko)}${c.brand?' · '+esc(c.brand):''}</div></div><div class="right"><a class="btn primary" href="https://wa.me/">Chat on WhatsApp</a><a class="btn" href="#" onclick="return false">Request another product</a></div></div>
+ <div class="sec"><div class="kv"><span>Product codes</span><span>${c.codes.join(', ')}</span><span>Certifications</span><span style="color:var(--muted)">To be completed by the company (by 7 Dec)</span><span>Export markets</span><span style="color:var(--muted)">To be completed by the company</span><span>Last updated</span><span>${c.updated}</span></div></div>
+ <div class="sec"><h4 class="t">About the company</h4><p>${esc(c.about)}</p></div>
+ ${c.products.map(pr).join('')}
+ <div class="sec"><h4 class="t">Trade conditions</h4><div class="pending">Selling unit, MOQ, units per package, lead time and annual supply are entered by the company on its own edit screen after selection (deadline 7 Dec). Prices are discussed at the meeting and are never shown here.</div></div>
+ <div class="sec"><h4 class="t">Documents</h4><a class="btn" href="#" onclick="return false">Company product catalog (PDF)</a></div>
+ </section>`;
+ $('#back').onclick=()=>{location.hash=''};
+ $('#main').onclick=e=>{const b=e.target.closest('.play');if(!b)return;const box=b.parentElement;box.innerHTML=`<iframe src="https://www.youtube-nocookie.com/embed/${box.dataset.yt}?autoplay=1&rel=0&playsinline=1" title="Product video" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;};
+ window.scrollTo(0,0);}
+function route(){const id=location.hash.replace('#','');const c=C.find(x=>x.id===id);if(c)renderCompany(c);else{applyVol();renderTabs();renderList();}}
+$('#tabs').onclick=e=>{const t=e.target.closest('button');if(!t)return;vol=t.dataset.v;ch='';code='';q='';if(location.hash)location.hash='';else route();};
+window.addEventListener('hashchange',route);
+fetch('data.json').then(r=>r.json()).then(d=>{C=d;route();}).catch(()=>{$('#main').innerHTML='<p style="color:var(--muted)">Could not load the sample data.</p>';});
+</script>
+</body>
+</html>
