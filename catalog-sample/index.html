@@ -5,105 +5,169 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>K-BUSINESS DAY 2026 · Online Catalog (sample)</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;700&display=swap">
 <style>
-:root{--bg:#F6F5F2;--panel:#FFFFFF;--fg:#1A1F2B;--muted:#5B6170;--line:#D8DAE0;--accent:#A8324F;--tint:rgba(168,50,79,.08);--warn:#B4510F;--warnbg:#FBEDE3;--font:Inter,'Noto Sans KR',system-ui,sans-serif}
+/* Tokens. Volume accents are fixed project colors; everything else is paper, ink, slate. */
+:root{--paper:#FBFAF8;--panel:#FFFFFF;--ink:#16181D;--slate:#646B78;--hair:#E6E4DF;--soft:#F1EFEA;
+ --accent:#A8324F;--accent-ink:#FFFFFF;--tint:#F8EEF1;--font:Manrope,'Noto Sans KR',system-ui,sans-serif}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font);font-size:14px;line-height:1.55}
-a{color:var(--accent)}
-.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
-.note{background:var(--warnbg);color:var(--warn);font-size:13px;padding:8px 0}
-.top{background:#1A1F2B;color:#fff}.top .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:14px 20px;flex-wrap:wrap}
-.top b{font-size:16px;letter-spacing:.5px}.top .sub{opacity:.75;font-size:13px}
-.nav{background:var(--panel);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
-.nav .wrap{display:flex;gap:4px;overflow-x:auto;padding:0 20px}
-.nav button{font:inherit;font-weight:600;font-size:13px;background:none;border:0;border-bottom:3px solid transparent;padding:14px 14px;cursor:pointer;color:var(--muted);white-space:nowrap}
-.nav button[aria-selected="true"]{color:var(--accent);border-bottom-color:var(--accent)}
-.filters{display:flex;gap:8px;flex-wrap:wrap;padding:16px 0;align-items:center}
-.filters select,.filters input{font:inherit;font-size:13px;padding:8px 10px;border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--fg);min-height:38px}
-.filters input{flex:1;min-width:180px}.meta{font-size:12px;color:var(--muted);margin-left:auto}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;padding-bottom:40px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:14px;cursor:pointer;display:flex;flex-direction:column;gap:8px;text-align:left;font:inherit;color:inherit;min-width:0}
-.card:hover,.card:focus-visible{border-color:var(--accent);outline:none}
-.card .code{font-size:11px;font-weight:700;letter-spacing:.6px;color:var(--accent)}.card h3{margin:0;font-size:15px;line-height:1.25}
-.card .p{font-size:13px;color:var(--muted)}
-.ph{height:150px;border-radius:6px;background:var(--tint);display:flex;align-items:center;justify-content:center;overflow:hidden}
-.ph img{max-width:100%;max-height:100%;object-fit:contain}.ph.sq{background:#fff}.ph.sq img{width:100%;height:100%;object-fit:cover}
-.chips{display:flex;gap:6px;flex-wrap:wrap}.chip{font-size:11px;font-weight:600;padding:3px 8px;border-radius:4px;background:var(--tint);color:var(--accent)}
-.chip.v{background:#1A1F2B;color:#fff}
-/* company page */
-.back{display:inline-flex;align-items:center;gap:6px;font:inherit;font-weight:600;font-size:13px;color:var(--fg);background:none;border:0;padding:16px 0 8px;cursor:pointer}
-.co{background:var(--panel);border:1px solid var(--line);border-radius:10px;margin:6px 0 40px;overflow:hidden}
-.band{height:8px;background:var(--accent)}
-.hd{display:flex;gap:16px;align-items:center;padding:20px 24px;border-bottom:1px solid var(--line);flex-wrap:wrap}
-.logo{width:80px;height:80px;flex:none;background:#fff;border:1px solid var(--line);border-radius:6px;display:flex;align-items:center;justify-content:center;overflow:hidden}.logo img{max-width:66px;max-height:66px;object-fit:contain}
-.hd .k{font-size:11px;font-weight:700;letter-spacing:.7px;color:var(--accent);text-transform:uppercase}.hd h2{margin:2px 0 0;font-size:24px;line-height:1.2}.hd .ko{font-size:13px;color:var(--muted)}
-.hd .right{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
-.sec{padding:18px 24px;border-bottom:1px solid var(--line)}.sec:last-child{border-bottom:0}
-h4.t{margin:0 0 8px;font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--accent)}
-.sec p{margin:0;max-width:90ch}
-.kv{display:grid;grid-template-columns:140px minmax(0,1fr);gap:4px 12px;font-size:13px}.kv span:nth-child(odd){color:var(--muted)}
-.prod{display:grid;grid-template-columns:160px minmax(0,1fr) 300px;gap:22px;padding:20px 24px;border-bottom:1px solid var(--line)}
-.prod .ph{width:160px;height:160px}
-.prod h5{margin:0 0 4px;font-size:17px;line-height:1.25}.prod .chips{margin-bottom:8px}.prod p{margin:6px 0 0;font-size:13px}
-.links{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-.btn{font:inherit;font-weight:600;font-size:12px;padding:8px 12px;border-radius:5px;border:1px solid var(--fg);color:var(--fg);text-decoration:none;display:inline-flex;align-items:center;gap:6px;background:transparent;cursor:pointer}
-.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
-.vcol{display:flex;flex-direction:column;gap:8px}
-.player{position:relative;width:100%;border-radius:8px;overflow:hidden;background:#000;aspect-ratio:16/9}
-.player.shorts{aspect-ratio:9/16;max-width:220px;margin:0 auto}
-.player img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.92}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+.sample{font-size:12.5px;color:var(--slate);padding:8px 0;border-bottom:1px solid var(--hair);background:var(--panel)}
+/* Masthead: event name left, date right, volume spine below */
+.mast{background:var(--panel)}
+.mast .wrap{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:22px 24px 14px;flex-wrap:wrap}
+.brand{font-weight:800;font-size:17px;letter-spacing:-.01em}.brand small{display:block;font-weight:500;font-size:12.5px;color:var(--slate);letter-spacing:0}
+.when{font-size:13px;color:var(--slate)}
+.vols{background:var(--panel);border-bottom:1px solid var(--hair);position:sticky;top:0;z-index:5}
+.vols .wrap{display:flex;gap:0;overflow-x:auto;scrollbar-width:none}
+.vols button{background:none;border:0;padding:12px 18px 12px 0;margin-right:18px;border-bottom:2px solid transparent;cursor:pointer;display:flex;align-items:center;gap:9px;color:var(--slate);font-weight:600;font-size:14px;white-space:nowrap}
+.vols button i{width:12px;height:12px;border-radius:50%;background:var(--c);flex:none;opacity:.55}
+.vols button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--c)}.vols button[aria-selected="true"] i{opacity:1}
+/* Volume hero: the one memorable element — the volume's own pattern band */
+.hero{position:relative;color:var(--accent-ink);background:var(--accent);overflow:hidden;border-radius:14px;margin:24px 0 18px;padding:34px 36px 30px;min-height:180px;display:flex;flex-direction:column;justify-content:flex-end;gap:6px}
+.hero .pat{position:absolute;inset:0;opacity:.22;background-repeat:repeat;pointer-events:none}
+.hero h1{position:relative;margin:0;font-size:clamp(30px,4.6vw,46px);font-weight:800;letter-spacing:-.02em;line-height:1.05}
+.hero p{position:relative;margin:0;font-size:14px;opacity:.9;max-width:60ch}
+.hero .vol-no{position:relative;font-size:13px;font-weight:600;opacity:.85}
+/* Toolbar */
+.bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:6px 0 18px}
+.bar .count{font-size:13px;color:var(--slate);margin-right:auto}
+.field{display:flex;align-items:center;gap:8px;border:1px solid var(--hair);background:var(--panel);border-radius:10px;padding:0 12px;height:40px}
+.field select,.field input{border:0;background:none;font:inherit;font-size:14px;color:var(--ink);height:38px;outline:none;min-width:0}
+.field input{width:220px}.field svg{flex:none;color:var(--slate)}
+/* Company cards: photo first, then the facts */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(236px,1fr));gap:18px;padding-bottom:56px}
+.card{background:var(--panel);border:1px solid var(--hair);border-radius:14px;overflow:hidden;cursor:pointer;text-align:left;padding:0;display:flex;flex-direction:column;transition:border-color .15s,transform .15s}
+.card:hover{border-color:var(--ink)}.card:active{transform:scale(.99)}
+.card .media{aspect-ratio:1;background:var(--soft);display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;border-bottom:1px solid var(--hair)}
+.card .media img{max-width:78%;max-height:78%;object-fit:contain}.card .media.sq img{width:100%;height:100%;max-width:none;max-height:none;object-fit:cover}
+.card .media .nophoto{font-size:12px;color:var(--slate);padding:12px;text-align:center}
+.card .vflag{position:absolute;left:12px;top:12px;background:rgba(22,24,29,.82);color:#fff;font-size:11.5px;font-weight:700;padding:5px 9px 5px 7px;border-radius:999px;display:flex;align-items:center;gap:5px;backdrop-filter:blur(4px)}
+.card .body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:4px}
+.card .co{font-weight:800;font-size:16px;letter-spacing:-.01em;line-height:1.25}
+.card .ko{font-size:12.5px;color:var(--slate)}
+.card .pl{font-size:13px;color:var(--ink);margin-top:6px;line-height:1.45}
+.card .ft{display:flex;justify-content:space-between;gap:8px;margin-top:10px;font-size:12px;color:var(--slate)}
+.card .ft b{color:var(--accent);font-weight:700}
+.empty{color:var(--slate);padding:40px 0}
+/* Company page */
+.crumb{display:flex;align-items:center;gap:10px;padding:22px 0 14px;font-size:13.5px;color:var(--slate)}
+.crumb button{background:none;border:0;padding:0;cursor:pointer;color:var(--ink);font-weight:600;display:inline-flex;align-items:center;gap:6px}
+.page{display:grid;grid-template-columns:300px minmax(0,1fr);gap:28px;align-items:start;padding-bottom:64px}
+.side{position:sticky;top:64px;display:flex;flex-direction:column;gap:14px}
+.id{background:var(--panel);border:1px solid var(--hair);border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:14px}
+.id .logo{height:84px;display:flex;align-items:center}.id .logo img{max-height:72px;max-width:170px;object-fit:contain}
+.id .logo .none{font-size:12px;color:var(--slate)}
+.id h1{margin:0;font-size:26px;font-weight:800;letter-spacing:-.02em;line-height:1.1}
+.id .ko{font-size:13.5px;color:var(--slate);margin-top:4px}
+.facts{display:grid;grid-template-columns:auto 1fr;gap:7px 14px;font-size:13.5px;border-top:1px solid var(--hair);padding-top:14px}
+.facts dt{color:var(--slate);margin:0}.facts dd{margin:0;min-width:0;overflow-wrap:anywhere}.facts dd.todo{color:var(--slate);font-style:italic}
+.code{display:inline-block;font-weight:700;color:var(--accent);background:var(--tint);padding:2px 8px;border-radius:6px;font-size:12.5px}
+.act{display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--hair);padding-top:14px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:42px;padding:0 16px;border-radius:10px;border:1px solid var(--ink);background:var(--panel);font-weight:700;font-size:14px;text-decoration:none;cursor:pointer}
+.btn.fill{background:var(--ink);color:#fff;border-color:var(--ink)}
+.btn.sm{height:34px;font-size:13px;padding:0 12px;border-color:var(--hair)}
+.btn.sm:hover{border-color:var(--ink)}
+.main{display:flex;flex-direction:column;gap:20px;min-width:0}
+.about{background:var(--panel);border:1px solid var(--hair);border-radius:14px;padding:24px 26px}
+.about h2,.product h2,.terms h2{margin:0 0 10px;font-size:13px;font-weight:700;color:var(--slate)}
+.about p{margin:0;max-width:78ch;font-size:15px}
+/* Product: media pair on top (photo + video), facts below */
+.product{background:var(--panel);border:1px solid var(--hair);border-radius:14px;overflow:hidden}
+.product .media{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--hair)}
+.product .media>*{min-height:300px}
+.photo{background:var(--soft);display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+.photo img{max-width:70%;max-height:70%;object-fit:contain}.photo.sq img{width:100%;height:100%;max-width:none;max-height:none;object-fit:cover}
+.photo .nophoto{font-size:13px;color:var(--slate);text-align:center;padding:20px}
+.video{background:#0E0F12;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.video .player{position:relative;width:100%;height:100%}
+.video.shorts .player{width:auto;aspect-ratio:9/16;height:100%;max-height:420px}
+.player img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.85}
 .player iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-.play{position:absolute;inset:0;width:100%;height:100%;border:0;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.play span{width:58px;height:58px;border-radius:50%;background:var(--accent);box-shadow:0 4px 16px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center}
-.play:hover span{transform:scale(1.06)}.play svg{margin-left:4px}
-.vmeta{font-size:12px;color:var(--muted);text-align:center}
-.novid{border:1px dashed var(--line);border-radius:8px;padding:14px;font-size:12px;color:var(--muted);text-align:center}
-.pending{font-size:13px;color:var(--muted);background:var(--tint);border-radius:6px;padding:10px 12px}
-.foot{font-size:12px;color:var(--muted);padding:0 0 40px;max-width:80ch}
-@media (max-width:860px){.prod{grid-template-columns:1fr}.prod .ph{width:100%;height:220px}.player.shorts{margin:0}.kv{grid-template-columns:1fr}}
+.play{position:absolute;inset:0;width:100%;height:100%;border:0;background:linear-gradient(to top,rgba(0,0,0,.55),rgba(0,0,0,0) 55%);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:#fff}
+.play b{width:64px;height:64px;border-radius:50%;background:#fff;color:var(--ink);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(0,0,0,.35);transition:transform .15s}
+.play:hover b{transform:scale(1.06)}.play b svg{margin-left:4px}
+.play span{font-size:13px;font-weight:600;text-shadow:0 1px 6px rgba(0,0,0,.6)}
+.video .cap{position:absolute;left:14px;bottom:12px;font-size:12px;color:rgba(255,255,255,.8);pointer-events:none}
+.video .none{color:#9AA0AB;font-size:13px;text-align:center;padding:20px;line-height:1.5}
+.product .text{padding:22px 26px 24px}
+.product .text h3{margin:0 0 4px;font-size:22px;font-weight:800;letter-spacing:-.015em;line-height:1.2}
+.product .meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0 14px;font-size:13px;color:var(--slate)}
+.product p{margin:0 0 10px;max-width:78ch}.product p:last-of-type{margin-bottom:0}
+.product p b{font-weight:700}
+.product .links{margin-top:14px;display:flex;gap:8px;flex-wrap:wrap}
+.terms{background:var(--panel);border:1px dashed var(--hair);border-radius:14px;padding:20px 26px;color:var(--slate);font-size:14px}
+.terms p{margin:0;max-width:78ch}
+.foot{font-size:12.5px;color:var(--slate);padding:0 0 48px;max-width:80ch}
+@media (max-width:900px){.page{grid-template-columns:1fr}.side{position:static}.product .media{grid-template-columns:1fr}.product .media>*{min-height:260px}.video.shorts .player{height:420px}}
+@media (max-width:560px){.hero{padding:26px 22px 22px;min-height:150px}.field input{width:150px}.grid{grid-template-columns:repeat(2,1fr);gap:12px}.card .body{padding:12px}.card .ft{flex-direction:column;gap:2px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
-<div class="note"><div class="wrap">시험판 · 접수 자료(선정 전) 중 산업군별 1개사씩 무작위 8개사입니다. 유튜브 링크를 제출한 4개사(ZEROSET·MEREN·Daon International·Liberte)는 제품 옆에서 영상이 바로 재생됩니다.</div></div>
-<div class="top"><div class="wrap"><div><b>K-BUSINESS DAY 2026</b> <span class="sub">· Online catalog of participating companies</span></div><div class="sub">22–23 Dec 2026 · COEX, Seoul</div></div></div>
-<div class="nav"><div class="wrap" id="tabs" role="tablist"></div></div>
-<div class="wrap" id="main"></div>
+<div class="sample"><div class="wrap">시험판 · 접수 자료(선정 전) 중 산업군별 1개사씩 무작위 8개사. 영상이 있는 기업은 제품 사진 옆에서 바로 재생됩니다. 바이어·거래 조건은 가상/미입력.</div></div>
+<header class="mast"><div class="wrap"><div class="brand">K-BUSINESS DAY 2026<small>Online catalog of participating Korean companies</small></div><div class="when">22–23 December 2026 · COEX, Seoul</div></div></header>
+<nav class="vols"><div class="wrap" id="tabs" role="tablist"></div></nav>
+<main class="wrap" id="main"></main>
 <script>
-const VOL={'Beauty & Health':{accent:'#A8324F',tint:'rgba(168,50,79,.08)',chapters:['Beauty','Medical devices']},'Fashion & Textile':{accent:'#2F3E8F',tint:'rgba(47,62,143,.08)',chapters:['Textile & fashion']},'Lifestyle':{accent:'#2F6B3F',tint:'rgba(47,107,63,.08)',chapters:['Living','Furniture & interior','Stationery','Baby & maternity']},'Fine Food':{accent:'#B4510F',tint:'rgba(180,81,15,.08)',chapters:['Food']}};
+const VOL={
+ 'Beauty & Health':{no:'Volume 1',accent:'#A8324F',tint:'#F8EEF1',chapters:['Beauty','Medical devices'],blurb:'Skincare, cosmetics, personal care and medical devices.',pat:'circles'},
+ 'Fashion & Textile':{no:'Volume 2',accent:'#2F3E8F',tint:'#EDEFF8',chapters:['Textile & fashion'],blurb:'Fabrics, apparel, accessories and jewelry.',pat:'weave'},
+ 'Lifestyle':{no:'Volume 3',accent:'#2F6B3F',tint:'#EBF3ED',chapters:['Living','Furniture & interior','Stationery','Baby & maternity'],blurb:'Home, furniture, stationery, baby and maternity goods.',pat:'diamonds'},
+ 'Fine Food':{no:'Volume 4',accent:'#B4510F',tint:'#FBEFE5',chapters:['Food'],blurb:'Processed foods, beverages and ingredients.',pat:'waves'}};
+const PAT={
+ circles:`<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><g fill='none' stroke='white' stroke-width='1.2'><circle cx='60' cy='60' r='14'/><circle cx='60' cy='60' r='30'/><circle cx='60' cy='60' r='46'/></g></svg>`,
+ weave:`<svg xmlns='http://www.w3.org/2000/svg' width='48' height='48'><g fill='none' stroke='white' stroke-width='1.2'><path d='M0 12h24M24 36h24M12 0v24M36 24v24'/></g></svg>`,
+ diamonds:`<svg xmlns='http://www.w3.org/2000/svg' width='96' height='96'><g fill='none' stroke='white' stroke-width='1.2'><path d='M48 6l42 42-42 42L6 48zM48 22l26 26-26 26-26-26zM48 38l10 10-10 10-10-10z'/></g></svg>`,
+ waves:`<svg xmlns='http://www.w3.org/2000/svg' width='120' height='40'><path d='M0 20c15-14 30-14 45 0s30 14 45 0 30-14 45 0' fill='none' stroke='white' stroke-width='1.3'/></svg>`};
 let C=[], vol='Beauty & Health', ch='', code='', q='';
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const ph=(p,cls)=>p?`<div class="ph ${p.tr?'':'sq'} ${cls||''}"><img src="${p.src}" alt=""></div>`:`<div class="ph ${cls||''}" style="font-size:12px;color:var(--muted)">Photo not received (file over 10 MB)</div>`;
-function applyVol(){const v=VOL[vol];document.documentElement.style.setProperty('--accent',v.accent);document.documentElement.style.setProperty('--tint',v.tint);}
-function renderTabs(){$('#tabs').innerHTML=Object.keys(VOL).map(v=>`<button role="tab" aria-selected="${v===vol}" data-v="${v}">${v} (${C.filter(c=>c.vol===v).length})</button>`).join('');}
+const svgUrl=s=>`url('data:image/svg+xml;utf8,${encodeURIComponent(s).replace(/'/g,'%27')}')`;
+const playIcon=`<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>`;
+const camIcon=`<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>`;
+function applyVol(){const v=VOL[vol];const r=document.documentElement.style;r.setProperty('--accent',v.accent);r.setProperty('--tint',v.tint);}
+function renderTabs(){$('#tabs').innerHTML=Object.entries(VOL).map(([k,v])=>`<button role="tab" aria-selected="${k===vol}" data-v="${k}" style="--c:${v.accent}"><i></i>${k}</button>`).join('');}
 function list(){return C.filter(c=>c.vol===vol&&(!ch||c.ch===ch)&&(!code||c.codes.includes(code))&&(!q||(c.name+' '+c.name_ko+' '+c.products.map(p=>p.name).join(' ')).toLowerCase().includes(q.toLowerCase()))).sort((a,b)=>a.codes[0].localeCompare(b.codes[0]));}
-function renderList(){const codes=[...new Set(C.filter(c=>c.vol===vol).flatMap(c=>c.codes))].sort();const L=list();
- $('#main').innerHTML=`<div class="filters"><select id="chapter" aria-label="Chapter"><option value="">All chapters</option>${VOL[vol].chapters.map(c=>`<option ${c===ch?'selected':''}>${c}</option>`).join('')}</select><select id="code" aria-label="Product code"><option value="">All product codes</option>${codes.map(c=>`<option ${c===code?'selected':''}>${c}</option>`).join('')}</select><input id="q" type="search" value="${esc(q)}" placeholder="Search company or product" aria-label="Search"><span class="meta">${L.length} of ${C.filter(c=>c.vol===vol).length} companies in this volume · sample of 8 from 840 applicants</span></div>
- <div class="grid">${L.map(c=>{const nv=c.products.filter(p=>p.yt).length;return `<button class="card" data-id="${c.id}"><div class="code">${c.codes[0]} · ${c.id}</div><h3>${esc(c.name)}</h3>${ph(c.products[0]&&c.products[0].photo)}<div class="p">${c.products.map(p=>esc(p.name)).join(' · ')}</div><div class="chips"><span class="chip">${esc(c.ch)}</span>${nv?`<span class="chip v">▶ ${nv} video${nv>1?'s':''}</span>`:''}</div></button>`}).join('')||'<p style="color:var(--muted)">No company matches these filters.</p>'}</div>
- <div class="foot">Videos play inside this page. Product videos were submitted by each company as YouTube links on its matching form; prices are discussed at the meeting and are never shown here.</div>`;
- $('#chapter').onchange=e=>{ch=e.target.value;renderList()};$('#code').onchange=e=>{code=e.target.value;renderList()};$('#q').oninput=e=>{q=e.target.value;renderList();$('#q').focus();$('#q').setSelectionRange(q.length,q.length)};
+function card(c){const p=c.products.find(x=>x.photo)||c.products[0]||{};const nv=c.products.filter(x=>x.yt).length;
+ const media=p.photo?`<div class="media ${p.photo.tr?'':'sq'}"><img src="${p.photo.src}" alt="">${nv?`<span class="vflag">${camIcon}${nv} video${nv>1?'s':''}</span>`:''}</div>`:`<div class="media"><span class="nophoto">Photo not received</span>${nv?`<span class="vflag">${camIcon}${nv} video${nv>1?'s':''}</span>`:''}</div>`;
+ return `<button class="card" data-id="${c.id}">${media}<div class="body"><div class="co">${esc(c.name)}</div><div class="ko">${esc(c.name_ko)}</div><div class="pl">${c.products.map(x=>esc(x.name)).join('<br>')}</div><div class="ft"><span>${esc(c.ch)}</span><b>${c.codes[0]}</b></div></div></button>`;}
+function renderList(){const v=VOL[vol];const codes=[...new Set(C.filter(c=>c.vol===vol).flatMap(c=>c.codes))].sort();const L=list();const total=C.filter(c=>c.vol===vol).length;
+ $('#main').innerHTML=`<section class="hero"><div class="pat" style="background-image:${svgUrl(PAT[v.pat])}"></div><div class="vol-no">${v.no}</div><h1>${vol}</h1><p>${v.blurb}</p></section>
+ <div class="bar"><span class="count">${L.length} of ${total} companies in this volume</span>
+  <label class="field"><select id="chapter" aria-label="Chapter"><option value="">All chapters</option>${v.chapters.map(c=>`<option ${c===ch?'selected':''}>${c}</option>`).join('')}</select></label>
+  <label class="field"><select id="code" aria-label="Product code"><option value="">All product codes</option>${codes.map(c=>`<option ${c===code?'selected':''}>${c}</option>`).join('')}</select></label>
+  <label class="field"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" type="search" value="${esc(q)}" placeholder="Company or product" aria-label="Search"></label></div>
+ <div class="grid">${L.map(card).join('')||'<p class="empty">No company matches these filters.</p>'}</div>
+ <p class="foot">This sample shows 8 of 840 applicants, one per industry. Product videos were submitted by each company as YouTube links on its matching form and play inside this page. Prices are discussed at the meeting and are never shown here.</p>`;
+ $('#chapter').onchange=e=>{ch=e.target.value;renderList()};$('#code').onchange=e=>{code=e.target.value;renderList()};
+ $('#q').oninput=e=>{q=e.target.value;renderList();const i=$('#q');i.focus();i.setSelectionRange(q.length,q.length)};
  $('#main').onclick=e=>{const b=e.target.closest('.card');if(b)location.hash=b.dataset.id};}
-function video(p){ if(!p.yt) return `<div class="vcol"><div class="novid">No video submitted for this product</div></div>`;
- return `<div class="vcol"><div class="player ${p.shorts?'shorts':''}" data-yt="${p.yt}"><img src="https://i.ytimg.com/vi/${p.yt}/hqdefault.jpg" alt="" onerror="this.remove()"><button class="play" aria-label="Play video"><span><svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></span></button></div><div class="vmeta">${p.shorts?'Short (vertical)':'Product video'} · submitted by the company</div></div>`;}
+function videoBox(p){ if(!p.yt) return `<div class="video"><div class="none">No video submitted<br>for this product</div></div>`;
+ return `<div class="video ${p.shorts?'shorts':''}"><div class="player" data-yt="${p.yt}"><img src="https://i.ytimg.com/vi/${p.yt}/hqdefault.jpg" alt="" onerror="this.remove()"><button class="play" aria-label="Play product video"><b>${playIcon}</b><span>Watch the product video</span></button></div><div class="cap">${p.shorts?'Short, vertical':'Video'} · from the company's YouTube</div></div>`;}
+function product(p,c){
+ const photo=p.photo?`<div class="photo ${p.photo.tr?'':'sq'}"><img src="${p.photo.src}" alt=""></div>`:`<div class="photo"><span class="nophoto">Photo not received<br>(file over 10 MB)</span></div>`;
+ return `<article class="product"><div class="media">${photo}${videoBox(p)}</div><div class="text"><h2>Product ${p.n} of ${c.products.length}</h2><h3>${esc(p.name)}</h3><div class="meta"><span class="code">${esc(p.code)}</span>${c.brand?`<span>Brand ${esc(c.brand)}</span>`:''}<span>${esc(p.name_ko)}</span></div><p>${esc(p.intro)}</p>${p.why?`<p><b>Why it stands out.</b> ${esc(p.why)}</p>`:''}${p.url?`<div class="links"><a class="btn sm" href="${esc(p.url)}" target="_blank" rel="noopener">Product page on the company's site</a></div>`:''}</div></article>`;}
 function renderCompany(c){vol=c.vol;applyVol();renderTabs();
- const pr=p=>`<div class="prod">${ph(p.photo)}<div><h4 class="t">Product 0${p.n}</h4><h5>${esc(p.name)}</h5><div class="chips"><span class="chip">${esc(p.code)}</span>${c.brand?`<span class="chip">${esc(c.brand)}</span>`:''}</div><p><b>Overview.</b> ${esc(p.intro)}</p>${p.why?`<p><b>Why it stands out.</b> ${esc(p.why)}</p>`:''}${p.url?`<div class="links"><a class="btn" href="${esc(p.url)}" target="_blank" rel="noopener">Product page ↗</a></div>`:''}</div>${video(p)}</div>`;
- $('#main').innerHTML=`<button class="back" id="back">← Back to ${esc(vol)}</button>
- <section class="co"><div class="band"></div>
- <div class="hd"><div class="logo">${c.logo?`<img src="${c.logo.src}" alt="">`:'LOGO'}</div><div><div class="k">${c.vol} / ${esc(c.ch)} · ${c.id}</div><h2>${esc(c.name)}</h2><div class="ko">${esc(c.name_ko)}${c.brand?' · '+esc(c.brand):''}</div></div><div class="right"><a class="btn primary" href="https://wa.me/">Chat on WhatsApp</a><a class="btn" href="#" onclick="return false">Request another product</a></div></div>
- <div class="sec"><div class="kv"><span>Product codes</span><span>${c.codes.join(', ')}</span><span>Certifications</span><span style="color:var(--muted)">To be completed by the company (by 7 Dec)</span><span>Export markets</span><span style="color:var(--muted)">To be completed by the company</span><span>Last updated</span><span>${c.updated}</span></div></div>
- <div class="sec"><h4 class="t">About the company</h4><p>${esc(c.about)}</p></div>
- ${c.products.map(pr).join('')}
- <div class="sec"><h4 class="t">Trade conditions</h4><div class="pending">Selling unit, MOQ, units per package, lead time and annual supply are entered by the company on its own edit screen after selection (deadline 7 Dec). Prices are discussed at the meeting and are never shown here.</div></div>
- <div class="sec"><h4 class="t">Documents</h4><a class="btn" href="#" onclick="return false">Company product catalog (PDF)</a></div>
- </section>`;
+ $('#main').innerHTML=`<div class="crumb"><button id="back"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>${esc(vol)}</button><span>/</span><span>${esc(c.ch)}</span></div>
+ <div class="page"><aside class="side"><div class="id"><div class="logo">${c.logo?`<img src="${c.logo.src}" alt="${esc(c.name)} logo">`:'<span class="none">Logo not received</span>'}</div><div><h1>${esc(c.name)}</h1><div class="ko">${esc(c.name_ko)}${c.brand?' · '+esc(c.brand):''}</div></div>
+  <dl class="facts"><dt>Company no.</dt><dd>${c.id}</dd><dt>Products</dt><dd>${c.codes.map(x=>`<span class="code">${x}</span>`).join(' ')}</dd><dt>Certifications</dt><dd class="todo">to be completed by the company</dd><dt>Exports to</dt><dd class="todo">to be completed by the company</dd><dt>Updated</dt><dd>${c.updated.slice(0,10)}</dd></dl>
+  <div class="act"><a class="btn fill" href="https://wa.me/">Chat on WhatsApp</a><button class="btn" type="button">Request another product</button></div></div></aside>
+ <div class="main"><section class="about"><h2>About the company</h2><p>${esc(c.about)}</p></section>${c.products.map(p=>product(p,c)).join('')}
+ <section class="terms"><h2>Trade conditions</h2><p>Selling unit, minimum order, units per package, lead time and annual supply are entered by the company on its own edit screen after selection. Prices are discussed at the meeting.</p></section></div></div>`;
  $('#back').onclick=()=>{location.hash=''};
  $('#main').onclick=e=>{const b=e.target.closest('.play');if(!b)return;const box=b.parentElement;box.innerHTML=`<iframe src="https://www.youtube-nocookie.com/embed/${box.dataset.yt}?autoplay=1&rel=0&playsinline=1" title="Product video" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;};
  window.scrollTo(0,0);}
 function route(){const id=location.hash.replace('#','');const c=C.find(x=>x.id===id);if(c)renderCompany(c);else{applyVol();renderTabs();renderList();}}
 $('#tabs').onclick=e=>{const t=e.target.closest('button');if(!t)return;vol=t.dataset.v;ch='';code='';q='';if(location.hash)location.hash='';else route();};
 window.addEventListener('hashchange',route);
-fetch('data.json').then(r=>r.json()).then(d=>{C=d;route();}).catch(()=>{$('#main').innerHTML='<p style="color:var(--muted)">Could not load the sample data.</p>';});
+fetch('data.json').then(r=>r.json()).then(d=>{C=d;route();}).catch(()=>{$('#main').innerHTML='<p class="empty">Could not load the sample data. Reload the page to try again.</p>';});
 </script>
 </body>
 </html>
